@@ -25,8 +25,11 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/*player = instance_create(200+irandom(20),200,objPlayer);
-global.player = player;*/
+            <string>button_turn = scrCreateButton(id,room_width/2, 14,"End Turn","turn",1);
+buttonListen = "";
+
+go_x = 0;
+go_y = 0;
 
 clientx = 64;   // player start X and Y
 clienty = 192;
@@ -86,7 +89,7 @@ alarm[0]=120;
         </arguments>
       </action>
     </event>
-    <event eventtype="6" enumb="53">
+    <event eventtype="3" enumb="0">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -103,7 +106,75 @@ alarm[0]=120;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>SendMoveTo(mouse_x, mouse_y);
+            <string>if (buttonListen == "turn") {
+    SendMoveTo(go_x,go_y);
+    go_x = 0;
+    go_y = 0;
+    
+    buttonListen = "";
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>515</id>
+        <kind>0</kind>
+        <userelative>-1</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>1</exetype>
+        <functionname>action_draw_arrow</functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>0</kind>
+            <string>0</string>
+          </argument>
+          <argument>
+            <kind>0</kind>
+            <string>0</string>
+          </argument>
+          <argument>
+            <kind>0</kind>
+            <string>0</string>
+          </argument>
+          <argument>
+            <kind>0</kind>
+            <string>0</string>
+          </argument>
+          <argument>
+            <kind>0</kind>
+            <string>12</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="6" enumb="56">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if (!collision_point(mouse_x,mouse_y,objButton,0,0)) {
+    go_x = mouse_x;
+    go_y = mouse_y;
+}
 </string>
           </argument>
         </arguments>
@@ -166,29 +237,6 @@ if( client == eventid )
         </arguments>
       </action>
     </event>
-    <event eventtype="7" enumb="3">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>network_destroy(client);
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
     <event eventtype="8" enumb="0">
       <action>
         <libid>1</libid>
@@ -224,8 +272,13 @@ for(i=0;i&lt;sprites;i++){
     draw_set_color(c_white);
     //draw_set_font(fName);
     draw_set_halign(fa_center);
-    draw_text(xx+16,yy-20,name);
+    draw_text(xx,yy-28,name);
 }
+if (go_x != 0 &amp;&amp; go_y != 0) {
+    draw_arrow(clientx,clienty,go_x,go_y,12);
+}
+
+
 </string>
           </argument>
         </arguments>
