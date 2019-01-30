@@ -16,7 +16,7 @@
         ds_list_add( socketlist, sock );
 
         // Create a new player, and pick a random colour for that player        
-        var inst = instance_create(64,192, objPlayer);
+        var inst = instance_create(20,20, objPlayer);
 
         // put this instance into a map, using the socket ID as the lookup
         ds_map_add( Clients, sock, inst );

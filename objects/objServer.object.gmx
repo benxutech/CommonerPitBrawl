@@ -34,7 +34,7 @@ Clients = ds_map_create();
 socketlist = ds_list_create();
 
 // Try and create the actual server
-server = network_create_server(global.ServerType ,6510, 8 );
+server = network_create_server(global.ServerType, 6510, 8 );
 if (server &lt; 0) {    
     // If theres already a server running, shut down and delete.
     global.haveserver = false;

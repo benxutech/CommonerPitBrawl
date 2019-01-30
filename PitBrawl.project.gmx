@@ -10,23 +10,35 @@
     <sprite>sprites\sprTitle</sprite>
     <sprite>sprites\sprButton</sprite>
     <sprite>sprites\sprButtonAction</sprite>
+    <sprite>sprites\sprBlock</sprite>
+    <sprite>sprites\sprPlayer</sprite>
+    <sprite>sprites\sprSelect</sprite>
+    <sprite>sprites\sprSelectBlock</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
   <scripts name="scripts">
-    <script>scripts\scrCreateButton.gml</script>
-    <script>scripts\SendKey.gml</script>
-    <script>scripts\SendMoveTo.gml</script>
-    <script>scripts\ConnectDisconnectClient.gml</script>
-    <script>scripts\SendKeepAlive.gml</script>
-    <script>scripts\ServerRecievedData.gml</script>
-    <script>scripts\SendName.gml</script>
-    <script>scripts\SendAction.gml</script>
+    <scripts name="Menu">
+      <script>scripts\CreateButton.gml</script>
+    </scripts>
+    <scripts name="Network">
+      <script>scripts\SendKey.gml</script>
+      <script>scripts\SendMoveTo.gml</script>
+      <script>scripts\SendKeepAlive.gml</script>
+      <script>scripts\ServerRecievedData.gml</script>
+      <script>scripts\SendName.gml</script>
+      <script>scripts\SendAction.gml</script>
+      <script>scripts\ConnectDisconnectClient.gml</script>
+    </scripts>
+    <scripts name="Playerside">
+      <script>scripts\MoveEntity.gml</script>
+    </scripts>
+    <script>scripts\ToIsometric.gml</script>
   </scripts>
   <objects name="objects">
     <objects name="game">
       <object>objects\objEntity</object>
-      <object>objects\objPlayer</object>
+      <object>objects\objPlayerx</object>
     </objects>
     <objects name="network">
       <object>objects\objServer</object>
@@ -38,6 +50,11 @@
       <object>objects\objCharMenu</object>
       <object>objects\objButton</object>
     </objects>
+    <object>objects\objBlock</object>
+    <object>objects\objBattle</object>
+    <object>objects\objPlayer</object>
+    <object>objects\objPlayerPuppet</object>
+    <object>objects\objSelect</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\rmMenu</room>

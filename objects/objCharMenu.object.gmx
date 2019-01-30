@@ -25,9 +25,9 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>button_back = scrCreateButton(id, room_width-2, 2, "Back", "back");
-button_save = scrCreateButton(id, room_width-2, 67, "Save", "save");
-button_name = scrCreateButton(id, 182, 67, "Edit Name", "name");
+            <string>button_back = CreateButton(id, room_width-2, 2, "Back", "back");
+button_save = CreateButton(id, room_width-2, 67, "Save", "save");
+button_name = CreateButton(id, 182, 67, "Edit Name", "name");
 buttonListen = "";
 
 tempName = global.PlayerName;
