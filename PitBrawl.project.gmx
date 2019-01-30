@@ -21,6 +21,7 @@
     <script>scripts\SendKeepAlive.gml</script>
     <script>scripts\ServerRecievedData.gml</script>
     <script>scripts\SendName.gml</script>
+    <script>scripts\SendAction.gml</script>
   </scripts>
   <objects name="objects">
     <objects name="game">
