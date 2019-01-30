@@ -25,48 +25,81 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>// Grid
-global.gridSize = 32;  // Size in pixels
-global.gridX = ((room_width-360)/2)+360;
-global.gridY = 60;
-global.vertRatio = 0.5;
+            <string>// View initialize
+view_xview[0] = 0;
+view_yview[0] = 0;
+view_wview[0] = 360;
+view_hview[0] = 640;
 
+// Load map - just generating it for now
 gridWidth = 12;
 gridHeight = 12;
+gridRealWidth = (max(gridWidth,gridHeight)*64)+64;
+gridRealHeight = (max(gridWidth,gridHeight)*32)+32;
 
-gridRealHeight = max(gridWidth,gridHeight)*32+32;
+map = ds_grid_create(gridWidth, gridHeight);
+for (var i = 0; i &lt; gridWidth; i++) {
+    for (var o = 0; o &lt; gridHeight; o++) {
+        blockType = 1;
+        if (o == 4 &amp;&amp; i &lt;= 6 &amp;&amp; i &gt;= 2) blockType = 0;
+        if (o &lt;= 7 &amp;&amp; o &gt;= 3 &amp;&amp; i == 8) blockType = 2;
+        
+        ds_grid_add(map, i, o, blockType);
+    }
+}
 
-// Create map
+// Room resize to fit grid
+padding = 200;
+room_width = view_wview[0] + gridRealWidth + padding;
+room_height = view_hview[0] + gridRealHeight + padding;
 
+// Grid
+global.gridSize = 32;  // Size in pixels
+global.gridX = view_wview[0] + ((room_width-view_wview[0])/2);
+global.gridY = 100;
+global.vertRatio = 0.5;
 
 // Draw Map blocks
-//blocks = ds_grid_create(gridWidth,gridHeight);
-
-for (var i = 0; i &lt; gridHeight; i++) {
-    for (var o = 0; o &lt; gridWidth; o++) {
+for (var i = 0; i &lt; ds_grid_height(map); i++) {
+    for (var o = 0; o &lt; ds_grid_width(map); o++) {
         pos = ToIsometric(i,o);
-        b = instance_create(global.gridX+pos[0], global.gridY+pos[1], objBlock);
-        //ds_grid_add(blocks, i, o, b);
-        b.xx = i;
-        b.yy = o;
+        if (map[# i, o] == 1) {
+            b = instance_create(global.gridX+pos[0], global.gridY+pos[1], objBlock);
+            b.xx = i;
+            b.yy = o;
+        }
+        if (map[# i, o] == 2) {
+            b = instance_create(global.gridX+pos[0], global.gridY+pos[1], objBlockWater);
+            b.xx = i;
+            b.yy = o;
+            b.image_speed = 1/30;
+        }
     }
 }
 instance_create(0,0,objSelect);
 
-// Make entities
+// Make entities list
 entities = ds_list_create();
-pos = ToIsometric(3,3);
-np = instance_create(global.gridX, global.gridY, objPlayer);
-ds_list_add(entities, np);
+//np = instance_create(global.gridX, global.gridY, objPlayer);
+//ds_list_add(entities, np);
 
+// Put camera into the middle
+view_xview[1] = view_wview[0] + ((room_width-view_wview[0])/2) - (view_wview[1]/2);
 
-// View stuff
-
+// Camera init
 startPressed_x = mouse_x;
 startPressed_y = mouse_y;
 startView_x = view_xview[1];
 startView_y = view_yview[1];
-scroll = 0;
+panning = 0;
+scrollFactor = 8;
+scrollLimit_lower = 200;
+scrollLimit_upper = 360;
+
+panLimit_left = view_hview[0] - (view_wport[1]/2) - 60;
+panLimit_right = room_width - view_wview[1] - (view_wport[1]/2) + 120;
+panLimit_upper = 0 - 100; 
+panLimit_lower = gridRealHeight - view_hview[1] + 200;
 
 </string>
           </argument>
@@ -90,51 +123,61 @@ scroll = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (mouse_check_button_pressed(mb_left)) {
+            <string>// Scrolling
+if (mouse_wheel_up()) {
+    if (view_wview[1] &gt; scrollLimit_lower ) {
+        view_wview[1] -= scrollFactor;
+        view_hview[1] -= scrollFactor;
+        view_xview[1] += scrollFactor/2;
+        view_yview[1] += scrollFactor/2;
+    }
+}
+if (mouse_wheel_down()) {
+    if (view_wview[1] &lt; scrollLimit_upper ) {
+        view_wview[1] += scrollFactor;
+        view_hview[1] += scrollFactor;
+        view_xview[1] -= scrollFactor/2;
+        view_yview[1] -= scrollFactor/2;
+    }
+}
+
+// Panning
+if (mouse_check_button_pressed(mb_left)) {
     startPressed_x = window_mouse_get_x();
     startPressed_y = window_mouse_get_y();
     startView_x = view_xview[1];
     startView_y = view_yview[1];
-    scroll = 1;
+    panning = 1;
 }
-if (scroll == 1) {
+if (panning == 1) {
     view_xview[1] = startView_x - (window_mouse_get_x() - startPressed_x);
     view_yview[1] = startView_y - (window_mouse_get_y() - startPressed_y);
 }
 if (mouse_check_button_released(mb_left)) {
-    scroll = 0;
+    panning = 0;
 }
+
+// Panning boundaries
+if (view_xview[1] &lt; panLimit_left) {
+    view_xview[1] = panLimit_left;
+}
+if (view_xview[1] &gt; panLimit_right) {
+    view_xview[1] = panLimit_right;
+}
+if (view_yview[1] &lt; panLimit_upper) {
+    view_yview[1] = panLimit_upper;
+}
+if (view_yview[1] &gt; panLimit_lower) {
+    view_yview[1] = panLimit_lower;
+}
+panLimit_left = view_hview[0] - (view_wport[1]/2) - 60;
+panLimit_right = room_width - view_wview[1] - (view_wport[1]/2) + 100;
+panLimit_upper = 0 - 100; 
+panLimit_lower = gridRealHeight - view_hview[1] + 200;
 
 
 
-// Boundaries
-if (view_xview[1] &gt; room_width-view_wview[1]) {
-    view_xview[1] = room_width-view_wview[1];
-}
-if (view_yview[1] &gt; gridRealHeight+30-view_hview[1]) {
-    view_yview[1] = gridRealHeight+30-view_hview[1];
-}
-if (view_xview[1] &lt; 360) {
-    view_xview[1] = 360;
-}
-if (view_yview[1] &lt; 0) {
-    view_yview[1] = 0;
-}
 
-// Scrolling
-scrollFactor = 8;
-if (mouse_wheel_up()) {
-    view_wview[1] -= scrollFactor;
-    view_hview[1] -= scrollFactor;
-    view_xview[1] += scrollFactor/2;
-    view_yview[1] += scrollFactor/2;
-}
-if (mouse_wheel_down()) {
-    view_wview[1] += scrollFactor;
-    view_hview[1] += scrollFactor;
-    view_xview[1] -= scrollFactor/2;
-    view_yview[1] -= scrollFactor/2;
-}
 
 </string>
           </argument>
@@ -158,106 +201,19 @@ if (mouse_wheel_down()) {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>// Draw view
-
+            <string>// Draw camera lines
+draw_set_color(c_white);
 draw_rectangle(view_xport[1], view_yport[1], view_xport[1]+view_wport[1], view_yport[1]+view_hport[1], 1)
 
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="9" enumb="40">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>np.yy += 1;
-np.mov = 1;
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="9" enumb="39">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>np.xx += 1;
-np.mov = 1;
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="9" enumb="38">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>np.yy -= 1;
-np.mov = 1;
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="9" enumb="37">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>np.xx -= 1;
-np.mov = 1;
+// Draw bottom UI panel
+draw_set_color(c_white);
+draw_rectangle( view_wport[1], view_hport[1], view_xview[0]+view_wview[0], view_yview[0]+view_hview[0], 0)
+
+
+
+
+
+
 </string>
           </argument>
         </arguments>

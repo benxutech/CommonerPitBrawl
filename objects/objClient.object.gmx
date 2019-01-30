@@ -31,13 +31,9 @@ clientx = 64;   // player start X and Y
 clienty = 192;
 PlayerName = global.PlayerName;   // get the name that was selected (it's a server OR player name)
 
-// Create a buffer for the network messages
 buff = buffer_create(256, buffer_grow, 1);
-// Create a TCP/IP socket
 client = network_create_socket(global.ServerType);
-// remember this socket ID so the server can ignore it (if we have a local server)
 global.client = client;
-// We're playing!!
 global.NetworkState = NETWORK_PLAY;
 
 // Create a list to hold ALL sprites sent from the server
@@ -80,32 +76,6 @@ alarm[0]=120;
             <string>/// Send keep alive "ping" to server
 SendKeepAlive();
 alarm[0]=120;
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="6" enumb="56">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>if (!collision_point(mouse_x,mouse_y,objButton,0,0)) {
-    go_x = mouse_x;
-    go_y = mouse_y;
-}
 </string>
           </argument>
         </arguments>
@@ -186,7 +156,7 @@ if( client == eventid )
             <kind>1</kind>
             <string>
 // Now loop through all active sprites and draw them
-var index = 0;
+/*var index = 0;
 for(i=0;i&lt;sprites;i++){
     var xx,yy,sp,spindex;
     
@@ -202,105 +172,9 @@ for(i=0;i&lt;sprites;i++){
     //draw_set_font(fName);
     draw_set_halign(fa_center);
     draw_text(xx,yy-28,name);
-}
+}*/
 
 
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="9" enumb="39">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Tell server RIGHT was pressed
-SendKey(vk_right,1);
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="9" enumb="37">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Tell server LEFT was pressed
-SendKey(vk_left,1);
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="10" enumb="39">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Tell server RIGHT was released
-SendKey(vk_right,0);
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="10" enumb="37">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Tell server LEFT was released
-SendKey(vk_left,0);
 </string>
           </argument>
         </arguments>

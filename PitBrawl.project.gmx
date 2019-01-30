@@ -14,8 +14,11 @@
     <sprite>sprites\sprPlayer</sprite>
     <sprite>sprites\sprSelect</sprite>
     <sprite>sprites\sprSelectBlock</sprite>
+    <sprite>sprites\sprBlockWater</sprite>
   </sprites>
-  <backgrounds name="background"/>
+  <backgrounds name="background">
+    <background>background\background0</background>
+  </backgrounds>
   <paths name="paths"/>
   <scripts name="scripts">
     <scripts name="Menu">
@@ -51,6 +54,7 @@
       <object>objects\objButton</object>
     </objects>
     <object>objects\objBlock</object>
+    <object>objects\objBlockWater</object>
     <object>objects\objBattle</object>
     <object>objects\objPlayer</object>
     <object>objects\objPlayerPuppet</object>
