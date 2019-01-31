@@ -15,11 +15,17 @@
         // add client to our list of connected clients
         ds_list_add( socketlist, sock );
 
+        // Give this client their ID
+        
         // Create a new player, and pick a random colour for that player        
-        var inst = instance_create(20,20, objPlayer);
+        var inst = instance_create(0,0, objPlayerServer);
+        inst.xx = 2;
+        inst.yy = 2;
 
         // put this instance into a map, using the socket ID as the lookup
         ds_map_add( Clients, sock, inst );
+        
+        // give players the new info 
         
         
     }
@@ -35,7 +41,6 @@
         // Also delete the socket from our global list of connected clients
         var index = ds_list_find_index( socketlist, sock );
         ds_list_delete(socketlist,index);
-        show_debug_message("+++++++++++++++++++++++++++++++++++++ 2Kill socket")
     }
 }
 

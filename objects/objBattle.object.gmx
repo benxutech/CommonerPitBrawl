@@ -41,8 +41,9 @@ map = ds_grid_create(gridWidth, gridHeight);
 for (var i = 0; i &lt; gridWidth; i++) {
     for (var o = 0; o &lt; gridHeight; o++) {
         blockType = 1;
-        if (o == 4 &amp;&amp; i &lt;= 6 &amp;&amp; i &gt;= 2) blockType = 0;
-        if (o &lt;= 7 &amp;&amp; o &gt;= 3 &amp;&amp; i == 8) blockType = 2;
+        if (o &gt;= 4 &amp;&amp; o &lt;= 5 &amp;&amp; i &lt;= 6 &amp;&amp; i &gt;= 2) blockType = 0;
+        if (o &lt;= 7 &amp;&amp; o &gt;= 2 &amp;&amp; i == 8) blockType = 2;
+        if (o &lt;= 6 &amp;&amp; o &gt;= 2 &amp;&amp; i == 9) blockType = 2;
         
         ds_grid_add(map, i, o, blockType);
     }
@@ -54,10 +55,8 @@ room_width = view_wview[0] + gridRealWidth + padding;
 room_height = view_hview[0] + gridRealHeight + padding;
 
 // Grid
-global.gridSize = 32;  // Size in pixels
 global.gridX = view_wview[0] + ((room_width-view_wview[0])/2);
 global.gridY = 100;
-global.vertRatio = 0.5;
 
 // Draw Map blocks
 for (var i = 0; i &lt; ds_grid_height(map); i++) {
@@ -80,8 +79,10 @@ instance_create(0,0,objSelect);
 
 // Make entities list
 entities = ds_list_create();
-//np = instance_create(global.gridX, global.gridY, objPlayer);
-//ds_list_add(entities, np);
+
+// Remember player ID (when it gets sent to us)
+player = 0;
+
 
 // Put camera into the middle
 view_xview[1] = view_wview[0] + ((room_width-view_wview[0])/2) - (view_wview[1]/2);
@@ -100,6 +101,14 @@ panLimit_left = view_hview[0] - (view_wport[1]/2) - 60;
 panLimit_right = room_width - view_wview[1] - (view_wport[1]/2) + 120;
 panLimit_upper = 0 - 100; 
 panLimit_lower = gridRealHeight - view_hview[1] + 200;
+
+
+// UI Buttons
+
+// movement
+
+// end turn
+
 
 </string>
           </argument>
@@ -176,6 +185,16 @@ panLimit_upper = 0 - 100;
 panLimit_lower = gridRealHeight - view_hview[1] + 200;
 
 
+// Click
+block = collision_point(mouse_x,mouse_y,objBlock,1,0);
+if (block) {
+    if (mouse_check_button_pressed(mb_left)) {
+        if (player) {
+            player.xx = block.xx;
+            player.yy = block.yy;
+        }
+    }
+}
 
 
 
@@ -202,13 +221,18 @@ panLimit_lower = gridRealHeight - view_hview[1] + 200;
           <argument>
             <kind>1</kind>
             <string>// Draw camera lines
+/*
 draw_set_color(c_white);
 draw_rectangle(view_xport[1], view_yport[1], view_xport[1]+view_wport[1], view_yport[1]+view_hport[1], 1)
-
+*/
 // Draw bottom UI panel
-draw_set_color(c_white);
-draw_rectangle( view_wport[1], view_hport[1], view_xview[0]+view_wview[0], view_yview[0]+view_hview[0], 0)
+draw_set_color(c_gray);
+draw_rectangle(view_xport[1], view_yport[1]+view_hport[1], view_xview[0]+view_wview[0], view_yview[0]+view_hview[0], 0)
 
+
+// Top UI panel
+draw_set_color(c_gray);
+draw_rectangle(view_xview[0], view_yview[0], view_xport[1]+view_wport[1], view_yport[1], 0);
 
 
 

@@ -9,21 +9,22 @@
     <sprite>sprites\sprHuman</sprite>
     <sprite>sprites\sprTitle</sprite>
     <sprite>sprites\sprButton</sprite>
-    <sprite>sprites\sprButtonAction</sprite>
+    <sprite>sprites\sprButtonThin</sprite>
     <sprite>sprites\sprBlock</sprite>
     <sprite>sprites\sprPlayer</sprite>
     <sprite>sprites\sprSelect</sprite>
     <sprite>sprites\sprSelectBlock</sprite>
     <sprite>sprites\sprBlockWater</sprite>
+    <sprite>sprites\sprDie</sprite>
+    <sprite>sprites\sprButtonAction</sprite>
+    <sprite>sprites\sprite11</sprite>
+    <sprite>sprites\sprRollResult</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\background0</background>
   </backgrounds>
   <paths name="paths"/>
   <scripts name="scripts">
-    <scripts name="Menu">
-      <script>scripts\CreateButton.gml</script>
-    </scripts>
     <scripts name="Network">
       <script>scripts\SendKey.gml</script>
       <script>scripts\SendMoveTo.gml</script>
@@ -36,12 +37,21 @@
     <scripts name="Playerside">
       <script>scripts\MoveEntity.gml</script>
     </scripts>
+    <script>scripts\CreateButton.gml</script>
     <script>scripts\ToIsometric.gml</script>
+    <script>scripts\RollDice.gml</script>
+    <script>scripts\AnimatedDice.gml</script>
   </scripts>
   <objects name="objects">
     <objects name="game">
+      <object>objects\objBattle</object>
       <object>objects\objEntity</object>
-      <object>objects\objPlayerx</object>
+      <object>objects\objPlayerServerX</object>
+      <object>objects\objBlock</object>
+      <object>objects\objBlockWater</object>
+      <object>objects\objPlayerClient</object>
+      <object>objects\objPlayerServer</object>
+      <object>objects\objSelect</object>
     </objects>
     <objects name="network">
       <object>objects\objServer</object>
@@ -53,12 +63,9 @@
       <object>objects\objCharMenu</object>
       <object>objects\objButton</object>
     </objects>
-    <object>objects\objBlock</object>
-    <object>objects\objBlockWater</object>
-    <object>objects\objBattle</object>
-    <object>objects\objPlayer</object>
-    <object>objects\objPlayerPuppet</object>
-    <object>objects\objSelect</object>
+    <object>objects\objDiceTest</object>
+    <object>objects\objRoll</object>
+    <object>objects\objRollResult</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\rmMenu</room>
@@ -66,7 +73,9 @@
     <room>rooms\rmJoin</room>
     <room>rooms\rmBattle</room>
   </rooms>
-  <constants number="9">
+  <constants number="11">
+    <constant name="GRID_SIZE">32</constant>
+    <constant name="VERT_RATIO">0.5</constant>
     <constant name="NETWORK_LOGIN">0</constant>
     <constant name="NETWORK_PLAY">1</constant>
     <constant name="PING_CMD">2</constant>

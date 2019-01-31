@@ -72,9 +72,10 @@ regular_send = 0;  // Timer for sending regular updates
             <kind>1</kind>
             <string>/// Send player data to ALL attached clients
 
-// Once a frame, we send ALL attached clients, ALL game sprites (plaeyrs and baddies)
+// send ALL attached clients, ALL Entities and their relevant properties
 regular_send += 1;
 var count = ds_list_size(socketlist);
+// every 2 seconds
 if (regular_send == 2*room_speed) {
     if( count&gt;0 )
     {
@@ -114,8 +115,8 @@ if (regular_send == 2*room_speed) {
     
             // Get the player's instance, so we can get it's X,Y
             var inst = ds_map_find_value( Clients, sock);
-            buffer_write(global.player_buffer, buffer_s16, inst.x );
-            buffer_write(global.player_buffer, buffer_s16, inst.y );
+            buffer_write(global.player_buffer, buffer_s16, inst.xx );
+            buffer_write(global.player_buffer, buffer_s16, inst.yy );
     
             // Send data to client
             network_send_packet( sock,player_buffer, buffer_size );

@@ -61,22 +61,6 @@ spd = 10;
 pos = ToIsometric(xx,yy);
 mov_x = global.gridX + pos[0];
 mov_y = global.gridY + pos[1];
-/*
-x = mov_x;
-y = mov_y;*/
-
-/*
-if (mov == 1) {*/
-    /*if (abs(mov_x-x) &gt;= 1) {
-        x = x + ((mov_x-x)*0.9);
-    }
-    if (abs(mov_y-y) &gt;= 1) {
-        y = y + ((mov_y-y)*0.9);
-    }*//*
-}
-if (abs(mov_x-x) &lt; 1 &amp;&amp; abs(mov_y-y) &lt; 1) {
-    mov = 0;
-}*/
 
 direction = point_direction(x,y,mov_x,mov_y);
 

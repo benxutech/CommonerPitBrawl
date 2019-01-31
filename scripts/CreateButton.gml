@@ -1,4 +1,4 @@
-// TBD: 2 types of button, Big (menu), Small (which just manage to fit the text)
+// TBD: 3 types of button, Big (menu), thin (which just manage to fit the text), Action (square)
 
 var i, arg;
 for (i = 0; i < 6; i += 1;) {
@@ -12,6 +12,9 @@ for (i = 0; i < 6; i += 1;) {
 
 sprite = sprButton;
 if (arg[5] == 1) {
+    sprite = sprButtonThin;
+}
+if (arg[5] == 2) {
     sprite = sprButtonAction;
 }
 
