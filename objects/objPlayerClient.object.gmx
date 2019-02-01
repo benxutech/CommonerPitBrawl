@@ -26,6 +26,7 @@
           <argument>
             <kind>1</kind>
             <string>mov = 0;
+moveType = 0;  // 0 = teleport, 1 = "slide"
 
 xx = 0;
 yy = 0;
@@ -62,17 +63,25 @@ pos = ToIsometric(xx,yy);
 mov_x = global.gridX + pos[0];
 mov_y = global.gridY + pos[1];
 
-direction = point_direction(x,y,mov_x,mov_y);
-
-if (point_distance(x,y,mov_x,mov_y) &gt; spd) {
-    speed = spd;
-}
-else if (point_distance(x,y,mov_x,mov_y) &lt;= spd) {
+if (moveType == 0) {
     x = mov_x;
     y = mov_y;
     speed = 0;
 }
 
+// Move towards
+if (moveType == 1) {
+    direction = point_direction(x,y,mov_x,mov_y);
+    if (point_distance(x,y,mov_x,mov_y) &gt; spd) {
+        speed = spd;
+    }
+    else if (point_distance(x,y,mov_x,mov_y) &lt;= spd) {
+        x = mov_x;
+        y = mov_y;
+        speed = 0;
+        moveType = 0;
+    }
+}
 
 
 

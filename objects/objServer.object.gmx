@@ -47,7 +47,7 @@ if (server &lt; 0) {
 
 // Server stuff
 regular_send = 0;  // Timer for sending regular updates
-
+regular_send_seconds = 5;  // Delay in seconds
 </string>
           </argument>
         </arguments>
@@ -76,7 +76,7 @@ regular_send = 0;  // Timer for sending regular updates
 regular_send += 1;
 var count = ds_list_size(socketlist);
 // every 2 seconds
-if (regular_send == 2*room_speed) {
+if (regular_send == regular_send_seconds*room_speed) {
     if( count&gt;0 )
     {
         // Regular position updates
@@ -84,6 +84,9 @@ if (regular_send == 2*room_speed) {
         
         // Reset buffer to start - Networking ALWAYS reads from the START of the buffer
         buffer_seek(player_buffer, buffer_seek_start, 0);
+        
+        // Buffer type
+        buffer_write(player_buffer, buffer_s16, 1 );
         
         // Total number of entity
         buffer_write(player_buffer, buffer_u32, global.entityCount );
@@ -99,6 +102,8 @@ if (regular_send == 2*room_speed) {
             buffer_write(global.player_buffer, buffer_s16, y );
             buffer_write(global.player_buffer, buffer_s16, sprite_index );
             buffer_write(global.player_buffer, buffer_s16, image_index );
+            buffer_write(global.player_buffer, buffer_s16, socketID );
+            buffer_write(global.player_buffer, buffer_s16, id );
             buffer_write(global.player_buffer, buffer_string, PlayerName );
         }
         
@@ -113,15 +118,15 @@ if (regular_send == 2*room_speed) {
             // Write in client location, so it can do a scroll window "follow"
             buffer_seek(player_buffer, buffer_seek_start, 4);
     
-            // Get the player's instance, so we can get it's X,Y
+            // Get the player's instance, so we can get it's id
             var inst = ds_map_find_value( Clients, sock);
-            buffer_write(global.player_buffer, buffer_s16, inst.xx );
-            buffer_write(global.player_buffer, buffer_s16, inst.yy );
+            buffer_write(global.player_buffer, buffer_s16, inst.socketID );
     
             // Send data to client
             network_send_packet( sock,player_buffer, buffer_size );
         }
     }
+    show_debug_message("sentregularpacket")
     regular_send = 0;
 }    
 

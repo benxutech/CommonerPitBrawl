@@ -25,7 +25,11 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>// View initialize
+            <string>// does all the battle-related stuff - client might need 
+// to handle network outside of battle after all.
+owner = 0;
+
+// View initialize
 view_xview[0] = 0;
 view_yview[0] = 0;
 view_wview[0] = 360;
@@ -179,19 +183,20 @@ if (view_yview[1] &lt; panLimit_upper) {
 if (view_yview[1] &gt; panLimit_lower) {
     view_yview[1] = panLimit_lower;
 }
-panLimit_left = view_hview[0] - (view_wport[1]/2) - 60;
-panLimit_right = room_width - view_wview[1] - (view_wport[1]/2) + 100;
+panLimit_left = view_hview[0] - (view_wport[1]/2) - 100;
+panLimit_right = room_width - view_wview[1] - (view_wport[1]/2) + 164;
 panLimit_upper = 0 - 100; 
 panLimit_lower = gridRealHeight - view_hview[1] + 200;
 
 
 // Click
-block = collision_point(mouse_x,mouse_y,objBlock,1,0);
-if (block) {
-    if (mouse_check_button_pressed(mb_left)) {
+if (mouse_check_button_pressed(mb_left)) {
+    block = collision_point(mouse_x,mouse_y,objBlock,1,0);
+    if (block) {
         if (player) {
-            player.xx = block.xx;
-            player.yy = block.yy;
+            with (owner) {
+                SendMoveTo(battle.block.xx, battle.block.yy);
+            }
         }
     }
 }

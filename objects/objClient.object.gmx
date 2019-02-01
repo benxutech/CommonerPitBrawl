@@ -26,9 +26,9 @@
           <argument>
             <kind>1</kind>
             <string>battle = instance_create(0,0,objBattle);
+battle.owner = id;
 
-clientx = 64;   // player start X and Y
-clienty = 192;
+clientID = 0;   // player start X and Y
 PlayerName = global.PlayerName;   // get the name that was selected (it's a server OR player name)
 
 buff = buffer_create(256, buffer_grow, 1);
@@ -37,7 +37,7 @@ global.client = client;
 global.NetworkState = NETWORK_PLAY;
 
 // Create a list to hold ALL sprites sent from the server
-allsprites = ds_list_create();
+entities = ds_list_create();
 sprites = 0;
 
 // Connect to our server
@@ -81,6 +81,28 @@ alarm[0]=120;
         </arguments>
       </action>
     </event>
+    <event eventtype="3" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string></string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="7" enumb="68">
       <action>
         <libid>1</libid>
@@ -103,29 +125,53 @@ var eventid = ds_map_find_value(async_load, "id");
 
 // Our socket?
 if( client == eventid )
-{
+{/*
     switch(global.NetworkState)
     {
         case NETWORK_PLAY :
-        {
-            // Read all data....
-            var buff = ds_map_find_value(async_load, "buffer");
-            // Get number of sprites sent
-            sprites = buffer_read(buff, buffer_u32 ); 
-            
-            // Read out OUR location (allow scrolling maps)
-            clientx = buffer_read(buff,buffer_s16);     //x
-            clienty = buffer_read(buff,buffer_s16);     //y
+        {*/
+    // Read all data....
+    var buff = ds_map_find_value(async_load, "buffer");
+    
+    // Get what type of packet this is
+    
+    // Get number of sprites sent
+    entityCount = buffer_read(buff, buffer_u32 ); 
+    
+    // OUR socket ID
+    clientID = buffer_read(buff,buffer_s16); 
+    //clientx = buffer_read(buff,buffer_s16);     //x
+    //clienty = buffer_read(buff,buffer_s16);     //y
+    
+    // Now clear the render list, and start filling it up with NEW data!
+    //ds_list_clear(entities);
+    for(var i = 0; i &lt; entityCount; i++) {
+        /*ds_list_add(entities, buffer_read(buff,buffer_s16) );     //xx
+        ds_list_add(entities, buffer_read(buff,buffer_s16) );     //yy
+        ds_list_add(entities, buffer_read(buff,buffer_s16) );     //sprite_index
+        ds_list_add(entities, buffer_read(buff,buffer_s16) );     //image_index   
+        ds_list_add(entities, buffer_read(buff,buffer_s16) );     //socketID    
+        ds_list_add(entities, buffer_read(buff,buffer_string) );  // player name
+        */
+        b_xx = buffer_read(buff,buffer_s16);     //xx
+        b_yy = buffer_read(buff,buffer_s16);     //yy
+        b_sprite_index = buffer_read(buff,buffer_s16);     //sprite_index
+        b_image_index = buffer_read(buff,buffer_s16);     //image_index   
+        b_clientID = buffer_read(buff,buffer_s16);     //socketID    
+        b_entityID = buffer_read(buff,buffer_s16);     //entityID
+        b_PlayerName = buffer_read(buff,buffer_string);  // player name
         
-            // Now clear the render list, and start filling it up with NEW data!
-            ds_list_clear(allsprites);
-            for(var i=0; i&lt;sprites; i++){
-                ds_list_add(allsprites, buffer_read(buff,buffer_s16) );     //x
-                ds_list_add(allsprites, buffer_read(buff,buffer_s16) );     //y
-                ds_list_add(allsprites, buffer_read(buff,buffer_s16) );     //sprite_index
-                ds_list_add(allsprites, buffer_read(buff,buffer_s16) );     //image_index       
-                ds_list_add(allsprites, buffer_read(buff,buffer_string) );  // player name
+        if (ds_list_find_index(entities,b_entityID) == -1) {
+            with (battle) {
+                player = instance_create(1,1,objPlayerClient);
+                player.xx = owner.b_xx;
+                player.yy = owner.b_yy;
+                player.clientID = owner.b_clientID;
+                player.entityID = owner.b_entityID;
+                player.PlayerName = owner.b_PlayerName;
+                show_debug_message("2")
             }
+            ds_list_add(entities,b_entityID);
         }
     }
 }

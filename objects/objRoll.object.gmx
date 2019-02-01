@@ -83,7 +83,7 @@ var me = id;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>image_angle = direction + 90;
+            <string>image_angle = direction + 90 +180;
 
 if (speed &gt; 0) {
 speed -= accel;

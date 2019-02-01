@@ -1,7 +1,7 @@
 /// Send a key "event" to the server
 ///
-///  arg0 = x
-///  arg1 = y
+///  arg0 = xx
+///  arg1 = yy
 ///
 {
     // Move to start of buffer. Networking ALWAYS takes the data from the START of a buffer.

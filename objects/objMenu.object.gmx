@@ -158,7 +158,9 @@ if i_d == msg {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_sprite(sprTitle,0,room_width/2,24);
+            <string>draw_set_valign(fa_bottom);
+draw_text(room_height-10,10,"Name: " + global.PlayerName);
+draw_sprite(sprTitle,0,room_width/2,24);
 </string>
           </argument>
         </arguments>
