@@ -1,9 +1,8 @@
-// TBD: 3 types of button, Big (menu), thin (which just manage to fit the text), Action (square)
-
+// 3 types of button, Big (menu), thin (which just manages to fit the text), Action (square)
 var i, arg;
 for (i = 0; i < 6; i += 1;) {
     if argument_count > i {
-        arg[i] = argument[i]
+        arg[i] = argument[i];
     }
     else {
         arg[i] = -1;

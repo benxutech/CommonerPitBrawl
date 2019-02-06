@@ -22,12 +22,14 @@
         inst.xx = 2;
         inst.yy = 2;
         inst.socketID = sock;
+        
+        // Give it an initiative
+        // Move this elsewhere when personal stats are created
+        var dice = RollDice(1,20);
+        ShowRoll(sock, dice, 'Initiative');
 
         // put this instance into a map, using the socket ID as the lookup
         ds_map_add( Clients, sock, inst );
-        
-        // give players the new info 
-        
         
     }
     else
@@ -43,6 +45,7 @@
         var index = ds_list_find_index( socketlist, sock );
         ds_list_delete(socketlist,index);
     }
+    return t;
 }
 
 

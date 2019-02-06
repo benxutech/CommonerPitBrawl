@@ -1,10 +1,13 @@
-/// Create a dice animation and roll
-// Arg0 = no. of dice
-// Arg1 = dice size
+/// Create a dice animation and shows the result
+// Arg0 = result to show
+tx = argument0;
+ty =  argument1;
+result = argument2;
+text = argument3;
 
-result = RollDice(argument0,argument1);
-d = instance_create(70+irandom(50), room_height + 40, objRoll);
+d = instance_create(tx, ty, objRoll);
 d.result = result;
+d.text = text;
 
 return result;
 

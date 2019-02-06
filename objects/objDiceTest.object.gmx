@@ -25,7 +25,7 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>button_roll = CreateButton(id, 100, 100, "Roll#(test)", "roll", 2);
+            <string>button_roll = CreateButton(id, 32, room_height-32, "Roll#(test)", "roll", 2);
 buttonListen = "";
 
 
@@ -53,7 +53,7 @@ buttonListen = "";
             <kind>1</kind>
             <string>switch (buttonListen) {
 case "roll": 
-    show_debug_message(AnimatedDice(1,20));
+    show_debug_message(AnimatedDice(70+irandom(50), room_height + 40,RollDice(1,20),'Test d20'));
     buttonListen = "";
 break;
 }

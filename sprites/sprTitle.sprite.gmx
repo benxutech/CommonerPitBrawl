@@ -7,10 +7,10 @@
   <coltolerance>0</coltolerance>
   <sepmasks>0</sepmasks>
   <bboxmode>0</bboxmode>
-  <bbox_left>34</bbox_left>
+  <bbox_left>18</bbox_left>
   <bbox_right>323</bbox_right>
-  <bbox_top>3</bbox_top>
-  <bbox_bottom>297</bbox_bottom>
+  <bbox_top>0</bbox_top>
+  <bbox_bottom>319</bbox_bottom>
   <HTile>0</HTile>
   <VTile>0</VTile>
   <TextureGroups>
@@ -21,5 +21,124 @@
   <height>320</height>
   <frames>
     <frame index="0">images\sprTitle_0.png</frame>
+    <frame index="1">images\sprTitle_1.png</frame>
+    <frame index="2">images\sprTitle_2.png</frame>
+    <frame index="3">images\sprTitle_3.png</frame>
+    <frame index="4">images\sprTitle_4.png</frame>
+    <frame index="5">images\sprTitle_5.png</frame>
+    <frame index="6">images\sprTitle_6.png</frame>
+    <frame index="7">images\sprTitle_7.png</frame>
+    <frame index="8">images\sprTitle_8.png</frame>
+    <frame index="9">images\sprTitle_9.png</frame>
+    <frame index="10">images\sprTitle_10.png</frame>
+    <frame index="11">images\sprTitle_11.png</frame>
+    <frame index="12">images\sprTitle_12.png</frame>
+    <frame index="13">images\sprTitle_13.png</frame>
+    <frame index="14">images\sprTitle_14.png</frame>
+    <frame index="15">images\sprTitle_15.png</frame>
+    <frame index="16">images\sprTitle_16.png</frame>
+    <frame index="17">images\sprTitle_17.png</frame>
+    <frame index="18">images\sprTitle_18.png</frame>
+    <frame index="19">images\sprTitle_19.png</frame>
+    <frame index="20">images\sprTitle_20.png</frame>
+    <frame index="21">images\sprTitle_21.png</frame>
+    <frame index="22">images\sprTitle_22.png</frame>
+    <frame index="23">images\sprTitle_23.png</frame>
+    <frame index="24">images\sprTitle_24.png</frame>
+    <frame index="25">images\sprTitle_25.png</frame>
+    <frame index="26">images\sprTitle_26.png</frame>
+    <frame index="27">images\sprTitle_27.png</frame>
+    <frame index="28">images\sprTitle_28.png</frame>
+    <frame index="29">images\sprTitle_29.png</frame>
+    <frame index="30">images\sprTitle_30.png</frame>
+    <frame index="31">images\sprTitle_31.png</frame>
+    <frame index="32">images\sprTitle_32.png</frame>
+    <frame index="33">images\sprTitle_33.png</frame>
+    <frame index="34">images\sprTitle_34.png</frame>
+    <frame index="35">images\sprTitle_35.png</frame>
+    <frame index="36">images\sprTitle_36.png</frame>
+    <frame index="37">images\sprTitle_37.png</frame>
+    <frame index="38">images\sprTitle_38.png</frame>
+    <frame index="39">images\sprTitle_39.png</frame>
+    <frame index="40">images\sprTitle_40.png</frame>
+    <frame index="41">images\sprTitle_41.png</frame>
+    <frame index="42">images\sprTitle_42.png</frame>
+    <frame index="43">images\sprTitle_43.png</frame>
+    <frame index="44">images\sprTitle_44.png</frame>
+    <frame index="45">images\sprTitle_45.png</frame>
+    <frame index="46">images\sprTitle_46.png</frame>
+    <frame index="47">images\sprTitle_47.png</frame>
+    <frame index="48">images\sprTitle_48.png</frame>
+    <frame index="49">images\sprTitle_49.png</frame>
+    <frame index="50">images\sprTitle_50.png</frame>
+    <frame index="51">images\sprTitle_51.png</frame>
+    <frame index="52">images\sprTitle_52.png</frame>
+    <frame index="53">images\sprTitle_53.png</frame>
+    <frame index="54">images\sprTitle_54.png</frame>
+    <frame index="55">images\sprTitle_55.png</frame>
+    <frame index="56">images\sprTitle_56.png</frame>
+    <frame index="57">images\sprTitle_57.png</frame>
+    <frame index="58">images\sprTitle_58.png</frame>
+    <frame index="59">images\sprTitle_59.png</frame>
+    <frame index="60">images\sprTitle_60.png</frame>
+    <frame index="61">images\sprTitle_61.png</frame>
+    <frame index="62">images\sprTitle_62.png</frame>
+    <frame index="63">images\sprTitle_63.png</frame>
+    <frame index="64">images\sprTitle_64.png</frame>
+    <frame index="65">images\sprTitle_65.png</frame>
+    <frame index="66">images\sprTitle_66.png</frame>
+    <frame index="67">images\sprTitle_67.png</frame>
+    <frame index="68">images\sprTitle_68.png</frame>
+    <frame index="69">images\sprTitle_69.png</frame>
+    <frame index="70">images\sprTitle_70.png</frame>
+    <frame index="71">images\sprTitle_71.png</frame>
+    <frame index="72">images\sprTitle_72.png</frame>
+    <frame index="73">images\sprTitle_73.png</frame>
+    <frame index="74">images\sprTitle_74.png</frame>
+    <frame index="75">images\sprTitle_75.png</frame>
+    <frame index="76">images\sprTitle_76.png</frame>
+    <frame index="77">images\sprTitle_77.png</frame>
+    <frame index="78">images\sprTitle_78.png</frame>
+    <frame index="79">images\sprTitle_79.png</frame>
+    <frame index="80">images\sprTitle_80.png</frame>
+    <frame index="81">images\sprTitle_81.png</frame>
+    <frame index="82">images\sprTitle_82.png</frame>
+    <frame index="83">images\sprTitle_83.png</frame>
+    <frame index="84">images\sprTitle_84.png</frame>
+    <frame index="85">images\sprTitle_85.png</frame>
+    <frame index="86">images\sprTitle_86.png</frame>
+    <frame index="87">images\sprTitle_87.png</frame>
+    <frame index="88">images\sprTitle_88.png</frame>
+    <frame index="89">images\sprTitle_89.png</frame>
+    <frame index="90">images\sprTitle_90.png</frame>
+    <frame index="91">images\sprTitle_91.png</frame>
+    <frame index="92">images\sprTitle_92.png</frame>
+    <frame index="93">images\sprTitle_93.png</frame>
+    <frame index="94">images\sprTitle_94.png</frame>
+    <frame index="95">images\sprTitle_95.png</frame>
+    <frame index="96">images\sprTitle_96.png</frame>
+    <frame index="97">images\sprTitle_97.png</frame>
+    <frame index="98">images\sprTitle_98.png</frame>
+    <frame index="99">images\sprTitle_99.png</frame>
+    <frame index="100">images\sprTitle_100.png</frame>
+    <frame index="101">images\sprTitle_101.png</frame>
+    <frame index="102">images\sprTitle_102.png</frame>
+    <frame index="103">images\sprTitle_103.png</frame>
+    <frame index="104">images\sprTitle_104.png</frame>
+    <frame index="105">images\sprTitle_105.png</frame>
+    <frame index="106">images\sprTitle_106.png</frame>
+    <frame index="107">images\sprTitle_107.png</frame>
+    <frame index="108">images\sprTitle_108.png</frame>
+    <frame index="109">images\sprTitle_109.png</frame>
+    <frame index="110">images\sprTitle_110.png</frame>
+    <frame index="111">images\sprTitle_111.png</frame>
+    <frame index="112">images\sprTitle_112.png</frame>
+    <frame index="113">images\sprTitle_113.png</frame>
+    <frame index="114">images\sprTitle_114.png</frame>
+    <frame index="115">images\sprTitle_115.png</frame>
+    <frame index="116">images\sprTitle_116.png</frame>
+    <frame index="117">images\sprTitle_117.png</frame>
+    <frame index="118">images\sprTitle_118.png</frame>
+    <frame index="119">images\sprTitle_119.png</frame>
   </frames>
 </sprite>

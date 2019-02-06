@@ -25,8 +25,8 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>// Stats
-name = "Bob the Slayer";
+            <string>/// Stats and properties
+name = "unknown";
 race = "Human";
 subrace = "";
 class = "Commoner";
@@ -55,6 +55,16 @@ hp = hit_dice_size + con_mod;
 ac = 10 + dex_mod;
 init_mod = dex_mod;
 
+// Actions
+movement = 30;
+action[0] = 0;  // action
+action[1] = 0;  // free action
+action[2] = 0;  // bonus action
+action[3] = 0;  // reaction
+
+// Initiative
+initiative = 0;
+
 // Conditions - based on rules
 
 // Status - buffs and debuffs
@@ -63,6 +73,28 @@ init_mod = dex_mod;
 xx = 0;
 yy = 0;
 
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Increment entityCount by 1
+global.entityCount++;
 </string>
           </argument>
         </arguments>

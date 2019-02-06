@@ -32,6 +32,7 @@ global.haveserver = true;
 player_buffer = buffer_create(16384, buffer_fixed, 1);
 Clients = ds_map_create();
 socketlist = ds_list_create();
+count = 0;
 
 // Try and create the actual server
 server = network_create_server(global.ServerType, 6510, 8 );
@@ -48,6 +49,48 @@ if (server &lt; 0) {
 // Server stuff
 regular_send = 0;  // Timer for sending regular updates
 regular_send_seconds = 5;  // Delay in seconds
+
+
+// Debug button (disabled)
+button[0] = CreateButton(id, 120, 640-120, "Pos", "getpositions");
+button[0].persistent = false;
+button[0].visible = false;
+buttonListen = "";
+
+
+// Game
+initiativeList = ds_list_create();
+initiativeIndex = 0;
+    // when a new player joins, this should be recalculated
+    // or just not have an index, and work off current entity only?
+
+
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="1" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>with (button[0]) {
+    instance_destroy();
+}
 </string>
           </argument>
         </arguments>
@@ -74,61 +117,33 @@ regular_send_seconds = 5;  // Delay in seconds
 
 // send ALL attached clients, ALL Entities and their relevant properties
 regular_send += 1;
-var count = ds_list_size(socketlist);
-// every 2 seconds
 if (regular_send == regular_send_seconds*room_speed) {
+    count = ds_list_size(socketlist);
     if( count&gt;0 )
     {
-        // Regular position updates
-        global.player_buffer = player_buffer;
-        
-        // Reset buffer to start - Networking ALWAYS reads from the START of the buffer
-        buffer_seek(player_buffer, buffer_seek_start, 0);
-        
-        // Buffer type
-        buffer_write(player_buffer, buffer_s16, 1 );
-        
-        // Total number of entity
-        buffer_write(player_buffer, buffer_u32, global.entityCount );
-    
-        // Dummy player x,y...will fill in later. This allows the client to follow themselves in a scrolling level.
-        buffer_write(global.player_buffer, buffer_s16, 0 );
-        buffer_write(global.player_buffer, buffer_s16, 0 );
-    
-        // All attached players
-        with(objEntity)
-        {
-            buffer_write(global.player_buffer, buffer_s16, x );
-            buffer_write(global.player_buffer, buffer_s16, y );
-            buffer_write(global.player_buffer, buffer_s16, sprite_index );
-            buffer_write(global.player_buffer, buffer_s16, image_index );
-            buffer_write(global.player_buffer, buffer_s16, socketID );
-            buffer_write(global.player_buffer, buffer_s16, id );
-            buffer_write(global.player_buffer, buffer_string, PlayerName );
-        }
-        
-        var buffer_size = buffer_tell(player_buffer);
-            
-        // Now send all data... to all clients
-        for(i=0;i&lt;count;i++)
-        {   
-            // get the socket
-            var sock = ds_list_find_value(socketlist,i);
-    
-            // Write in client location, so it can do a scroll window "follow"
-            buffer_seek(player_buffer, buffer_seek_start, 4);
-    
-            // Get the player's instance, so we can get it's id
-            var inst = ds_map_find_value( Clients, sock);
-            buffer_write(global.player_buffer, buffer_s16, inst.socketID );
-    
-            // Send data to client
-            network_send_packet( sock,player_buffer, buffer_size );
-        }
+        UpdateEntities(count, player_buffer, 1);
     }
     show_debug_message("sentregularpacket")
     regular_send = 0;
 }    
+
+
+// Buttons
+switch (buttonListen) {
+case "getpositions": 
+    count = ds_list_size(socketlist);
+    for(i=0;i&lt;count;i++) {
+        var sock = ds_list_find_value(socketlist,i);
+        show_debug_message('Socket: '+ string(sock));
+        with (objEntity) {
+            show_debug_message(xx);
+            show_debug_message(yy);
+            
+        }
+    }
+    buttonListen = "";
+    break;
+}
 
 
 
@@ -161,12 +176,17 @@ var eventid = ds_map_find_value(async_load, "id");
 if( server == eventid ){
     // If the socket ID is the server one, then we have a new 
     /// client connecting, OR an old client disconnecting
-    ConnectDisconnectClient();
+    var joined = ConnectDisconnectClient();
+    
+    
 }else if( eventid==global.client){
     // Do nothing if this is for our "local" client
 }else{
     // All other sockets are connected client sockets, and we have recieved commands from them.
-    ServerRecievedData();
+    cmd = ServerRecievedData();
+    count = ds_list_size(socketlist);
+    if (cmd == MOVE_CMD) UpdateEntities(count, player_buffer, 1);
+    if (cmd == NAME_CMD) UpdateEntities(count, player_buffer, 1);
 }
 </string>
           </argument>

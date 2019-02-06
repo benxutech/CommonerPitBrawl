@@ -36,12 +36,13 @@ view_wview[0] = 360;
 view_hview[0] = 640;
 
 // Load map - just generating it for now
-gridWidth = 12;
-gridHeight = 12;
+gridWidth = 11;
+gridHeight = 11;
 gridRealWidth = (max(gridWidth,gridHeight)*64)+64;
 gridRealHeight = (max(gridWidth,gridHeight)*32)+32;
 
 map = ds_grid_create(gridWidth, gridHeight);
+pathingGrid = ds_grid_create(gridWidth, gridHeight);
 for (var i = 0; i &lt; gridWidth; i++) {
     for (var o = 0; o &lt; gridHeight; o++) {
         blockType = 1;
@@ -50,6 +51,7 @@ for (var i = 0; i &lt; gridWidth; i++) {
         if (o &lt;= 6 &amp;&amp; o &gt;= 2 &amp;&amp; i == 9) blockType = 2;
         
         ds_grid_add(map, i, o, blockType);
+        
     }
 }
 
@@ -61,32 +63,40 @@ room_height = view_hview[0] + gridRealHeight + padding;
 // Grid
 global.gridX = view_wview[0] + ((room_width-view_wview[0])/2);
 global.gridY = 100;
+movePath = 0;
 
-// Draw Map blocks
-for (var i = 0; i &lt; ds_grid_height(map); i++) {
-    for (var o = 0; o &lt; ds_grid_width(map); o++) {
+// Create Map blocks
+blocks = ds_grid_create(ds_grid_width(map),ds_grid_height(map));
+for (var i = 0; i &lt; ds_grid_width(map); i++) {
+    for (var o = 0; o &lt; ds_grid_height(map); o++) {
         pos = ToIsometric(i,o);
+        if (map[# i, o] == 0) {
+            mp_grid_add_cell(pathingGrid, i, o);
+            blocks[# i, o] = 0;
+        }
         if (map[# i, o] == 1) {
             b = instance_create(global.gridX+pos[0], global.gridY+pos[1], objBlock);
             b.xx = i;
             b.yy = o;
+            blocks[# i, o] = b;
         }
         if (map[# i, o] == 2) {
             b = instance_create(global.gridX+pos[0], global.gridY+pos[1], objBlockWater);
             b.xx = i;
             b.yy = o;
-            b.image_speed = 1/30;
+            b.image_speed = 1/60;
+            blocks[# i, o] = b;
+            mp_grid_add_cell(pathingGrid, i, o);
         }
     }
 }
-instance_create(0,0,objSelect);
+select = instance_create(0,0,objSelect);
 
 // Make entities list
 entities = ds_list_create();
 
 // Remember player ID (when it gets sent to us)
 player = 0;
-
 
 // Put camera into the middle
 view_xview[1] = view_wview[0] + ((room_width-view_wview[0])/2) - (view_wview[1]/2);
@@ -99,7 +109,7 @@ startView_y = view_yview[1];
 panning = 0;
 scrollFactor = 8;
 scrollLimit_lower = 200;
-scrollLimit_upper = 360;
+scrollLimit_upper = 480;
 
 panLimit_left = view_hview[0] - (view_wport[1]/2) - 60;
 panLimit_right = room_width - view_wview[1] - (view_wport[1]/2) + 120;
@@ -108,12 +118,85 @@ panLimit_lower = gridRealHeight - view_hview[1] + 200;
 
 
 // UI Buttons
+// Action buttons
+var buttonAction_x = 30+30;
+var buttonAction_y = 640-80;
+var buttonActionStep_x = 60 + 20
+var index = 0;
 
-// movement
+button[0] = CreateButton(id, buttonAction_x+buttonActionStep_x*index, buttonAction_y, "Action", "action", 2);
+button[0].toggle = 1;
+index++;
+button[1] = CreateButton(id, buttonAction_x+buttonActionStep_x*index, buttonAction_y, "Free", "freeaction", 2);
+button[1].toggle = 1;
+index++;
+button[2] = CreateButton(id, buttonAction_x+buttonActionStep_x*index, buttonAction_y, "Bonus", "bonusaction", 2);
+button[2].toggle = 1;
+index++;
+button[3] = CreateButton(id, buttonAction_x+buttonActionStep_x*index, buttonAction_y, "Move", "move", 2);
+button[3].toggle = 1;
 
-// end turn
+// targetMode toggles (UNEEDED)
+//targetMode_action = 0;
+//targetMode_move = 0;
+
+// End turn
+button[4] = CreateButton(id, view_wview[0]/2, 50, "End Turn", "turn", 1);
+
+// End of buttons
+buttonListen = "";
 
 
+// Button action indicators 
+var index = 0;
+indicator[index] = instance_create(button[index].x,button[index].y-10-30,objIndicator);
+index++;
+indicator[index] = instance_create(button[index].x,button[index].y-10-30,objIndicator);
+index++;
+indicator[index] = instance_create(button[index].x,button[index].y-10-30,objIndicator);
+index++;
+indicator[index] = instance_create(button[index].x,button[index].y-10-30,objIndicator);
+
+//
+//canMove = 0;
+toDraw[0,0] = 0;
+
+
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="2">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>// Path calc
+/*if (select.visible) {
+    if (instance_exists(objPlayerClient)) {
+        movePath = path_add();
+        mp_grid_path(pathingGrid, movePath, player.x, player.y, select.block.xx, select.block.yy, 1);
+    }
+} 
+else {
+    if (path_exists(movePath)) {
+        path_delete(movePath);
+    }
+}*/
 </string>
           </argument>
         </arguments>
@@ -156,11 +239,13 @@ if (mouse_wheel_down()) {
 
 // Panning
 if (mouse_check_button_pressed(mb_left)) {
-    startPressed_x = window_mouse_get_x();
-    startPressed_y = window_mouse_get_y();
-    startView_x = view_xview[1];
-    startView_y = view_yview[1];
-    panning = 1;
+    if (mouse_y &lt; view_yport[1]+view_hport[1]) {
+        startPressed_x = window_mouse_get_x();
+        startPressed_y = window_mouse_get_y();
+        startView_x = view_xview[1];
+        startView_y = view_yview[1];
+        panning = 1;
+    }
 }
 if (panning == 1) {
     view_xview[1] = startView_x - (window_mouse_get_x() - startPressed_x);
@@ -171,6 +256,10 @@ if (mouse_check_button_released(mb_left)) {
 }
 
 // Panning boundaries
+panLimit_left = view_hview[0] - (view_wport[1]/2) - 100;
+panLimit_right = room_width - view_wview[1] - (view_wport[1]/2) + 164;
+panLimit_upper = 0 - 100; 
+panLimit_lower = gridRealHeight - view_hview[1] + 200;
 if (view_xview[1] &lt; panLimit_left) {
     view_xview[1] = panLimit_left;
 }
@@ -183,22 +272,85 @@ if (view_yview[1] &lt; panLimit_upper) {
 if (view_yview[1] &gt; panLimit_lower) {
     view_yview[1] = panLimit_lower;
 }
-panLimit_left = view_hview[0] - (view_wport[1]/2) - 100;
-panLimit_right = room_width - view_wview[1] - (view_wport[1]/2) + 164;
-panLimit_upper = 0 - 100; 
-panLimit_lower = gridRealHeight - view_hview[1] + 200;
 
+// Move Range
+// no getting movement yet
+// no collision
+// Get tiles in range (square first, then diamond)
+/*
+var r = 5*2+1;
+for (var i = 0; i &lt; r; i++) {
+    for (var o = 0; o &lt; r; o++) {
+        toDraw[i,o].x = x+(i*32);
+        toDraw[i,o].y = y+(o*32);
+    }
+}*/
 
-// Click
-if (mouse_check_button_pressed(mb_left)) {
-    block = collision_point(mouse_x,mouse_y,objBlock,1,0);
-    if (block) {
-        if (player) {
-            with (owner) {
-                SendMoveTo(battle.block.xx, battle.block.yy);
-            }
+// if Move is on
+if (button[3].image_index == 2) {
+    // Select
+    with (select) {
+        block = collision_point(mouse_x,mouse_y,objBlock,1,0);
+        if (block) {
+            x = block.x;
+            y = block.y;
+            xx = block.xx;
+            yy = block.yy;
+            visible = 1;
+        }
+        else {
+            visible = 0;
         }
     }
+    // Click
+    if (mouse_check_button_pressed(mb_left)) {
+        if (mouse_y &lt; view_yport[1]+view_hport[1]) {
+            block = collision_point(mouse_x,mouse_y,objBlock,1,0);
+            if (block) {
+                if (player) {
+                    // using 1 movement as placeholder before movement ranges
+                    if (player.movement &gt;= 1) {
+                        player.movement -= 1;
+                        with (owner) {
+                            SendMoveTo(battle.block.xx, battle.block.yy);
+                        }
+                    }
+                }
+            }
+            button[3].image_index = 0;
+        }
+    }
+}
+else {
+    select.visible = 0;
+}
+
+// Buttons
+switch (buttonListen) {
+case "action": 
+    buttonListen = "";
+    break;
+case "move": 
+    if (button[3].image_index == 0) {
+        buttonListen = "";
+        break;
+    }
+    if (button[3].image_index == 2) {
+        buttonListen = "";
+        break;
+    }
+case "turn": 
+        // send end turn packet, hope to get actions back from server
+        buttonListen = "";
+        break;
+}
+
+// Update indicator texts
+if (player) {
+    indicator[0].label = player.action[0];
+    indicator[1].label = player.action[1];
+    indicator[2].label = player.action[2];
+    indicator[3].label = player.movement;
 }
 
 
@@ -230,14 +382,75 @@ if (mouse_check_button_pressed(mb_left)) {
 draw_set_color(c_white);
 draw_rectangle(view_xport[1], view_yport[1], view_xport[1]+view_wport[1], view_yport[1]+view_hport[1], 1)
 */
+// Top UI panel
+draw_set_color(c_gray);
+draw_rectangle(view_xview[0], view_yview[0], view_xport[1]+view_wport[1], view_yport[1], 0);
+
 // Draw bottom UI panel
 draw_set_color(c_gray);
 draw_rectangle(view_xport[1], view_yport[1]+view_hport[1], view_xview[0]+view_wview[0], view_yview[0]+view_hview[0], 0)
 
 
-// Top UI panel
-draw_set_color(c_gray);
-draw_rectangle(view_xview[0], view_yview[0], view_xport[1]+view_wport[1], view_yport[1], 0);
+// Targeting status
+if (button[3].image_index == 2) {
+    draw_set_color(c_black);
+    draw_set_alpha(0.4);
+    draw_rectangle(view_wview[0]/2-110, view_yport[1]+view_hport[1]-33-12, view_wview[0]/2+110, view_yport[1]+view_hport[1]-33+12,0);
+    draw_set_alpha(1);
+    
+    draw_set_halign(fa_middle);
+    draw_set_font(font0);
+    draw_set_color(c_white);
+    draw_text(view_wview[0]/2, view_yport[1]+view_hport[1]-33, "Select tile to move to.") 
+}
+
+
+
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/*
+if (path_exists(movePath)) {
+    for (var i = 0; i &lt; path_get_length(movePath)+1; i++) {
+        show_debug_message(path_get_length(movePath))
+        show_debug_message(i)
+        ex = path_get_x(movePath, i/path_get_length(movePath)+1);
+        ey = path_get_y(movePath, i/path_get_length(movePath)+1);
+        draw_sprite(sprSelect,0,ex,ey);
+    }
+}*/
+/*
+var r = player.movement*2+1;
+for (var i = 0; i &lt; r; i++) {
+    for (var o = 0; o &lt; r; o++) {
+        if (toDraw[i,o] == 1) {
+            pos = ToIsometric(i-player.movement,o-player.movement);
+            draw_sprite(sprSelect,0,pos[0]+player.x,pos[1]+player.y);
+        }
+    }
+}*/
+
+
 
 
 

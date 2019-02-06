@@ -6,19 +6,30 @@
   <NewExtensions/>
   <sounds name="sound"/>
   <sprites name="sprites">
-    <sprite>sprites\sprHuman</sprite>
+    <sprite>sprites\sprite11</sprite>
     <sprite>sprites\sprTitle</sprite>
-    <sprite>sprites\sprButton</sprite>
-    <sprite>sprites\sprButtonThin</sprite>
-    <sprite>sprites\sprBlock</sprite>
-    <sprite>sprites\sprPlayer</sprite>
+    <sprites name="entity">
+      <sprite>sprites\sprPlayer</sprite>
+    </sprites>
+    <sprites name="blocks">
+      <sprite>sprites\sprBlock</sprite>
+      <sprite>sprites\sprite16</sprite>
+      <sprite>sprites\sprBlockWater</sprite>
+      <sprite>sprites\sprBlockWater2</sprite>
+      <sprite>sprites\sprTileStripTest</sprite>
+      <sprite>sprites\sprBlockHalfWater</sprite>
+    </sprites>
+    <sprites name="ui">
+      <sprite>sprites\sprButtonAction</sprite>
+      <sprite>sprites\sprButtonActionIndicator</sprite>
+      <sprite>sprites\sprButtonThin</sprite>
+      <sprite>sprites\sprButton</sprite>
+      <sprite>sprites\sprRollResult</sprite>
+      <sprite>sprites\sprDie</sprite>
+    </sprites>
     <sprite>sprites\sprSelect</sprite>
     <sprite>sprites\sprSelectBlock</sprite>
-    <sprite>sprites\sprBlockWater</sprite>
-    <sprite>sprites\sprDie</sprite>
-    <sprite>sprites\sprButtonAction</sprite>
-    <sprite>sprites\sprite11</sprite>
-    <sprite>sprites\sprRollResult</sprite>
+    <sprite>sprites\sprSelectBlockUp</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\background0</background>
@@ -26,32 +37,45 @@
   <paths name="paths"/>
   <scripts name="scripts">
     <scripts name="Network">
-      <script>scripts\SendKey.gml</script>
-      <script>scripts\SendMoveTo.gml</script>
-      <script>scripts\SendKeepAlive.gml</script>
+      <scripts name="client-out">
+        <script>scripts\SendKey.gml</script>
+        <script>scripts\SendMoveTo.gml</script>
+        <script>scripts\SendKeepAlive.gml</script>
+        <script>scripts\SendAction.gml</script>
+        <script>scripts\SendName.gml</script>
+      </scripts>
       <script>scripts\ServerRecievedData.gml</script>
-      <script>scripts\SendName.gml</script>
-      <script>scripts\SendAction.gml</script>
       <script>scripts\ConnectDisconnectClient.gml</script>
+      <script>scripts\UpdateEntities.gml</script>
+      <script>scripts\ShowRoll.gml</script>
     </scripts>
-    <scripts name="Playerside">
+    <scripts name="Clientside">
       <script>scripts\MoveEntity.gml</script>
+      <script>scripts\CreateButton.gml</script>
+      <script>scripts\CreateIndicator.gml</script>
+      <script>scripts\ToIsometric.gml</script>
+      <script>scripts\AnimatedDice.gml</script>
+      <script>scripts\EntityMove.gml</script>
+      <script>scripts\EntityDrawMoveRange.gml</script>
     </scripts>
-    <script>scripts\CreateButton.gml</script>
-    <script>scripts\ToIsometric.gml</script>
     <script>scripts\RollDice.gml</script>
-    <script>scripts\AnimatedDice.gml</script>
+    <script>scripts\GenIntiativeTable.gml</script>
   </scripts>
+  <fonts name="fonts">
+    <font>fonts\font0</font>
+    <font>fonts\font1</font>
+  </fonts>
   <objects name="objects">
+    <object>objects\objPlayerServerX</object>
     <objects name="game">
       <object>objects\objBattle</object>
       <object>objects\objEntity</object>
-      <object>objects\objPlayerServerX</object>
       <object>objects\objBlock</object>
       <object>objects\objBlockWater</object>
       <object>objects\objPlayerClient</object>
       <object>objects\objPlayerServer</object>
       <object>objects\objSelect</object>
+      <object>objects\objRange</object>
     </objects>
     <objects name="network">
       <object>objects\objServer</object>
@@ -62,6 +86,7 @@
       <object>objects\objJoinMenu</object>
       <object>objects\objCharMenu</object>
       <object>objects\objButton</object>
+      <object>objects\objIndicator</object>
     </objects>
     <object>objects\objDiceTest</object>
     <object>objects\objRoll</object>

@@ -3,7 +3,7 @@
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>0</depth>
+  <depth>100</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -28,8 +28,8 @@
             <string>battle = instance_create(0,0,objBattle);
 battle.owner = id;
 
-clientID = 0;   // player start X and Y
-PlayerName = global.PlayerName;   // get the name that was selected (it's a server OR player name)
+clientID = 0;   
+PlayerName = global.PlayerName;  
 
 buff = buffer_create(256, buffer_grow, 1);
 client = network_create_socket(global.ServerType);
@@ -38,7 +38,7 @@ global.NetworkState = NETWORK_PLAY;
 
 // Create a list to hold ALL sprites sent from the server
 entities = ds_list_create();
-sprites = 0;
+entityCount = 0;
 
 // Connect to our server
 var err = network_connect(client, global.connectip, 6510);
@@ -51,6 +51,7 @@ if( err!=0 ){
 // Client has connected to the server, so send our "player name"
 SendName( PlayerName );
 alarm[0]=120;
+
 </string>
           </argument>
         </arguments>
@@ -125,100 +126,91 @@ var eventid = ds_map_find_value(async_load, "id");
 
 // Our socket?
 if( client == eventid )
-{/*
-    switch(global.NetworkState)
-    {
-        case NETWORK_PLAY :
-        {*/
+{
+    show_debug_message('client received packet')
+    
     // Read all data....
     var buff = ds_map_find_value(async_load, "buffer");
-    
-    // Get what type of packet this is
-    
-    // Get number of sprites sent
-    entityCount = buffer_read(buff, buffer_u32 ); 
+    buffer_seek(buff, buffer_seek_start, 0);
     
     // OUR socket ID
+    // ---------------------Should really re-arrange this at some point
     clientID = buffer_read(buff,buffer_s16); 
-    //clientx = buffer_read(buff,buffer_s16);     //x
-    //clienty = buffer_read(buff,buffer_s16);     //y
     
-    // Now clear the render list, and start filling it up with NEW data!
-    //ds_list_clear(entities);
-    for(var i = 0; i &lt; entityCount; i++) {
-        /*ds_list_add(entities, buffer_read(buff,buffer_s16) );     //xx
-        ds_list_add(entities, buffer_read(buff,buffer_s16) );     //yy
-        ds_list_add(entities, buffer_read(buff,buffer_s16) );     //sprite_index
-        ds_list_add(entities, buffer_read(buff,buffer_s16) );     //image_index   
-        ds_list_add(entities, buffer_read(buff,buffer_s16) );     //socketID    
-        ds_list_add(entities, buffer_read(buff,buffer_string) );  // player name
-        */
-        b_xx = buffer_read(buff,buffer_s16);     //xx
-        b_yy = buffer_read(buff,buffer_s16);     //yy
-        b_sprite_index = buffer_read(buff,buffer_s16);     //sprite_index
-        b_image_index = buffer_read(buff,buffer_s16);     //image_index   
-        b_clientID = buffer_read(buff,buffer_s16);     //socketID    
-        b_entityID = buffer_read(buff,buffer_s16);     //entityID
-        b_PlayerName = buffer_read(buff,buffer_string);  // player name
+    // Get what type of packet this is
+    b_type = buffer_read(buff, buffer_s16 ); //if...
+    
+    // IF it's a entityupdate packet
+    if (b_type == 1) {
+    
+        // Get number of entity sent
+        entityCount = buffer_read(buff, buffer_u32 ); 
         
-        if (ds_list_find_index(entities,b_entityID) == -1) {
-            with (battle) {
-                player = instance_create(1,1,objPlayerClient);
-                player.xx = owner.b_xx;
-                player.yy = owner.b_yy;
-                player.clientID = owner.b_clientID;
-                player.entityID = owner.b_entityID;
-                player.PlayerName = owner.b_PlayerName;
-                show_debug_message("2")
+        //clientx = buffer_read(buff,buffer_s16);     //x
+        //clienty = buffer_read(buff,buffer_s16);     //y
+        for(var i = 0; i &lt; entityCount; i++) {
+            b_xx = buffer_read(buff,buffer_s16);     //xx
+            b_yy = buffer_read(buff,buffer_s16);     //yy
+            b_sprite_index = buffer_read(buff,buffer_s16); //sprite_index
+            b_image_index = buffer_read(buff,buffer_s16); //image_index   
+            b_socketID = buffer_read(buff,buffer_s16); //socketID    
+            b_entityID = buffer_read(buff,buffer_s16); //entityID
+            b_PlayerName = buffer_read(buff,buffer_string); // player name
+            b_moveType = buffer_read(buff,buffer_s16);
+            
+            // Check the old list if it exist
+            // If it isn't in the list then create and add it
+            
+            var exists = -1;
+            for ( var o = 0; o &lt; ds_list_size(entities); o++ ) {
+                if (ds_list_find_value(entities, o).entityID == b_entityID) exists = 1;
             }
-            ds_list_add(entities,b_entityID);
+            if (exists == -1) {
+                show_debug_message("not");
+                with (battle) {
+                    a = instance_create(0,0,objPlayerClient);
+                    a.owner = id;  // set owner first
+                    a.xx = owner.b_xx;
+                    a.yy = owner.b_yy;
+                    a.socketID = owner.b_socketID;
+                    a.entityID = owner.b_entityID;
+                    a.playerName = owner.b_PlayerName;
+                    a.moveType = 0;//owner.b_moveType;
+                }
+                ds_list_add(entities, battle.a);
+                
+                // If this instance is the player
+                if (b_socketID == clientID) {
+                    with (battle) {
+                        player = a;
+                    }
+                }
+            }
+            else {
+                show_debug_message("already");
+                // if it is already in the list, then
+                // Get the respective instance, and apply the changes
+                a = ds_list_find_value(entities, i);
+                
+                a.xx = b_xx;
+                a.yy = b_yy;
+                a.socketID = b_socketID;
+                a.entityID = b_entityID;
+                a.playerName = b_PlayerName;
+                a.moveType = b_moveType;
+            }
+        }
+    }
+    if (b_type == 2) {
+        // If it's a ROLL packet
+        b_result = buffer_read(buff,buffer_s16);
+        b_label = buffer_read(buff,buffer_string);
+        with (battle) {
+            AnimatedDice(160, 660, owner.b_result, owner.b_label);
         }
     }
 }
 
-
-
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="8" enumb="0">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>
-// Now loop through all active sprites and draw them
-/*var index = 0;
-for(i=0;i&lt;sprites;i++){
-    var xx,yy,sp,spindex;
-    
-    xx = ds_list_find_value(allsprites,index++);
-    yy = ds_list_find_value(allsprites,index++);
-    sp = ds_list_find_value(allsprites,index++);
-    spindex = ds_list_find_value(allsprites,index++);
-    name = ds_list_find_value(allsprites,index++);
-
-    draw_sprite_ext(sp,spindex,xx,yy,1,1,0,c_white,1.0);
-    
-    draw_set_color(c_white);
-    //draw_set_font(fName);
-    draw_set_halign(fa_center);
-    draw_text(xx,yy-28,name);
-}*/
 
 
 </string>

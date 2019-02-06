@@ -11,6 +11,8 @@
     // Look up the client details
     var inst = ds_map_find_value(Clients, sock );
 
+    var out = 0; // returned value
+    
     // Is this a KEY command?
     if( cmd==KEY_CMD )    
     {
@@ -38,7 +40,7 @@
     else if( cmd==NAME_CMD )    
     {
         // Set the client "name"
-        inst.PlayerName = buffer_read(buff, buffer_string );    
+        inst.name = buffer_read(buff, buffer_string );    
     }
     else if( cmd==PING_CMD )
     {
@@ -46,14 +48,13 @@
     }
     else if( cmd==MOVE_CMD )
     {
-        var go_x = buffer_read(buff, buffer_s16 );
-        var go_y = buffer_read(buff, buffer_s16 );
+        var go_xx = buffer_read(buff, buffer_s16 );
+        var go_yy = buffer_read(buff, buffer_s16 );
         
-        inst.mov = 1;
-        inst.mov_x = go_x;
-        inst.mov_y = go_y;
-    
+        inst.xx = go_xx;
+        inst.yy = go_yy;
     }
+    return cmd;
 }
 
 
