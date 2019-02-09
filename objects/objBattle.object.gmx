@@ -107,7 +107,7 @@ startPressed_y = mouse_y;
 startView_x = view_xview[1];
 startView_y = view_yview[1];
 panning = 0;
-scrollFactor = 8;
+scrollFactor = 10;
 scrollLimit_lower = 200;
 scrollLimit_upper = 480;
 
@@ -149,13 +149,15 @@ buttonListen = "";
 
 // Button action indicators 
 var index = 0;
-indicator[index] = instance_create(button[index].x,button[index].y-10-30,objIndicator);
+indicator[index] = instance_create(button[index].x,button[index].y-5-30,objIndicator);
 index++;
-indicator[index] = instance_create(button[index].x,button[index].y-10-30,objIndicator);
+indicator[index] = instance_create(button[index].x,button[index].y-5-30,objIndicator);
 index++;
-indicator[index] = instance_create(button[index].x,button[index].y-10-30,objIndicator);
+indicator[index] = instance_create(button[index].x,button[index].y-5-30,objIndicator);
 index++;
-indicator[index] = instance_create(button[index].x,button[index].y-10-30,objIndicator);
+indicator[index] = instance_create(button[index].x,button[index].y-5-30,objIndicator);
+indicator[index].image_index = 1;
+indicator[index].labelSuffix = " ft";
 
 //
 //canMove = 0;
@@ -341,6 +343,7 @@ case "move":
     }
 case "turn": 
         // send end turn packet, hope to get actions back from server
+        with (owner) {SendTurn();}
         buttonListen = "";
         break;
 }
@@ -394,7 +397,7 @@ draw_rectangle(view_xport[1], view_yport[1]+view_hport[1], view_xview[0]+view_wv
 // Targeting status
 if (button[3].image_index == 2) {
     draw_set_color(c_black);
-    draw_set_alpha(0.4);
+    draw_set_alpha(0.5);
     draw_rectangle(view_wview[0]/2-110, view_yport[1]+view_hport[1]-33-12, view_wview[0]/2+110, view_yport[1]+view_hport[1]-33+12,0);
     draw_set_alpha(1);
     

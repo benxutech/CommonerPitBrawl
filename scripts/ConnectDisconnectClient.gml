@@ -14,10 +14,8 @@
     {
         // add client to our list of connected clients
         ds_list_add( socketlist, sock );
-
-        // Give this client their sock ID so they know their own player
         
-        // Create a new player, and pick a random colour for that player        
+        // Create a new player,       
         var inst = instance_create(0,0, objPlayerServer);
         inst.xx = 2;
         inst.yy = 2;
@@ -30,7 +28,6 @@
 
         // put this instance into a map, using the socket ID as the lookup
         ds_map_add( Clients, sock, inst );
-        
     }
     else
     {

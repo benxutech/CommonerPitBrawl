@@ -51,9 +51,18 @@
         var go_xx = buffer_read(buff, buffer_s16 );
         var go_yy = buffer_read(buff, buffer_s16 );
         
-        inst.xx = go_xx;
-        inst.yy = go_yy;
+        if (inst.movement > 0) {
+            inst.xx = go_xx;
+            inst.yy = go_yy;
+            inst.movement = 0;
+        }
     }
+    else if( cmd==TURN_CMD )
+                    // placeholder stuff
+        inst.movement = 30;
+        inst.action[0] = 1;
+        inst.action[1] = 1;
+        inst.action[2] = 1;
     return cmd;
 }
 

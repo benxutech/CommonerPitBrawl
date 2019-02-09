@@ -135,6 +135,7 @@ if i_d == msg_ip {
           <argument>
             <kind>1</kind>
             <string>draw_set_halign(fa_center);
+draw_set_font(font0);
 draw_text(room_width/2,room_height/2-45, "IP to Join: "+ip);
 </string>
           </argument>

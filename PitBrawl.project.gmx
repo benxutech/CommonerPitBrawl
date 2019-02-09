@@ -28,6 +28,7 @@
       <sprite>sprites\sprDie</sprite>
     </sprites>
     <sprite>sprites\sprSelect</sprite>
+    <sprite>sprites\sprSelectThick</sprite>
     <sprite>sprites\sprSelectBlock</sprite>
     <sprite>sprites\sprSelectBlockUp</sprite>
   </sprites>
@@ -43,10 +44,12 @@
         <script>scripts\SendKeepAlive.gml</script>
         <script>scripts\SendAction.gml</script>
         <script>scripts\SendName.gml</script>
+        <script>scripts\SendTurn.gml</script>
       </scripts>
       <script>scripts\ServerRecievedData.gml</script>
       <script>scripts\ConnectDisconnectClient.gml</script>
       <script>scripts\UpdateEntities.gml</script>
+      <script>scripts\UpdateEntityActions.gml</script>
       <script>scripts\ShowRoll.gml</script>
     </scripts>
     <scripts name="Clientside">
@@ -59,11 +62,13 @@
       <script>scripts\EntityDrawMoveRange.gml</script>
     </scripts>
     <script>scripts\RollDice.gml</script>
-    <script>scripts\GenIntiativeTable.gml</script>
+    <script>scripts\GetCurrentTurn.gml</script>
+    <script>scripts\TurnStart.gml</script>
   </scripts>
   <fonts name="fonts">
     <font>fonts\font0</font>
     <font>fonts\font1</font>
+    <font>fonts\fontSmall</font>
   </fonts>
   <objects name="objects">
     <object>objects\objPlayerServerX</object>
@@ -91,6 +96,7 @@
     <object>objects\objDiceTest</object>
     <object>objects\objRoll</object>
     <object>objects\objRollResult</object>
+    <object>objects\objInitiativeDisplay</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\rmMenu</room>
@@ -98,18 +104,16 @@
     <room>rooms\rmJoin</room>
     <room>rooms\rmBattle</room>
   </rooms>
-  <constants number="11">
+  <constants number="9">
     <constant name="GRID_SIZE">32</constant>
     <constant name="VERT_RATIO">0.5</constant>
     <constant name="NETWORK_LOGIN">0</constant>
     <constant name="NETWORK_PLAY">1</constant>
-    <constant name="PING_CMD">2</constant>
-    <constant name="LEFT_KEY">0</constant>
-    <constant name="RIGHT_KEY">1</constant>
-    <constant name="JUMP_KEY">2</constant>
     <constant name="KEY_CMD">0</constant>
     <constant name="NAME_CMD">1</constant>
+    <constant name="PING_CMD">2</constant>
     <constant name="MOVE_CMD">3</constant>
+    <constant name="TURN_CMD">4</constant>
   </constants>
   <help>
     <rtf>help.rtf</rtf>

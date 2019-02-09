@@ -157,6 +157,11 @@ if( client == eventid )
             b_entityID = buffer_read(buff,buffer_s16); //entityID
             b_PlayerName = buffer_read(buff,buffer_string); // player name
             b_moveType = buffer_read(buff,buffer_s16);
+            b_init = buffer_read(buff,buffer_s16);
+            b_movement = buffer_read(buff,buffer_s16);
+            b_action = buffer_read(buff,buffer_s16);
+            b_freeAction = buffer_read(buff,buffer_s16);
+            b_bonusAction = buffer_read(buff,buffer_s16);
             
             // Check the old list if it exist
             // If it isn't in the list then create and add it
@@ -176,6 +181,11 @@ if( client == eventid )
                     a.entityID = owner.b_entityID;
                     a.playerName = owner.b_PlayerName;
                     a.moveType = 0;//owner.b_moveType;
+                    a.initiative = owner.b_init;
+                    a.movement = owner.b_movement;
+                    a.action[0] = owner.b_action;
+                    a.action[1] = owner.b_freeAction;
+                    a.action[2] = owner.b_bonusAction;
                 }
                 ds_list_add(entities, battle.a);
                 
@@ -198,6 +208,11 @@ if( client == eventid )
                 a.entityID = b_entityID;
                 a.playerName = b_PlayerName;
                 a.moveType = b_moveType;
+                a.initiative = b_init;
+                a.movement = b_movement;
+                a.action[0] = b_action;
+                a.action[1] = b_freeAction;
+                a.action[2] = b_bonusAction;
             }
         }
     }
@@ -206,7 +221,7 @@ if( client == eventid )
         b_result = buffer_read(buff,buffer_s16);
         b_label = buffer_read(buff,buffer_string);
         with (battle) {
-            AnimatedDice(160, 660, owner.b_result, owner.b_label);
+            AnimatedDice(70+irandom(50), room_height + 40, owner.b_result, owner.b_label);
         }
     }
 }

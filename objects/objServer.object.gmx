@@ -59,10 +59,11 @@ buttonListen = "";
 
 
 // Game
-initiativeList = ds_list_create();
+randomize();
+//initiativeList = ds_list_create();
 initiativeIndex = 0;
     // when a new player joins, this should be recalculated
-    // or just not have an index, and work off current entity only?
+    // or just not have an index, and work off current entity only? &lt;- yes
 
 
 
@@ -152,6 +153,27 @@ case "getpositions":
           </argument>
         </arguments>
       </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Update initiative
+</string>
+          </argument>
+        </arguments>
+      </action>
     </event>
     <event eventtype="7" enumb="68">
       <action>
@@ -177,7 +199,13 @@ if( server == eventid ){
     // If the socket ID is the server one, then we have a new 
     /// client connecting, OR an old client disconnecting
     var joined = ConnectDisconnectClient();
-    
+    if (joined) {
+        if (ds_list_size(socketlist) == 1) {
+            // if this is the first player
+            /*var current = GetCurrentTurn(Clients, initiativeIndex);
+            TurnStart(current);*/
+        }
+    }
     
 }else if( eventid==global.client){
     // Do nothing if this is for our "local" client
@@ -187,6 +215,16 @@ if( server == eventid ){
     count = ds_list_size(socketlist);
     if (cmd == MOVE_CMD) UpdateEntities(count, player_buffer, 1);
     if (cmd == NAME_CMD) UpdateEntities(count, player_buffer, 1);
+    if (cmd == TURN_CMD) {
+        show_debug_message("Received turn end");
+        // turn goes to next player
+        initiativeIndex += 1;
+        // give actions to next player
+        var current = ds_list_find_value(Clients, initiativeIndex);//GetCurrentTurn(Clients, initiativeIndex);
+        if (current != 0) TurnStart(current);
+        // update players
+        UpdateEntities(count, player_buffer, 1);
+    }
 }
 </string>
           </argument>

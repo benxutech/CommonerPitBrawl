@@ -55,14 +55,14 @@ hp = hit_dice_size + con_mod;
 ac = 10 + dex_mod;
 init_mod = dex_mod;
 
-// Actions
+// Actions/round stuff
 movement = 30;
 action[0] = 0;  // action
 action[1] = 0;  // free action
 action[2] = 0;  // bonus action
 action[3] = 0;  // reaction
 
-// Initiative
+// Initiative/per battle stuff
 initiative = 0;
 
 // Conditions - based on rules
