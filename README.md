@@ -1,5 +1,5 @@
 # Commoner: Pit Brawl
-A turn-based isometric multiplayer arena game based on D&amp;D 5e SRD.　Mainly a network test.
+A turn-based isometric multiplayer arena game based on D&amp;D 5e SRD. Mainly just dipping toes into networking.
 
 Peer-hosted, up to 4 players at a time. 
 
