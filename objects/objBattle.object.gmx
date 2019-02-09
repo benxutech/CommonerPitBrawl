@@ -314,7 +314,7 @@ if (button[3].image_index == 2) {
                     if (player.movement &gt;= 1) {
                         player.movement -= 1;
                         with (owner) {
-                            SendMoveTo(battle.block.xx, battle.block.yy);
+                            SendMoveTo(battle.block.xx, battle.block.yy,1);
                         }
                     }
                 }

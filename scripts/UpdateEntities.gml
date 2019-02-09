@@ -29,12 +29,14 @@ with(objPlayerServer)
     buffer_write(global.player_buffer, buffer_s16, socketID );
     buffer_write(global.player_buffer, buffer_s16, id );
     buffer_write(global.player_buffer, buffer_string, name );
-    buffer_write(global.player_buffer, buffer_s16, argument2 );
+    buffer_write(global.player_buffer, buffer_s16, moveType );
     buffer_write(global.player_buffer, buffer_s16, initiative );
     buffer_write(global.player_buffer, buffer_s16, movement);
     buffer_write(global.player_buffer, buffer_s16, action[0]);
     buffer_write(global.player_buffer, buffer_s16, action[1]);
     buffer_write(global.player_buffer, buffer_s16, action[2]);
+    buffer_write(global.player_buffer, buffer_s16, die);
+    buffer_write(global.player_buffer, buffer_s16, turn);
     //no reaction send yet
 }
 

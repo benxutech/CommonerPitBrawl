@@ -121,7 +121,7 @@ if (regular_send == regular_send_seconds*room_speed) {
     count = ds_list_size(socketlist);
     if( count&gt;0 )
     {
-        UpdateEntities(count, player_buffer, 1);
+        UpdateEntities(count, player_buffer);
     }
     show_debug_message("sentregularpacket")
     regular_send = 0;
@@ -211,8 +211,8 @@ if( server == eventid ){
     // All other sockets are connected client sockets, and we have recieved commands from them.
     cmd = ServerRecievedData();
     count = ds_list_size(socketlist);
-    if (cmd == MOVE_CMD) UpdateEntities(count, player_buffer, 1);
-    if (cmd == NAME_CMD) UpdateEntities(count, player_buffer, 1);
+    if (cmd == MOVE_CMD) UpdateEntities(count, player_buffer);
+    if (cmd == NAME_CMD) UpdateEntities(count, player_buffer);
     if (cmd == TURN_CMD) {
         //show_debug_message("Received turn end");
         // turn goes to next player
@@ -221,7 +221,7 @@ if( server == eventid ){
         //var current = ds_list_find_value(Clients, initiativeIndex);//GetCurrentTurn(Clients, initiativeIndex);
         //if (current != 0) TurnStart(current);
         // update players
-        UpdateEntities(count, player_buffer, 1);
+        UpdateEntities(count, player_buffer);
     }
 }
 </string>

@@ -61,9 +61,11 @@ action[0] = 0;  // action
 action[1] = 0;  // free action
 action[2] = 0;  // bonus action
 action[3] = 0;  // reaction
+turn = 0;
 
 // Initiative/per battle stuff
 initiative = 0;
+die = 0;
 
 // Conditions - based on rules
 
@@ -72,7 +74,7 @@ initiative = 0;
 // Properties
 xx = 0;
 yy = 0;
-
+moveType = 0;
 </string>
           </argument>
         </arguments>

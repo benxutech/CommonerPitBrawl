@@ -45,6 +45,10 @@ action[0] = 0;  // action
 action[1] = 0;  // free action
 action[2] = 0;  // bonus action
 action[3] = 0;  // reaction
+
+
+effect_create_above(ef_ring, x, y, 1, c_yellow);
+die = 0;
 </string>
           </argument>
         </arguments>
@@ -93,8 +97,11 @@ if (moveType == 1) {
     }
 }
 
-
-
+// die 
+if (die == 1) {
+    effect_create_above(ef_firework, x, y-20, 1, c_blue);
+    die = 2;
+}
 </string>
           </argument>
         </arguments>

@@ -49,7 +49,7 @@
       <script>scripts\ServerRecievedData.gml</script>
       <script>scripts\ConnectDisconnectClient.gml</script>
       <script>scripts\UpdateEntities.gml</script>
-      <script>scripts\UpdateEntityActions.gml</script>
+      <script>scripts\UpdateEntityActions_unused.gml</script>
       <script>scripts\ShowRoll.gml</script>
     </scripts>
     <scripts name="Clientside">

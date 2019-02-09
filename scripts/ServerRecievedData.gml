@@ -46,14 +46,26 @@
     else if( cmd==MOVE_CMD ) {
         var go_xx = buffer_read(buff, buffer_s16 );
         var go_yy = buffer_read(buff, buffer_s16 );
+        var go_moveType = buffer_read(buff, buffer_s16 );
         
         if (inst.movement > 0) {
             inst.xx = go_xx;
             inst.yy = go_yy;
             inst.movement = 0;
+            inst.moveType = go_moveType;
         }
     }
     else if( cmd==TURN_CMD ) {
+        // take away turns from everyone
+        
+        var count = ds_list_size(socketlist);
+        for (var i=0;i<count;i++) {
+            var tempSock = socketlist[| i];
+            var tempInst = ds_map_find_value(Clients, tempSock);
+            tempInst.turn = 0;
+        }
+        
+        
         var h = ds_list_size(entities)-1;//ds_grid_height(entitiesInitiatives);
         if (initiativeIndex < h) initiativeIndex += 1;
         else initiativeIndex = 0;
@@ -63,7 +75,7 @@
         instNext.action[0] = 1;
         instNext.action[1] = 1;
         instNext.action[2] = 1;
-        // send 
+        instNext.turn = 1;
     }
     return cmd;
     

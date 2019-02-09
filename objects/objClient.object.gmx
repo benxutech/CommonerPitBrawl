@@ -162,6 +162,8 @@ if( client == eventid )
             b_action = buffer_read(buff,buffer_s16);
             b_freeAction = buffer_read(buff,buffer_s16);
             b_bonusAction = buffer_read(buff,buffer_s16);
+            b_die = buffer_read(buff,buffer_s16);
+            b_turn = buffer_read(buff,buffer_s16);
             
             // Check the old list if it exist
             // If it isn't in the list then create and add it
@@ -174,18 +176,7 @@ if( client == eventid )
                 show_debug_message("not");
                 with (battle) {
                     a = instance_create(0,0,objPlayerClient);
-                    a.owner = id;  // set owner first
-                    a.xx = owner.b_xx;
-                    a.yy = owner.b_yy;
-                    a.socketID = owner.b_socketID;
-                    a.entityID = owner.b_entityID;
-                    a.playerName = owner.b_PlayerName;
-                    a.moveType = 0;//owner.b_moveType;
-                    a.initiative = owner.b_init;
-                    a.movement = owner.b_movement;
-                    a.action[0] = owner.b_action;
-                    a.action[1] = owner.b_freeAction;
-                    a.action[2] = owner.b_bonusAction;
+                    a.owner = id;  // set owner
                 }
                 ds_list_add(entities, battle.a);
                 
@@ -198,22 +189,23 @@ if( client == eventid )
             }
             else {
                 show_debug_message("already");
-                // if it is already in the list, then
-                // Get the respective instance, and apply the changes
-                a = ds_list_find_value(entities, i);
-                
-                a.xx = b_xx;
-                a.yy = b_yy;
-                a.socketID = b_socketID;
-                a.entityID = b_entityID;
-                a.playerName = b_PlayerName;
-                a.moveType = b_moveType;
-                a.initiative = b_init;
-                a.movement = b_movement;
-                a.action[0] = b_action;
-                a.action[1] = b_freeAction;
-                a.action[2] = b_bonusAction;
             }
+            // regardless if it already exists, we'll still update it
+            a = ds_list_find_value(entities, i);
+            
+            a.xx = b_xx;
+            a.yy = b_yy;
+            a.socketID = b_socketID;
+            a.entityID = b_entityID;
+            a.playerName = b_PlayerName;
+            a.moveType = b_moveType;
+            a.initiative = b_init;
+            a.movement = b_movement;
+            a.action[0] = b_action;
+            a.action[1] = b_freeAction;
+            a.action[2] = b_bonusAction;
+            a.die = b_die;
+            a.turn = b_turn;
         }
     }
     if (b_type == 2) {

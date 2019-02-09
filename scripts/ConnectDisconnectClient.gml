@@ -18,8 +18,8 @@
         // Create a new player,       
         var inst = instance_create(0,0, objPlayerServer);
         inst.socketID = sock;
-        inst.xx = 2+irandom(3);
-        inst.yy = 2+irandom(1);
+        inst.xx = 1+irandom(2);
+        inst.yy = 1+irandom(1);
         
         // Give it an initiative
                 // Move this elsewhere when personal stats are created
