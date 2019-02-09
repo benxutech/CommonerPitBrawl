@@ -59,11 +59,10 @@ buttonListen = "";
 
 
 // Game
-randomize();
-//initiativeList = ds_list_create();
+//entitiesInitiatives = ds_grid_create();
+entities = ds_list_create();
 initiativeIndex = 0;
-    // when a new player joins, this should be recalculated
-    // or just not have an index, and work off current entity only? &lt;- yes
+    // when a new player joins or leaves, this should be recalculated
 
 
 
@@ -216,12 +215,12 @@ if( server == eventid ){
     if (cmd == MOVE_CMD) UpdateEntities(count, player_buffer, 1);
     if (cmd == NAME_CMD) UpdateEntities(count, player_buffer, 1);
     if (cmd == TURN_CMD) {
-        show_debug_message("Received turn end");
+        //show_debug_message("Received turn end");
         // turn goes to next player
-        initiativeIndex += 1;
+        //initiativeIndex += 1;
         // give actions to next player
-        var current = ds_list_find_value(Clients, initiativeIndex);//GetCurrentTurn(Clients, initiativeIndex);
-        if (current != 0) TurnStart(current);
+        //var current = ds_list_find_value(Clients, initiativeIndex);//GetCurrentTurn(Clients, initiativeIndex);
+        //if (current != 0) TurnStart(current);
         // update players
         UpdateEntities(count, player_buffer, 1);
     }

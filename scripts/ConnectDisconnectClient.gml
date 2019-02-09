@@ -24,10 +24,24 @@
         // Give it an initiative
         // Move this elsewhere when personal stats are created
         var dice = RollDice(1,20);
-        ShowRoll(sock, dice, 'Initiative');
+        inst.initiative = dice;
+        ShowRoll(sock, dice, 'Your Initiative');
 
         // put this instance into a map, using the socket ID as the lookup
         ds_map_add( Clients, sock, inst );
+        
+        // insert into entities
+        ds_list_add(entities, inst);
+        
+        
+        
+        // put into entity-initiative grid
+        /*var h = ds_grid_height(entitiesInitiatives);
+        show_debug_message(ds_grid_height(entitiesInitiatives))
+        ds_grid_resize(entitiesInitiatives, 2, h);
+        ds_grid_set(entitiesInitiatives, 0, h-1, inst);
+        ds_grid_set(entitiesInitiatives, 1, h-1, inst.initiative);
+        ds_grid_sort(entitiesInitiatives, 1, 0);*/
     }
     else
     {

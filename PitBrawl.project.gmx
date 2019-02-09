@@ -64,6 +64,7 @@
     <script>scripts\RollDice.gml</script>
     <script>scripts\GetCurrentTurn.gml</script>
     <script>scripts\TurnStart.gml</script>
+    <script>scripts\SortListInitiative.gml</script>
   </scripts>
   <fonts name="fonts">
     <font>fonts\font0</font>
@@ -71,6 +72,7 @@
     <font>fonts\fontSmall</font>
   </fonts>
   <objects name="objects">
+    <object>objects\objDiceTest</object>
     <object>objects\objPlayerServerX</object>
     <objects name="game">
       <object>objects\objBattle</object>
@@ -93,7 +95,6 @@
       <object>objects\objButton</object>
       <object>objects\objIndicator</object>
     </objects>
-    <object>objects\objDiceTest</object>
     <object>objects\objRoll</object>
     <object>objects\objRollResult</object>
     <object>objects\objInitiativeDisplay</object>

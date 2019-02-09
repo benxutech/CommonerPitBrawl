@@ -14,8 +14,7 @@
     var out = 0; // returned value
     
     // Is this a KEY command?
-    if( cmd==KEY_CMD )    
-    {
+    if( cmd==KEY_CMD ) {
         // Read the key that was sent
         var key = buffer_read(buff, buffer_s16 );
         // And it's up/down state
@@ -37,17 +36,14 @@
         }
     }
     // Is this a NAME command?
-    else if( cmd==NAME_CMD )    
-    {
+    else if( cmd==NAME_CMD ) {
         // Set the client "name"
         inst.name = buffer_read(buff, buffer_string );    
     }
-    else if( cmd==PING_CMD )
-    {
+    else if( cmd==PING_CMD ) {
         // keep alive - ignore it
     }
-    else if( cmd==MOVE_CMD )
-    {
+    else if( cmd==MOVE_CMD ) {
         var go_xx = buffer_read(buff, buffer_s16 );
         var go_yy = buffer_read(buff, buffer_s16 );
         
@@ -57,13 +53,23 @@
             inst.movement = 0;
         }
     }
-    else if( cmd==TURN_CMD )
-                    // placeholder stuff
-        inst.movement = 30;
-        inst.action[0] = 1;
-        inst.action[1] = 1;
-        inst.action[2] = 1;
+    else if( cmd==TURN_CMD ) {
+        var h = ds_list_size(entities)-1;//ds_grid_height(entitiesInitiatives);
+        if (initiativeIndex < h) initiativeIndex += 1;
+        else initiativeIndex = 0;
+        
+        var instNext = entities[| initiativeIndex]//ds_grid_get(entitiesInitiatives, 0, initiativeIndex);
+            show_debug_message('1')
+        if (!is_undefined(instNext)) {
+            show_debug_message('defined')
+            instNext.movement = 30;
+            instNext.action[0] = 1;
+            instNext.action[1] = 1;
+            instNext.action[2] = 1;
+        }
+    }
     return cmd;
+    
 }
 
 
