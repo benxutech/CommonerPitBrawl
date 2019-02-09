@@ -65,10 +65,12 @@
     <script>scripts\GetCurrentTurn.gml</script>
     <script>scripts\TurnStart.gml</script>
     <script>scripts\SortListInitiative.gml</script>
+    <script>scripts\GiveEntityTurn.gml</script>
   </scripts>
   <fonts name="fonts">
     <font>fonts\font0</font>
     <font>fonts\font1</font>
+    <font>fonts\font3</font>
     <font>fonts\fontSmall</font>
   </fonts>
   <objects name="objects">

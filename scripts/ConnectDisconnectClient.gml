@@ -33,15 +33,13 @@
         // insert into entities
         ds_list_add(entities, inst);
         
-        
-        
-        // put into entity-initiative grid
-        /*var h = ds_grid_height(entitiesInitiatives);
-        show_debug_message(ds_grid_height(entitiesInitiatives))
-        ds_grid_resize(entitiesInitiatives, 2, h);
-        ds_grid_set(entitiesInitiatives, 0, h-1, inst);
-        ds_grid_set(entitiesInitiatives, 1, h-1, inst.initiative);
-        ds_grid_sort(entitiesInitiatives, 1, 0);*/
+        // If it's the only player, then give it the turn
+        show_debug_message(ds_list_size(socketlist));
+        /*if (ds_list_size(socketlist) == 1) {
+            show_debug_message('what the heck');
+            GiveEntityTurn(socketlist,Clients,inst);
+        }*/
+            GiveEntityTurn(socketlist,Clients,inst);
     }
     else
     {

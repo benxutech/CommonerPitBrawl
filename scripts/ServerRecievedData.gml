@@ -58,24 +58,14 @@
     else if( cmd==TURN_CMD ) {
         // take away turns from everyone
         
-        var count = ds_list_size(socketlist);
-        for (var i=0;i<count;i++) {
-            var tempSock = socketlist[| i];
-            var tempInst = ds_map_find_value(Clients, tempSock);
-            tempInst.turn = 0;
-        }
-        
         
         var h = ds_list_size(entities)-1;//ds_grid_height(entitiesInitiatives);
         if (initiativeIndex < h) initiativeIndex += 1;
         else initiativeIndex = 0;
+            show_debug_message(initiativeIndex);
         
         var instNext = entities[| initiativeIndex];//ds_grid_get(entitiesInitiatives, 0, initiativeIndex);
-        instNext.movement = 30;
-        instNext.action[0] = 1;
-        instNext.action[1] = 1;
-        instNext.action[2] = 1;
-        instNext.turn = 1;
+        GiveEntityTurn(socketlist,Clients,instNext);
     }
     return cmd;
     

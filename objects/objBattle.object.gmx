@@ -163,7 +163,8 @@ indicator[index].labelSuffix = " ft";
 //canMove = 0;
 toDraw[0,0] = 0;
 
-
+// Turn baton
+turn = 0;
 
 </string>
           </argument>
@@ -348,6 +349,14 @@ case "turn":
         break;
 }
 
+// No buttons if turn isn't real
+for (var i=0; i&lt;5; i++) {
+    button[i].visible = turn;
+    if (i &lt;= 3) {
+        indicator[i].visible = turn;
+    }
+}
+
 // Update indicator texts
 if (player) {
     indicator[0].label = player.action[0];
@@ -407,7 +416,14 @@ if (button[3].image_index == 2) {
     draw_text(view_wview[0]/2, view_yport[1]+view_hport[1]-33, "Select tile to move to.") 
 }
 
-
+// Draw Waiting on other player's turn
+if (turn == 0) {
+    var txt = "Waiting on other turns...";
+    draw_set_font(font3);
+    draw_set_color(c_white);
+    draw_set_halign(fa_middle);
+    draw_text(360/2,550,txt);
+}
 
 
 </string>

@@ -174,17 +174,13 @@ if( client == eventid )
             }
             if (exists == -1) {
                 show_debug_message("not");
-                with (battle) {
-                    a = instance_create(0,0,objPlayerClient);
-                    a.owner = id;  // set owner
-                }
-                ds_list_add(entities, battle.a);
+                a = instance_create(0,0,objPlayerClient);
+                a.owner = battle.id;  // set owner
+                ds_list_add(entities, a);
                 
                 // If this instance is the player
                 if (b_socketID == clientID) {
-                    with (battle) {
-                        player = a;
-                    }
+                    battle.player = a;
                 }
             }
             else {
@@ -205,7 +201,9 @@ if( client == eventid )
             a.action[1] = b_freeAction;
             a.action[2] = b_bonusAction;
             a.die = b_die;
-            a.turn = b_turn;
+            if (b_socketID == clientID) {
+                battle.turn = b_turn;
+            }
         }
     }
     if (b_type == 2) {
