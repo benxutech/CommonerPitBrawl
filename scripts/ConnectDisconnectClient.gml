@@ -17,14 +17,14 @@
         
         // Create a new player,       
         var inst = instance_create(0,0, objPlayerServer);
-        inst.xx = 2;
-        inst.yy = 2;
         inst.socketID = sock;
+        inst.xx = 2+irandom(3);
+        inst.yy = 2+irandom(1);
         
         // Give it an initiative
-        // Move this elsewhere when personal stats are created
+                // Move this elsewhere when personal stats are created
         var dice = RollDice(1,20);
-        inst.initiative = dice;
+        inst.initiative = dice+ inst.init_mod;
         ShowRoll(sock, dice, 'Your Initiative');
 
         // put this instance into a map, using the socket ID as the lookup

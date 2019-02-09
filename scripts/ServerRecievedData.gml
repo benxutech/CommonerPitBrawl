@@ -58,15 +58,12 @@
         if (initiativeIndex < h) initiativeIndex += 1;
         else initiativeIndex = 0;
         
-        var instNext = entities[| initiativeIndex]//ds_grid_get(entitiesInitiatives, 0, initiativeIndex);
-            show_debug_message('1')
-        if (!is_undefined(instNext)) {
-            show_debug_message('defined')
-            instNext.movement = 30;
-            instNext.action[0] = 1;
-            instNext.action[1] = 1;
-            instNext.action[2] = 1;
-        }
+        var instNext = entities[| initiativeIndex];//ds_grid_get(entitiesInitiatives, 0, initiativeIndex);
+        instNext.movement = 30;
+        instNext.action[0] = 1;
+        instNext.action[1] = 1;
+        instNext.action[2] = 1;
+        // send 
     }
     return cmd;
     

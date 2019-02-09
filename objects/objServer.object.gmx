@@ -138,7 +138,6 @@ case "getpositions":
         with (objEntity) {
             show_debug_message(xx);
             show_debug_message(yy);
-            
         }
     }
     buttonListen = "";
