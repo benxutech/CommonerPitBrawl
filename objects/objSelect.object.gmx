@@ -27,6 +27,7 @@
             <kind>1</kind>
             <string>xx = 0;
 yy = 0;
+image_speed = 0;
 </string>
           </argument>
         </arguments>

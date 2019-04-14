@@ -1,4 +1,5 @@
 // 3 types of button, Big (menu), thin (which just manages to fit the text), Action (square)
+// owner, x, y, label, trigger, type/style
 var i, arg;
 for (i = 0; i < 6; i += 1;) {
     if argument_count > i {
@@ -9,7 +10,7 @@ for (i = 0; i < 6; i += 1;) {
     }
 }
 
-sprite = sprButton;
+var sprite = sprButton;
 if (arg[5] == 1) {
     sprite = sprButtonThin;
 }

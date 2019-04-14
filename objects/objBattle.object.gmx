@@ -51,7 +51,6 @@ for (var i = 0; i &lt; gridWidth; i++) {
         if (o &lt;= 6 &amp;&amp; o &gt;= 2 &amp;&amp; i == 9) blockType = 2;
         
         ds_grid_add(map, i, o, blockType);
-        
     }
 }
 
@@ -159,12 +158,17 @@ indicator[index] = instance_create(button[index].x,button[index].y-5-30,objIndic
 indicator[index].image_index = 1;
 indicator[index].labelSuffix = " ft";
 
-//
+// Animation
+animListen = "";
+
 //canMove = 0;
 toDraw[0,0] = 0;
 
 // Turn baton
 turn = 0;
+
+// Event
+turnAnim = 0;
 
 </string>
           </argument>
@@ -284,8 +288,8 @@ if (view_yview[1] &gt; panLimit_lower) {
 var r = 5*2+1;
 for (var i = 0; i &lt; r; i++) {
     for (var o = 0; o &lt; r; o++) {
-        toDraw[i,o].x = x+(i*32);
-        toDraw[i,o].y = y+(o*32);
+        toDraw[# i,o] = x+(i*32);
+        toDraw[# i,o] = y+(o*32);
     }
 }*/
 
@@ -335,6 +339,7 @@ case "action":
     break;
 case "move": 
     if (button[3].image_index == 0) {
+        ShowRange(player.xx,player.yy,2); //
         buttonListen = "";
         break;
     }
@@ -342,11 +347,13 @@ case "move":
         buttonListen = "";
         break;
     }
+    break;
 case "turn": 
-        // send end turn packet, hope to get actions back from server
-        with (owner) {SendTurn();}
-        buttonListen = "";
-        break;
+    // send end turn packet, hope to get actions back from server
+    with (owner) {SendTurn();}
+    turnAnim = 0;  // get anim ready for another one
+    buttonListen = "";
+    break;
 }
 
 // No buttons if turn isn't real
@@ -365,7 +372,28 @@ if (player) {
     indicator[3].label = player.movement;
 }
 
+if (turnAnim == 0) {
+    if (turn == 1) {
+        CreateCutIn(id,"Your Turn","turn");
+        turnAnim = 1;
+    }
+}
 
+// Animation
+switch (animListen) {
+case "turn":
+    turnAnim = 2;
+break;
+}
+
+/*
+if (turnAnim &gt;= 1) {
+    // do turn animation
+    
+    //turnAnim += 1;
+    
+    turnAnim = -1;
+}*/
 
 </string>
           </argument>
@@ -395,11 +423,12 @@ draw_set_color(c_white);
 draw_rectangle(view_xport[1], view_yport[1], view_xport[1]+view_wport[1], view_yport[1]+view_hport[1], 1)
 */
 // Top UI panel
-draw_set_color(c_gray);
+//draw_set_color(make_colour_hsv(52,83,181));
+draw_set_color(make_colour_rgb(235, 230, 198));
 draw_rectangle(view_xview[0], view_yview[0], view_xport[1]+view_wport[1], view_yport[1], 0);
 
 // Draw bottom UI panel
-draw_set_color(c_gray);
+//draw_set_color(make_colour_hsv(52,255,158));
 draw_rectangle(view_xport[1], view_yport[1]+view_hport[1], view_xview[0]+view_wview[0], view_yview[0]+view_hview[0], 0)
 
 
@@ -424,6 +453,9 @@ if (turn == 0) {
     draw_set_halign(fa_middle);
     draw_text(360/2,550,txt);
 }
+
+
+draw_sprite(sprInitiative,0,0,0);
 
 
 </string>
@@ -455,7 +487,7 @@ if (path_exists(movePath)) {
         show_debug_message(i)
         ex = path_get_x(movePath, i/path_get_length(movePath)+1);
         ey = path_get_y(movePath, i/path_get_length(movePath)+1);
-        draw_sprite(sprSelect,0,ex,ey);
+        draw_sprite(sprSelectRange,0,ex,ey);
     }
 }*/
 /*

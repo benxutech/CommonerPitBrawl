@@ -146,8 +146,6 @@ if( client == eventid )
         // Get number of entity sent
         entityCount = buffer_read(buff, buffer_u32 ); 
         
-        //clientx = buffer_read(buff,buffer_s16);     //x
-        //clienty = buffer_read(buff,buffer_s16);     //y
         for(var i = 0; i &lt; entityCount; i++) {
             b_xx = buffer_read(buff,buffer_s16);     //xx
             b_yy = buffer_read(buff,buffer_s16);     //yy
@@ -211,7 +209,7 @@ if( client == eventid )
         b_result = buffer_read(buff,buffer_s16);
         b_label = buffer_read(buff,buffer_string);
         with (battle) {
-            AnimatedDice(70+irandom(50), room_height + 40, owner.b_result, owner.b_label);
+            AnimatedDice(70+irandom(50), 640 + 40, owner.b_result, owner.b_label);
         }
     }
 }

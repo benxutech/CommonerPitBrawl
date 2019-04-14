@@ -8,6 +8,7 @@
   <sprites name="sprites">
     <sprite>sprites\sprite11</sprite>
     <sprite>sprites\sprTitle</sprite>
+    <sprite>sprites\sprTitle2</sprite>
     <sprites name="entity">
       <sprite>sprites\sprPlayer</sprite>
     </sprites>
@@ -28,9 +29,12 @@
       <sprite>sprites\sprDie</sprite>
     </sprites>
     <sprite>sprites\sprSelect</sprite>
+    <sprite>sprites\sprSelectRange</sprite>
     <sprite>sprites\sprSelectThick</sprite>
     <sprite>sprites\sprSelectBlock</sprite>
     <sprite>sprites\sprSelectBlockUp</sprite>
+    <sprite>sprites\sprInitiative</sprite>
+    <sprite>sprites\sprCutIn</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\background0</background>
@@ -55,11 +59,15 @@
     <scripts name="Clientside">
       <script>scripts\MoveEntity.gml</script>
       <script>scripts\CreateButton.gml</script>
+      <script>scripts\CreateCutIn.gml</script>
       <script>scripts\CreateIndicator.gml</script>
       <script>scripts\ToIsometric.gml</script>
       <script>scripts\AnimatedDice.gml</script>
       <script>scripts\EntityMove.gml</script>
       <script>scripts\EntityDrawMoveRange.gml</script>
+      <script>scripts\ShowRange.gml</script>
+      <script>scripts\SetTextProperty.gml</script>
+      <script>scripts\textProperty.gml</script>
     </scripts>
     <script>scripts\RollDice.gml</script>
     <script>scripts\GetCurrentTurn.gml</script>
@@ -81,8 +89,8 @@
       <object>objects\objEntity</object>
       <object>objects\objBlock</object>
       <object>objects\objBlockWater</object>
-      <object>objects\objPlayerClient</object>
       <object>objects\objPlayerServer</object>
+      <object>objects\objPlayerClient</object>
       <object>objects\objSelect</object>
       <object>objects\objRange</object>
     </objects>
@@ -96,6 +104,7 @@
       <object>objects\objCharMenu</object>
       <object>objects\objButton</object>
       <object>objects\objIndicator</object>
+      <object>objects\objCutIn</object>
     </objects>
     <object>objects\objRoll</object>
     <object>objects\objRollResult</object>
@@ -103,6 +112,7 @@
   </objects>
   <rooms name="rooms">
     <room>rooms\rmMenu</room>
+    <room>rooms\rmTransition</room>
     <room>rooms\rmCharacter</room>
     <room>rooms\rmJoin</room>
     <room>rooms\rmBattle</room>

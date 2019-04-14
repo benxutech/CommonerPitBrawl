@@ -35,11 +35,10 @@
         
         // If it's the only player, then give it the turn
         show_debug_message(ds_list_size(socketlist));
-        /*if (ds_list_size(socketlist) == 1) {
+        if (ds_list_size(socketlist) == 1) {
             show_debug_message('what the heck');
             GiveEntityTurn(socketlist,Clients,inst);
-        }*/
-            GiveEntityTurn(socketlist,Clients,inst);
+        }
     }
     else
     {
@@ -53,6 +52,8 @@
         // Also delete the socket from our global list of connected clients
         var index = ds_list_find_index( socketlist, sock );
         ds_list_delete(socketlist,index);
+        
+        // delete from entities
     }
     return t;
 }

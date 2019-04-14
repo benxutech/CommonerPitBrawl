@@ -28,6 +28,7 @@
             <string>image_speed = 0;
 toggle = 0;
 label = "";
+labelProperty = textProperty(font0, c_black, 1, fa_center, fa_middle);
 </string>
           </argument>
         </arguments>
@@ -130,12 +131,12 @@ if (toggle == 1) {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_self();
+            <string>draw_self();/*
 draw_set_halign(fa_center);
 draw_set_valign(fa_middle);
 draw_set_color(c_black);
-draw_set_font(font0);
-
+draw_set_font(font0);*/
+SetTextProperty(labelProperty);
 draw_text(x, y, label);
 
 

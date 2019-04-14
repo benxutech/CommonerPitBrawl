@@ -30,14 +30,17 @@
 mov = 0;
 moveType = 0;  // 0 = teleport, 1 = "slide"
 
-xx = 0;
-yy = 0;
-
 animSpd = 10;
 
 clientID = 0;
 
 playerName = "undefined";
+
+xx = 0;
+yy = 0;
+
+socketID = -1;
+entityID = -1;
 
 // Actions
 movement = 0; // placeholder
@@ -45,6 +48,10 @@ action[0] = 0;  // action
 action[1] = 0;  // free action
 action[2] = 0;  // bonus action
 action[3] = 0;  // reaction
+
+initiative = 0;
+
+movement = 0;
 
 die = 0;
 
