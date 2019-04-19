@@ -3,7 +3,7 @@
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>0</depth>
+  <depth>-600</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -25,15 +25,18 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>width = 100;
+            <string>width = 140;
 height = 20;
 bx1 = x-width/2;
 by1 = y-height/2;
 bx2 = x+width/2;
 by2 = y+height/2;
 
+items = ds_list_create();
+ds_list_add(items, "test1","test2","test3");
+
 labelProperty = textProperty(font6, c_black, 1, fa_left, fa_middle);
-label = "test";
+label = items[| 0];
 
 up = true;
 
@@ -41,7 +44,8 @@ hover = false;
 
 list = instance_create(bx1,by1,objScrollList);
 list.owner = id;
-list.width = width;
+list.width = width+height;
+list.items = items;
 
 </string>
           </argument>
@@ -68,13 +72,16 @@ list.width = width;
             <string>if (point_in_rectangle(mouse_x,mouse_y,bx1,by1,bx2+height,by2)) {
     hover = true;
     if (mouse_check_button_pressed(mb_left)) {
-        
+        list.visible = true;
     }
 }
 else {
     hover = false;
 }
 
+if (keyboard_check_pressed(vk_down)) {
+    ds_list_add(items, "another test");
+}
 </string>
           </argument>
         </arguments>

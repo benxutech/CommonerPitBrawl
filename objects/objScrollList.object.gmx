@@ -2,8 +2,8 @@
 <object>
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
-  <visible>-1</visible>
-  <depth>0</depth>
+  <visible>0</visible>
+  <depth>-600</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -25,19 +25,25 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>items = 0;
-width = 0;
+            <string>items = ds_list_create();
 itemHeight = 18;
 up = true;
-height = items*itemHeight;
+width = 0;
+height = ds_list_size(items)*itemHeight;
 
+bx1 = x;
+by1 = y-height;
+bx2 = x+width;
+by2 = y;
+cbpad = 5;
 
+labelProperty = textProperty(font6, c_black, 1, fa_left, fa_top);
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="8" enumb="0">
+    <event eventtype="3" enumb="0">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -54,9 +60,73 @@ height = items*itemHeight;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>
+            <string>if (visible == true) {
+        if (point_in_rectangle(mouse_x,mouse_y,bx2-itemHeight-cbpad,by1+cbpad,bx2-cbpad,by1+cbpad+itemHeight)) {
+        if (mouse_check_button_pressed(mb_left)) {
+            visible = false;
+        }
+    }
+    //height = ds_list_size(items)*itemHeight;
+}
+
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="64">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>height = ds_list_size(items)*itemHeight;
+
+// if up
+bx1 = x;
+by1 = y-height;
+bx2 = x+width;
+by2 = y;
+
 // Draw backing
-draw_rectangle 
+draw_set_color($a3a3c2);
+draw_rectangle(bx1,by1,bx2,by2,0);
+/*
+// Close button
+draw_set_color(c_gray);
+draw_rectangle(bx2-itemHeight-cbpad,by1+cbpad,bx2-cbpad,by1+cbpad+itemHeight,0);
+
+// button x
+draw_set_color(c_black);
+draw_text(bx2-itemHeight/2-cbpad,by1+itemHeight/2+cbpad,"X");
+*/
+// border
+draw_set_color(c_black);
+draw_rectangle(bx1,by1,bx2,by2,1);
+
+// items
+SetTextProperty(labelProperty);
+tpad = 4;
+for (var i=0; i&lt;ds_list_size(items); i++) { 
+    draw_text(bx1+tpad,by1+itemHeight*i,items[| i]);
+}
+
+
+
+
+
 </string>
           </argument>
         </arguments>

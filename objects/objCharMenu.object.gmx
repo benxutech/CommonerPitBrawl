@@ -32,7 +32,7 @@ button_age = CreateButton(id, 50, 110+25, "Edit Age", "age",1);
 button_reroll = CreateButton(id, room_width/2, 305, "Reroll", "reroll",1);
 buttonListen = "";
 
-dropdown_feat = instance_create(room_width/2,520,objDropdownBox);
+dropdown_feat1 = instance_create(85,410,objDropdownBox);
 
 tempName = objCharacter.name;
 
