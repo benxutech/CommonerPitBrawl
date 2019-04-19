@@ -37,6 +37,8 @@ with(objPlayerServer)
     buffer_write(global.player_buffer, buffer_s16, action[2]);
     buffer_write(global.player_buffer, buffer_s16, die);
     buffer_write(global.player_buffer, buffer_s16, turn);
+    buffer_write(global.player_buffer, buffer_s16, hp);
+    buffer_write(global.player_buffer, buffer_s16, maxHp);
     //no reaction send yet
 }
 

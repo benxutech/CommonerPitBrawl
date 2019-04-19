@@ -42,6 +42,10 @@ yy = 0;
 socketID = -1;
 entityID = -1;
 
+// HP
+hp = 6;
+maxHp = 6;
+
 // Actions
 movement = 0; // placeholder
 action[0] = 0;  // action
@@ -145,17 +149,36 @@ if (spawnEffect == 1) {
             <kind>1</kind>
             <string>draw_self();
 
+lx = x;
+ly = y-10;
+
+label = playerName;//+" "+string(hp)+"/"+string(maxHp);
+label2 = string(hp)+"/"+string(maxHp);
+
 draw_set_color(c_black);
+draw_set_font(fontSmall);
+len = string_width(label);
+lenH = 13;//string_height(label);
+rectHeight = 4;
+sidePadding = 20;
+healthAmount = hp/maxHp*100;
+draw_healthbar(lx-sidePadding, ly-rectHeight, lx+sidePadding, ly+rectHeight,healthAmount, c_black, c_red, c_green, 0, true, true)
+//draw_rectangle(x-(len/2)-sidePadding, y-rectHeight+lenH, x+(len/2)+sidePadding, y+rectHeight+lenH,0);
+
+
 draw_set_alpha(0.5);
-len = string_width(playerName);
-draw_rectangle(x-(len/2)-5, y-8, x+(len/2)+5, y+8,0);
+len = string_width(label);
+rectHeight = 6;
+sidePadding = 5;
+draw_rectangle(lx-(len/2)-sidePadding, ly-rectHeight+lenH, lx+(len/2)+sidePadding, ly+rectHeight+lenH,0);
 draw_set_alpha(1);
 
 draw_set_valign(fa_middle);
 draw_set_halign(fa_center);
 draw_set_color(c_white);
-draw_set_font(font0);
-draw_text(x,y,playerName);
+draw_text(lx,ly+lenH,label);
+draw_set_font(fontSmall);
+draw_text(lx,ly,label2);
 </string>
           </argument>
         </arguments>

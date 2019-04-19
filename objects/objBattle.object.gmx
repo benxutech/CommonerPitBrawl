@@ -351,6 +351,7 @@ case "move":
 case "turn": 
     // send end turn packet, hope to get actions back from server
     with (owner) {SendTurn();}
+    turn = 0;
     turnAnim = 0;  // get anim ready for another one
     buttonListen = "";
     break;

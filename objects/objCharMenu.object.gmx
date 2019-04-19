@@ -25,12 +25,16 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>button_back = CreateButton(id, room_width-42, 2+11, "Cancel", "back",1);
+            <string>button_back = CreateButton(id, room_width-42, 2+20, "Cancel", "back",1);
 button_save = CreateButton(id, room_width/2, room_height-67, "Save", "save");
-button_name = CreateButton(id, 50, 35, "Edit Name", "name",1);
+button_name = CreateButton(id, 50, 110, "Edit Name", "name",1);
+button_age = CreateButton(id, 50, 110+25, "Edit Age", "age",1);
+button_reroll = CreateButton(id, room_width/2, 305, "Reroll", "reroll",1);
 buttonListen = "";
 
-tempName = global.PlayerName;
+dropdown_feat = instance_create(room_width/2,520,objDropdownBox);
+
+tempName = objCharacter.name;
 
 
 
@@ -63,14 +67,25 @@ case "back":
 break;
 
 case "save": 
-    //global.PlayerName = tempName;
-    global.NewPlayerName = tempName;
+    objCharacter.name = tempName;
     room_goto(rmMenu);
     buttonListen = "";
 break;
 
 case "name":
     msg_name = get_string_async("Enter Name:", tempName);
+    buttonListen = "";
+break;
+
+case "reroll":
+    with (objCharacter) {
+        str = 8+irandom(5);
+        dex = 8+irandom(5);
+        con = 8+irandom(5);
+        int = 8+irandom(5);
+        wis = 8+irandom(5);
+        cha = 8+irandom(5);
+    }
     buttonListen = "";
 break;
 
@@ -128,9 +143,61 @@ if i_d == msg_name {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_set_halign(fa_left);
-draw_set_valign(fa_top);
-draw_text(8, 8, "Name: "+tempName);
+            <string>//draw_set_color(c_yellow);
+draw_set_alpha(0.5);
+draw_rectangle(0,185,room_width,330,1);
+draw_rectangle(0,350,room_width,490,1);
+draw_set_alpha(1);
+
+draw_set_color(c_black);
+draw_set_halign(fa_center);
+draw_set_valign(fa_middle);
+draw_set_font(fontHeading);
+draw_text(180,60,"Edit Commoner");
+draw_set_font(fontSubheading);
+draw_text(180,205,"Stats");
+draw_text(180,370,"Feats");
+
+draw_set_halign(fa_left);
+draw_set_valign(fa_middle);
+draw_set_font(font0);
+draw_text(100, 110, "Name:  "+tempName);
+draw_text(100, 110+25, "Age:  ");
+
+index = 0;
+base = 235;
+spacing = 18;
+draw_text(25, base+index*spacing, "Strength:");
+index++;
+draw_text(25, base+index*spacing, "Dexterity:");
+index++;
+draw_text(25, base+index*spacing, "Constitution:");
+index = 0;
+draw_text(200, base+index*spacing, "Intelligence:");
+index++;
+draw_text(200, base+index*spacing, "Wisdom:");
+index++;
+draw_text(200, base+index*spacing, "Charisma:");
+index = 0;
+draw_set_halign(fa_center);
+draw_set_color(c_dkgray);
+draw_text(25+125, base+index*spacing, objCharacter.str);
+index++;
+draw_text(25+125, base+index*spacing, objCharacter.dex);
+index++;
+draw_text(25+125, base+index*spacing, objCharacter.con);
+index = 0;
+draw_text(200+125, base+index*spacing, objCharacter.int);
+index++;
+draw_text(200+125, base+index*spacing, objCharacter.wis);
+index++;
+draw_text(200+125, base+index*spacing, objCharacter.cha);
+
+
+
+
+
+
 </string>
           </argument>
         </arguments>

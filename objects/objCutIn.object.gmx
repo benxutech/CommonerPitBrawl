@@ -28,7 +28,7 @@
             <string>owner = 0;
 label = "";
 trigger = "";
-labelProperty = textProperty(font0, c_white, 1, fa_center, fa_middle);
+labelProperty = textProperty(font1, c_white, 1, fa_center, fa_middle);
 rate = 0;
 stage = 0;
 target = 360/2;  

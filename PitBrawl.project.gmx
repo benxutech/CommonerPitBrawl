@@ -22,6 +22,7 @@
     </sprites>
     <sprites name="ui">
       <sprite>sprites\sprButtonAction</sprite>
+      <sprite>sprites\sprite24</sprite>
       <sprite>sprites\sprButtonActionIndicator</sprite>
       <sprite>sprites\sprButtonThin</sprite>
       <sprite>sprites\sprButton</sprite>
@@ -35,6 +36,8 @@
     <sprite>sprites\sprSelectBlockUp</sprite>
     <sprite>sprites\sprInitiative</sprite>
     <sprite>sprites\sprCutIn</sprite>
+    <sprite>sprites\sprActionMenu</sprite>
+    <sprite>sprites\sprTitleReflect</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\background0</background>
@@ -77,9 +80,12 @@
   </scripts>
   <fonts name="fonts">
     <font>fonts\font0</font>
+    <font>fonts\font6</font>
     <font>fonts\font1</font>
     <font>fonts\font3</font>
     <font>fonts\fontSmall</font>
+    <font>fonts\fontHeading</font>
+    <font>fonts\fontSubheading</font>
   </fonts>
   <objects name="objects">
     <object>objects\objDiceTest</object>
@@ -93,6 +99,7 @@
       <object>objects\objPlayerClient</object>
       <object>objects\objSelect</object>
       <object>objects\objRange</object>
+      <object>objects\objInitiativeDisplay</object>
     </objects>
     <objects name="network">
       <object>objects\objServer</object>
@@ -100,15 +107,19 @@
     </objects>
     <objects name="menu">
       <object>objects\objMenu</object>
+      <object>objects\objTitleReflect</object>
       <object>objects\objJoinMenu</object>
       <object>objects\objCharMenu</object>
       <object>objects\objButton</object>
       <object>objects\objIndicator</object>
       <object>objects\objCutIn</object>
+      <object>objects\objDropdownBox</object>
+      <object>objects\objScrollList</object>
+      <object>objects\objScrollListItem</object>
     </objects>
     <object>objects\objRoll</object>
     <object>objects\objRollResult</object>
-    <object>objects\objInitiativeDisplay</object>
+    <object>objects\objCharacter</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\rmMenu</room>

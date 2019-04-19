@@ -27,15 +27,15 @@
             <kind>1</kind>
             <string>button_host = CreateButton(id, room_width/2, room_height-130-90-2, "Host", "host");
 button_join = CreateButton(id, room_width/2, room_height-65-90-2, "Join", "join");
-button_character = CreateButton(id, room_width/2, room_height-90-2, "Edit#Character", "character");
+button_character = CreateButton(id, room_width/2, room_height-90-2, "Edit#Commoner", "character");
 buttonListen = "";
-
+/*
 global.PlayerName = "Bob";
 
 if (variable_global_exists("NewPlayerName")) {
     show_debug_message("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Exist")
     global.PlayerName = global.NewPlayerName;
-}
+}*/
 
 global.Server = -1;
 global.connectip = "127.0.0.1";
@@ -55,6 +55,12 @@ global.servernames = ds_list_create();
 x = room_width/2;
 y = 24;
 image_speed = 0.2;
+
+reflectTimer = 50;
+
+if (!instance_exists(objCharacter)) {
+    global.character = instance_create(0,0,objCharacter);
+}
 
 randomize();
 </string>
@@ -106,6 +112,13 @@ case "character":
     break;
 
 }
+
+reflectTimer -= 1;
+if (reflectTimer &lt;= 0) {
+    instance_create(0,0,objTitleReflect);
+    reflectTimer = 120;
+}
+
 </string>
           </argument>
         </arguments>
@@ -162,8 +175,11 @@ if i_d == msg {
             <string>draw_self();
 
 draw_set_valign(fa_bottom);
-draw_set_font(font0);
-draw_text(room_height-10,10,"Name: " + global.PlayerName);
+draw_set_halign(fa_left);
+draw_set_font(font6);
+if (instance_exists(objCharacter)) {
+    draw_text(10,room_height-10,"Name: " + objCharacter.name);
+}
 //draw_sprite(sprTitle,0,room_width/2,24);
 </string>
           </argument>

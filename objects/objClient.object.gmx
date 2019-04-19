@@ -29,7 +29,7 @@
 battle.owner = id;
 
 clientID = 0;   
-PlayerName = global.PlayerName;  
+PlayerName = objCharacter.name;
 
 buff = buffer_create(256, buffer_grow, 1);
 client = network_create_socket(global.ServerType);
@@ -162,6 +162,8 @@ if( client == eventid )
             b_bonusAction = buffer_read(buff,buffer_s16);
             b_die = buffer_read(buff,buffer_s16);
             b_turn = buffer_read(buff,buffer_s16);
+            b_hp = buffer_read(buff,buffer_s16);
+            b_maxHp = buffer_read(buff,buffer_s16);
             
             // Check the old list if it exist
             // If it isn't in the list then create and add it
@@ -199,6 +201,8 @@ if( client == eventid )
             a.action[1] = b_freeAction;
             a.action[2] = b_bonusAction;
             a.die = b_die;
+            a.hp = b_hp;
+            a.maxHp = b_maxHp;
             if (b_socketID == clientID) {
                 battle.turn = b_turn;
             }
