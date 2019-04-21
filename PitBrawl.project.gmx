@@ -116,7 +116,6 @@
       <object>objects\objCutIn</object>
       <object>objects\objDropdownBox</object>
       <object>objects\objScrollList</object>
-      <object>objects\objScrollListItem</object>
     </objects>
     <object>objects\objRoll</object>
     <object>objects\objRollResult</object>

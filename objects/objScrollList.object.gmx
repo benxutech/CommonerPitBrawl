@@ -37,6 +37,8 @@ bx2 = x+width;
 by2 = y;
 cbpad = 5;
 
+selected = 0;
+
 labelProperty = textProperty(font6, c_black, 1, fa_left, fa_top);
 </string>
           </argument>
@@ -67,7 +69,11 @@ labelProperty = textProperty(font6, c_black, 1, fa_left, fa_top);
             visible = false;
         }
     }
-    //height = ds_list_size(items)*itemHeight;
+    for (var i=0; i&lt;ds_list_size(items); i++) {
+        if (point_in_rectangle(mouse_x,mouse_y,bx1+itemHeight*i,by1,bx1+itemHeight*(i+1),by2)) {
+            selected = i;
+        }
+    }
 }
 
 height = ds_list_size(items)*itemHeight;
@@ -105,6 +111,10 @@ by2 = y;
             <string>// Draw backing
 draw_set_color(c_white);//$a3a3c2);
 draw_rectangle(bx1,by1-tpadH*2,bx2,by2,0);
+
+// Select
+draw_set_color(c_blue);
+draw_rectangle(bx1+itemHeight*selected,by1,bx1+itemHeight*(selected+1),by2,0);
 
 /*
 // Close button
