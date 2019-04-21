@@ -36,7 +36,7 @@ items = ds_list_create();
 ds_list_add(items, "test1","test2","test3");
 
 labelProperty = textProperty(font6, c_black, 1, fa_left, fa_middle);
-label = items[| 0];
+label = '';
 
 up = true;
 
@@ -47,6 +47,29 @@ list.owner = id;
 list.width = width+height;
 list.items = items;
 
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>list.visible = true;
 </string>
           </argument>
         </arguments>
@@ -69,10 +92,15 @@ list.items = items;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (point_in_rectangle(mouse_x,mouse_y,bx1,by1,bx2+height,by2)) {
+            <string>
+list.items = items;
+
+if (point_in_rectangle(mouse_x,mouse_y,bx1,by1,bx2+height,by2)) {
     hover = true;
     if (mouse_check_button_pressed(mb_left)) {
-        list.visible = true;
+        if (list.visible == false) {
+            alarm[0] = 2;
+        }
     }
 }
 else {
@@ -108,6 +136,8 @@ if (keyboard_check_pressed(vk_down)) {
 by1 = y-height/2;
 bx2 = x+width/2;
 by2 = y+height/2;
+
+label = items[| 0];
 
 // white background
 draw_set_color(c_white);
