@@ -31,6 +31,7 @@ up = true;
 width = 0;
 height = ds_list_size(items)*itemHeight;
 
+
 bx1 = x;
 by1 = y-height;
 bx2 = x+width;
@@ -70,8 +71,14 @@ labelProperty = textProperty(font6, c_black, 1, fa_left, fa_top);
         }
     }
     for (var i=0; i&lt;ds_list_size(items); i++) {
-        if (point_in_rectangle(mouse_x,mouse_y,bx1+itemHeight*i,by1,bx1+itemHeight*(i+1),by2)) {
+        if (point_in_rectangle(mouse_x,mouse_y,bx1,by1+itemHeight*i,bx2,by1+itemHeight*(i+1))) {
             selected = i;
+        }
+    }
+    if (point_in_rectangle(mouse_x,mouse_y,bx1,by1,bx2,by2)) {
+        if (mouse_check_button_pressed(mb_left)) {
+            owner.clicked = selected;
+            visible = false;
         }
     }
 }
@@ -114,7 +121,7 @@ draw_rectangle(bx1,by1-tpadH*2,bx2,by2,0);
 
 // Select
 draw_set_color(c_blue);
-draw_rectangle(bx1+itemHeight*selected,by1,bx1+itemHeight*(selected+1),by2,0);
+draw_rectangle(bx1,by1+itemHeight*selected,bx2,by1+itemHeight*(selected+1),0);
 
 /*
 // Close button

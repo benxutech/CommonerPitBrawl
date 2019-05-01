@@ -32,8 +32,17 @@ button_age = CreateButton(id, 50, 110+25, "Edit Age", "age",1);
 button_reroll = CreateButton(id, room_width/2, 305, "Reroll", "reroll",1);
 buttonListen = "";
 
+data = DataFeats();
+feats = data[0];
+descs = data[1];
+
 dropdown_feat1 = instance_create(85,410,objDropdownBox);
-dropdown_feat1.items = DataFeats();
+dropdown_feat1.items = feats;
+dropdown_feat2 = instance_create(85,450,objDropdownBox);
+dropdown_feat2.items = feats;
+
+featDesc1 = "";
+featDesc2 = "";
 
 tempName = objCharacter.name;
 
@@ -79,18 +88,21 @@ case "name":
 break;
 
 case "reroll":
-    with (objCharacter) {
-        str = 8+irandom(5);
-        dex = 8+irandom(5);
-        con = 8+irandom(5);
-        int = 8+irandom(5);
-        wis = 8+irandom(5);
-        cha = 8+irandom(5);
-    }
+    RerollStats(objCharacter.id, 0);
     buttonListen = "";
 break;
-
 }
+
+// Update label
+fd1 = descs[? dropdown_feat1.label];
+fd2 = descs[? dropdown_feat2.label];
+
+draw_set_font(fontSmall);
+if (!is_undefined(fd1)) featDesc1 = TextWrap(180-15, fd1);
+if (!is_undefined(fd2)) featDesc2 = TextWrap(180-15, fd2);
+
+
+
 </string>
           </argument>
         </arguments>
@@ -168,32 +180,31 @@ draw_text(100, 110+25, "Age:  ");
 index = 0;
 base = 235;
 spacing = 18;
-draw_text(25, base+index*spacing, "Strength:");
-index++;
-draw_text(25, base+index*spacing, "Dexterity:");
-index++;
+draw_text(25, base+index*spacing, "Strength:"); index++;
+draw_text(25, base+index*spacing, "Dexterity:"); index++;
 draw_text(25, base+index*spacing, "Constitution:");
 index = 0;
-draw_text(200, base+index*spacing, "Intelligence:");
-index++;
-draw_text(200, base+index*spacing, "Wisdom:");
-index++;
+draw_text(200, base+index*spacing, "Intelligence:"); index++;
+draw_text(200, base+index*spacing, "Wisdom:"); index++;
 draw_text(200, base+index*spacing, "Charisma:");
 index = 0;
 draw_set_halign(fa_center);
 draw_set_color(c_dkgray);
-draw_text(25+125, base+index*spacing, objCharacter.str);
-index++;
-draw_text(25+125, base+index*spacing, objCharacter.dex);
-index++;
+draw_text(25+125, base+index*spacing, objCharacter.str); index++;
+draw_text(25+125, base+index*spacing, objCharacter.dex); index++;
 draw_text(25+125, base+index*spacing, objCharacter.con);
 index = 0;
-draw_text(200+125, base+index*spacing, objCharacter.int);
-index++;
-draw_text(200+125, base+index*spacing, objCharacter.wis);
-index++;
+draw_text(200+125, base+index*spacing, objCharacter.int); index++;
+draw_text(200+125, base+index*spacing, objCharacter.wis); index++;
 draw_text(200+125, base+index*spacing, objCharacter.cha);
 
+
+draw_set_color(c_black);
+draw_set_halign(fa_left);
+draw_set_valign(fa_middle);
+draw_set_font(fontSmall);
+draw_text(185, 410, featDesc1);
+draw_text(185, 450, featDesc2);
 
 
 

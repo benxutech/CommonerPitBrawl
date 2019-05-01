@@ -78,6 +78,8 @@
     <script>scripts\SortListInitiative.gml</script>
     <script>scripts\GiveEntityTurn.gml</script>
     <script>scripts\DataFeats.gml</script>
+    <script>scripts\RerollStats.gml</script>
+    <script>scripts\TextWrap.gml</script>
   </scripts>
   <fonts name="fonts">
     <font>fonts\font0</font>

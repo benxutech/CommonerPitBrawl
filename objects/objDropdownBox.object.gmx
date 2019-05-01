@@ -38,6 +38,8 @@ ds_list_add(items, "test1","test2","test3");
 labelProperty = textProperty(font6, c_black, 1, fa_left, fa_middle);
 label = '';
 
+clicked = 0;
+
 up = true;
 
 hover = false;
@@ -92,8 +94,8 @@ list.items = items;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>
-list.items = items;
+            <string>list.items = items;
+label = items[| clicked];
 
 if (point_in_rectangle(mouse_x,mouse_y,bx1,by1,bx2+height,by2)) {
     hover = true;
@@ -136,8 +138,6 @@ if (keyboard_check_pressed(vk_down)) {
 by1 = y-height/2;
 bx2 = x+width/2;
 by2 = y+height/2;
-
-label = items[| 0];
 
 // white background
 draw_set_color(c_white);
