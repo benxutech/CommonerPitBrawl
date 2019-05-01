@@ -65,6 +65,7 @@ global.gridY = 100;
 movePath = 0;
 
 // Create Map blocks
+/*
 blocks = ds_grid_create(ds_grid_width(map),ds_grid_height(map));
 for (var i = 0; i &lt; ds_grid_width(map); i++) {
     for (var o = 0; o &lt; ds_grid_height(map); o++) {
@@ -88,7 +89,33 @@ for (var i = 0; i &lt; ds_grid_width(map); i++) {
             mp_grid_add_cell(pathingGrid, i, o);
         }
     }
+}*/
+
+
+blocks = ds_list_create();
+for (var i = 0; i &lt; ds_grid_width(map); i++) {
+    for (var o = 0; o &lt; ds_grid_height(map); o++) {
+        pos = ToIsometric(i,o);
+        if (map[# i, o] == 0) {
+            //blocks[# i, o] = 0;
+        }
+        if (map[# i, o] == 1) {
+            b = instance_create(global.gridX+pos[0], global.gridY+pos[1], objBlock);
+            b.xx = i;
+            b.yy = o;
+            ds_list_add(blocks, b);
+        }
+        if (map[# i, o] == 2) {
+            b = instance_create(global.gridX+pos[0], global.gridY+pos[1], objBlockWater);
+            b.xx = i;
+            b.yy = o;
+            b.image_speed = 1/60;
+            ds_list_add(blocks, b);
+        }
+    }
 }
+
+
 select = instance_create(0,0,objSelect);
 
 // Make entities list
@@ -170,6 +197,10 @@ turn = 0;
 // Event
 turnAnim = 0;
 
+
+// To Draw
+toDrawRangeX = ds_list_create();
+toDrawRangeY = ds_list_create();
 </string>
           </argument>
         </arguments>
@@ -309,17 +340,30 @@ if (button[3].image_index == 2) {
             visible = 0;
         }
     }
+    
+    for (var i = 0; i &lt; ds_list_size(blocks); i++) { 
+        blocks[|i].selected = 0;
+        var xDist = abs(player.xx-blocks[|i].xx);
+        var yDist = abs(player.yy-blocks[|i].yy);
+        if (xDist+yDist &lt;= player.movement/30) blocks[|i].selected = 1;
+    }
+    
     // Click
     if (mouse_check_button_pressed(mb_left)) {
         if (mouse_y &lt; view_yport[1]+view_hport[1]) {
             block = collision_point(mouse_x,mouse_y,objBlock,1,0);
             if (block) {
                 if (player) {
-                    // using 1 movement as placeholder before movement ranges
-                    if (player.movement &gt;= 1) {
-                        player.movement -= 1;
-                        with (owner) {
-                            SendMoveTo(battle.block.xx, battle.block.yy,1);
+                    // Use hacky clientside movement ranges. Change later
+                    var xDist = abs(player.xx-block.xx);
+                    var yDist = abs(player.yy-block.yy);
+                    if (xDist+yDist &lt;= player.movement/30) {
+                        // using 1 movement as placeholder before movement ranges
+                        if (player.movement &gt;= 1) {
+                            player.movement -= 1;
+                            with (owner) {
+                                SendMoveTo(battle.block.xx, battle.block.yy,1);
+                            }
                         }
                     }
                 }
@@ -329,6 +373,9 @@ if (button[3].image_index == 2) {
     }
 }
 else {
+    for (var i = 0; i &lt; ds_list_size(blocks); i++) { 
+        blocks[|i].selected = 0;
+    }
     select.visible = 0;
 }
 
@@ -339,7 +386,15 @@ case "action":
     break;
 case "move": 
     if (button[3].image_index == 0) {
-        ShowRange(player.xx,player.yy,2); //
+        //ShowRange(player.xx,player.yy,2); //
+        
+        /*
+        for (var i = 0; i &lt; gridWidth; i++) {
+            for (var o = 0; o &lt; gridHeight; o++) {
+                if (blocks[# i, o].xx == player)
+            }
+        }*/
+        
         buttonListen = "";
         break;
     }
@@ -501,9 +556,12 @@ for (var i = 0; i &lt; r; i++) {
         }
     }
 }*/
-
-
-
+/*
+player.xx-1
+player.xx+1
+player.yy-1
+player.yy+1
+*/
 
 
 

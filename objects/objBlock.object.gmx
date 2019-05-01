@@ -26,6 +26,8 @@
           <argument>
             <kind>1</kind>
             <string>depth = 0-y;
+selected = 0;
+
 </string>
           </argument>
         </arguments>
@@ -49,6 +51,9 @@
           <argument>
             <kind>1</kind>
             <string>draw_self();
+if (selected == 1) {
+    draw_sprite(sprSelect,0,x,y);
+}
 </string>
           </argument>
         </arguments>
