@@ -36,7 +36,6 @@
         // If it's the only player, then give it the turn
         show_debug_message(ds_list_size(socketlist));
         if (ds_list_size(socketlist) == 1) {
-            show_debug_message('what the heck');
             GiveEntityTurn(socketlist,Clients,inst);
         }
     }

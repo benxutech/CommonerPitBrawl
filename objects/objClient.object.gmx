@@ -183,9 +183,6 @@ if( client == eventid )
                     battle.player = a;
                 }
             }
-            else {
-                show_debug_message("already");
-            }
             // regardless if it already exists, we'll still update it
             a = ds_list_find_value(entities, i);
             

@@ -29,13 +29,6 @@
 button_join = CreateButton(id, room_width/2, room_height-65-90-2, "Join", "join");
 button_character = CreateButton(id, room_width/2, room_height-90-2, "Edit#Commoner", "character");
 buttonListen = "";
-/*
-global.PlayerName = "Bob";
-
-if (variable_global_exists("NewPlayerName")) {
-    show_debug_message("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Exist")
-    global.PlayerName = global.NewPlayerName;
-}*/
 
 global.Server = -1;
 global.connectip = "127.0.0.1";

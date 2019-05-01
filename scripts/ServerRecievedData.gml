@@ -57,12 +57,9 @@
     }
     else if( cmd==TURN_CMD ) {
         // take away turns from everyone
-        
-        
         var h = ds_list_size(entities)-1;//ds_grid_height(entitiesInitiatives);
         if (initiativeIndex < h) initiativeIndex += 1;
         else initiativeIndex = 0;
-            show_debug_message(initiativeIndex);
         
         var instNext = entities[| initiativeIndex];//ds_grid_get(entitiesInitiatives, 0, initiativeIndex);
         GiveEntityTurn(socketlist,Clients,instNext);

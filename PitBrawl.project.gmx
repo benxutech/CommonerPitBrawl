@@ -110,14 +110,15 @@
     </objects>
     <objects name="menu">
       <object>objects\objMenu</object>
-      <object>objects\objTitleReflect</object>
       <object>objects\objJoinMenu</object>
       <object>objects\objCharMenu</object>
+      <object>objects\objLobby</object>
       <object>objects\objButton</object>
       <object>objects\objIndicator</object>
       <object>objects\objCutIn</object>
       <object>objects\objDropdownBox</object>
       <object>objects\objScrollList</object>
+      <object>objects\objTitleReflect</object>
     </objects>
     <object>objects\objRoll</object>
     <object>objects\objRollResult</object>
@@ -125,6 +126,7 @@
   </objects>
   <rooms name="rooms">
     <room>rooms\rmMenu</room>
+    <room>rooms\rmLobby</room>
     <room>rooms\rmTransition</room>
     <room>rooms\rmCharacter</room>
     <room>rooms\rmJoin</room>
