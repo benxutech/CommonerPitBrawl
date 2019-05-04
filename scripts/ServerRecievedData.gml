@@ -37,8 +37,24 @@
     }
     // Is this a NAME command?
     else if( cmd==NAME_CMD ) {
-        // Set the client "name"
-        inst.name = buffer_read(buff, buffer_string );    
+        buffer_read(buff, buffer_s16);  // data size
+        
+        inst.name = buffer_read(buff, buffer_string);  // name
+        inst.race = buffer_read(buff, buffer_string);  // race
+        inst.subrace = buffer_read(buff, buffer_string);  // subrace
+        inst.class = buffer_read(buff, buffer_string);  // class
+        inst.level = buffer_read(buff, buffer_s16);  // level
+        inst.age = buffer_read(buff, buffer_s16);  // age
+        
+        inst.str = buffer_read(buff, buffer_s16);  // str
+        inst.dex = buffer_read(buff, buffer_s16);  // dex
+        inst.con = buffer_read(buff, buffer_s16);  // con
+        inst.int = buffer_read(buff, buffer_s16);  // int
+        inst.wis = buffer_read(buff, buffer_s16);  // wis
+        inst.cha = buffer_read(buff, buffer_s16);  // cha
+        
+        inst.sprite_index = buffer_read(buff, buffer_s16);  // sprite index
+        inst.image_index = buffer_read(buff, buffer_s16);  // image index
     }
     else if( cmd==PING_CMD ) {
         // keep alive - ignore it

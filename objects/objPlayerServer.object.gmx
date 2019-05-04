@@ -64,6 +64,14 @@ action[2] = 0;  // bonus action
 action[3] = 0;  // reaction
 turn = 0;
 
+// Action list
+actions = ds_list_create();
+bonusActions = ds_list_create();
+freeActions = ds_list_create();
+ds_list_add(actions, "Attack","Dash","Dodge");
+ds_list_add(bonusActions, "Test");
+ds_list_add(freeActions, "Test2");
+
 // Initiative/per battle stuff
 initiative = 0;
 die = 0;

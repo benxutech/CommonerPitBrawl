@@ -5,7 +5,7 @@
   <visible>-1</visible>
   <depth>-50</depth>
   <persistent>0</persistent>
-  <parentName>&lt;undefined&gt;</parentName>
+  <parentName>objPopup</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -205,7 +205,7 @@ for (var i=0; i&lt;ds_list_size(items); i++) {
             draw_set_alpha(0.7);
             draw_set_color(c_white);
             var gap = 0;  // temp
-            draw_rectangle(bx1+tpad/2,by1+itemHeight*i+gap,bx2-tpad/2,by1+itemHeight*(i+1)-2-gap,0);
+            draw_rectangle(bx1+tpad/2,by1+itemHeight*i+gap,bx2-tpad/2,by1+itemHeight*(i+1)-1-gap,0);
             draw_set_alpha(1);
             draw_line(bx1+tpad/2,by1+itemHeight*(i+1)-1-gap,bx2-tpad/2,by1+itemHeight*(i+1)-1-gap);
         }

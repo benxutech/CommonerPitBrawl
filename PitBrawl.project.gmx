@@ -82,6 +82,7 @@
     <script>scripts\DataFeats.gml</script>
     <script>scripts\RerollStats.gml</script>
     <script>scripts\TextWrap.gml</script>
+    <script>scripts\CharacterDataUpdate.gml</script>
   </scripts>
   <fonts name="fonts">
     <font>fonts\font0</font>
@@ -110,6 +111,7 @@
       <object>objects\objRange</object>
       <object>objects\objInitiativeDisplay</object>
       <object>objects\objActionList</object>
+      <object>objects\objPopup</object>
     </objects>
     <objects name="network">
       <object>objects\objServer</object>

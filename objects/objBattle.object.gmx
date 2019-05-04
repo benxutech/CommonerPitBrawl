@@ -271,18 +271,20 @@ if (mouse_wheel_down()) {
 }
 
 // Panning
-if (mouse_check_button_pressed(mb_left)) {
-    if (mouse_y &lt; view_yport[1]+view_hport[1]) {
-        startPressed_x = window_mouse_get_x();
-        startPressed_y = window_mouse_get_y();
-        startView_x = view_xview[1];
-        startView_y = view_yview[1];
-        panning = 1;
+if (!instance_exists(objPopup)) {
+    if (mouse_check_button_pressed(mb_left)) {
+        if (mouse_y &lt; view_yport[1]+view_hport[1]) {
+            startPressed_x = window_mouse_get_x();
+            startPressed_y = window_mouse_get_y();
+            startView_x = view_xview[1];
+            startView_y = view_yview[1];
+            panning = 1;
+        }
     }
-}
-if (panning == 1) {
-    view_xview[1] = startView_x - (window_mouse_get_x() - startPressed_x);
-    view_yview[1] = startView_y - (window_mouse_get_y() - startPressed_y);
+    if (panning == 1) {
+        view_xview[1] = startView_x - (window_mouse_get_x() - startPressed_x);
+        view_yview[1] = startView_y - (window_mouse_get_y() - startPressed_y);
+    }
 }
 if (mouse_check_button_released(mb_left)) {
     panning = 0;

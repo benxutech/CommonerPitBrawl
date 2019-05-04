@@ -37,11 +37,6 @@ class = "Commoner";
 level = 1;
 age = 20;
 
-// Sprite. Not used directly but just stored.
-image_speed = 0;
-sprite_index = sprPlayerRaw;
-image_index = 0;
-
 // Base stats
 hit_dice_size = 6;
 str = 8;
@@ -52,10 +47,42 @@ wis = 8;
 cha = 8;
 
 // Equipment
-gold = 10+cha;  // Starting gold is based on charisma
+gold = 0;//10+cha;  // Starting gold is based on charisma
 equipment = ds_list_create();
 
+// Sprite. Not used directly but just stored.
+image_speed = 0;
+sprite_index = sprPlayerRaw;
+image_index = 0;
 
+// Data list
+data = ds_list_create();
+CharacterDataUpdate();
+alarm[0] = 6;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>CharacterDataUpdate();
+alarm[0] = 6;
 </string>
           </argument>
         </arguments>

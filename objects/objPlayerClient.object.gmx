@@ -27,9 +27,6 @@
             <kind>1</kind>
             <string>image_speed = 0;
 
-mov = 0;
-moveType = 0;  // 0 = teleport, 1 = "slide"
-
 animSpd = 10;
 
 clientID = 0;
@@ -56,16 +53,19 @@ action[3] = 0;  // reaction
 // Action list
 actions = ds_list_create();
 bonusActions = ds_list_create();
-freeActions = ds_list_create();
+freeActions = ds_list_create();/*
 ds_list_add(actions, "Attack","Dash","Dodge");
 ds_list_add(bonusActions, "Test");
-ds_list_add(freeActions, "Test2");
+ds_list_add(freeActions, "Test2");*/
 
 initiative = 0;
 movement = 0;
 die = 0;
 
 spawnEffect = 1;
+
+mov = 0;
+moveType = 0;  // 0 = teleport, 1 = "slide"
 </string>
           </argument>
         </arguments>

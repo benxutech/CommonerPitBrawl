@@ -212,7 +212,9 @@ if( server == eventid ){
     cmd = ServerRecievedData();
     count = ds_list_size(socketlist);
     if (cmd == MOVE_CMD) UpdateEntities(count, player_buffer);
-    if (cmd == NAME_CMD) UpdateEntities(count, player_buffer);
+    if (cmd == NAME_CMD) {
+        UpdateEntities(count, player_buffer);
+    }
     if (cmd == TURN_CMD) {
         //show_debug_message("Received turn end");
         // turn goes to next player

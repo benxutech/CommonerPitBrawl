@@ -49,7 +49,7 @@ if( err!=0 ){
 }
 
 // Client has connected to the server, so send our "player name"
-SendName( PlayerName );
+SendName(objCharacter.data);
 alarm[0]=120;
 
 </string>
@@ -142,7 +142,6 @@ if( client == eventid )
     
     // IF it's a entityupdate packet
     if (b_type == 1) {
-    
         // Get number of entity sent
         entityCount = buffer_read(buff, buffer_u32 ); 
         

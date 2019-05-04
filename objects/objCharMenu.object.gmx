@@ -179,7 +179,7 @@ if i_d == msg {
                 tempName = res;
                 break;
             case "age":
-                tempAge = res;
+                tempAge = string_digits(res);
                 break;
             case "race":
                 tempRace = res;
