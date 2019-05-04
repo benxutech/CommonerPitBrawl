@@ -35,6 +35,12 @@ race = "Human";
 subrace = "";
 class = "Commoner";
 level = 1;
+age = 20;
+
+// Sprite. Not used directly but just stored.
+image_speed = 0;
+sprite_index = sprPlayerRaw;
+image_index = 0;
 
 // Base stats
 hit_dice_size = 6;

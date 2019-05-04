@@ -162,16 +162,11 @@ index++;
 button[3] = CreateButton(id, buttonAction_x+buttonActionStep_x*index, buttonAction_y, "Move", "move", 2);
 button[3].toggle = 1;
 
-// targetMode toggles (UNEEDED)
-//targetMode_action = 0;
-//targetMode_move = 0;
-
 // End turn
 button[4] = CreateButton(id, view_wview[0]/2, 50, "End Turn", "turn", 1);
 
 // End of buttons
 buttonListen = "";
-
 
 // Button action indicators 
 var index = 0;
@@ -311,21 +306,32 @@ if (view_yview[1] &gt; panLimit_lower) {
     view_yview[1] = panLimit_lower;
 }
 
-// Move Range
-// no getting movement yet
-// no collision
-// Get tiles in range (square first, then diamond)
-/*
-var r = 5*2+1;
-for (var i = 0; i &lt; r; i++) {
-    for (var o = 0; o &lt; r; o++) {
-        toDraw[# i,o] = x+(i*32);
-        toDraw[# i,o] = y+(o*32);
+// If action open
+if (instance_exists(objActionList)) {
+    if (actionList.closeTrigger == 1) {
+        button[0].image_index = 0;
+        actionList.closeTrigger = 0;
     }
-}*/
+    
+    if (button[0].image_index == 2) {
+        actionList.visible = 1;
+    }
+    else {
+        actionList.visible = 0;
+    }
+}
+if (button[0].image_index == 2) {
+    if (!instance_exists(objActionList)) {
+        // Action list
+        actionList = instance_create(30,320,objActionList);
+        actionList.owner = id;
+        actionList.visible = 0;
+    }
+}
 
 // if Move is on
 if (button[3].image_index == 2) {
+    
     // Select
     with (select) {
         block = collision_point(mouse_x,mouse_y,objBlock,1,0);
@@ -345,7 +351,9 @@ if (button[3].image_index == 2) {
         blocks[|i].selected = 0;
         var xDist = abs(player.xx-blocks[|i].xx);
         var yDist = abs(player.yy-blocks[|i].yy);
-        if (xDist+yDist &lt;= player.movement/30) blocks[|i].selected = 1;
+        if (xDist+yDist &lt;= player.movement/15) blocks[|i].selected = 1;
+        if (xDist+yDist == 0) blocks[|i].selected = 0;
+        if (blocks[|i].object_index == objBlockWater) blocks[|i].selected = 0;
     }
     
     // Click
@@ -355,9 +363,11 @@ if (button[3].image_index == 2) {
             if (block) {
                 if (player) {
                     // Use hacky clientside movement ranges. Change later
+                    // And hacky 2 move limit
                     var xDist = abs(player.xx-block.xx);
                     var yDist = abs(player.yy-block.yy);
-                    if (xDist+yDist &lt;= player.movement/30) {
+                    if (block.selected) {
+                    //if (xDist+yDist &lt;= player.movement/30) {
                         // using 1 movement as placeholder before movement ranges
                         if (player.movement &gt;= 1) {
                             player.movement -= 1;
@@ -366,6 +376,7 @@ if (button[3].image_index == 2) {
                             }
                         }
                     }
+                    //}
                 }
             }
             button[3].image_index = 0;
@@ -381,20 +392,12 @@ else {
 
 // Buttons
 switch (buttonListen) {
-case "action": 
+case "action":
+
     buttonListen = "";
     break;
 case "move": 
     if (button[3].image_index == 0) {
-        //ShowRange(player.xx,player.yy,2); //
-        
-        /*
-        for (var i = 0; i &lt; gridWidth; i++) {
-            for (var o = 0; o &lt; gridHeight; o++) {
-                if (blocks[# i, o].xx == player)
-            }
-        }*/
-        
         buttonListen = "";
         break;
     }

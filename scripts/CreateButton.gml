@@ -17,6 +17,9 @@ if (arg[5] == 1) {
 if (arg[5] == 2) {
     sprite = sprButtonAction;
 }
+if (arg[5] == 3) {
+    sprite = sprButtonTiny;
+}
 
 var b = instance_create(arg[1],arg[2],objButton);
 b.owner = arg[0];

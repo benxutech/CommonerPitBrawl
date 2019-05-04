@@ -11,6 +11,7 @@
     <sprite>sprites\sprTitle2</sprite>
     <sprites name="entity">
       <sprite>sprites\sprPlayer</sprite>
+      <sprite>sprites\sprPlayerRaw</sprite>
     </sprites>
     <sprites name="blocks">
       <sprite>sprites\sprBlock</sprite>
@@ -25,6 +26,7 @@
       <sprite>sprites\sprite24</sprite>
       <sprite>sprites\sprButtonActionIndicator</sprite>
       <sprite>sprites\sprButtonThin</sprite>
+      <sprite>sprites\sprButtonTiny</sprite>
       <sprite>sprites\sprButton</sprite>
       <sprite>sprites\sprRollResult</sprite>
       <sprite>sprites\sprDie</sprite>
@@ -89,6 +91,10 @@
     <font>fonts\fontSmall</font>
     <font>fonts\fontHeading</font>
     <font>fonts\fontSubheading</font>
+    <font>fonts\fontAction</font>
+    <font>fonts\fontSubheading2</font>
+    <font>fonts\fontUITitle</font>
+    <font>fonts\fontArrows</font>
   </fonts>
   <objects name="objects">
     <object>objects\objDiceTest</object>
@@ -103,6 +109,7 @@
       <object>objects\objSelect</object>
       <object>objects\objRange</object>
       <object>objects\objInitiativeDisplay</object>
+      <object>objects\objActionList</object>
     </objects>
     <objects name="network">
       <object>objects\objServer</object>

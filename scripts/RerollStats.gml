@@ -3,8 +3,8 @@ var char = argument0;
 var type = argument1;
 
 var numbers = ds_list_create();
-ds_list_add(numbers, 8+irandom(5));
-ds_list_add(numbers, 8+irandom(5));
+ds_list_add(numbers, 12+irandom(1));
+ds_list_add(numbers, 11+irandom(1));
 ds_list_add(numbers, 8+irandom(3));
 ds_list_add(numbers, 8+irandom(3));
 ds_list_add(numbers, 8+irandom(2));

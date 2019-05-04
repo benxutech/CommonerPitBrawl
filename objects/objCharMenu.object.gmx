@@ -25,12 +25,23 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>button_back = CreateButton(id, room_width-42, 2+20, "Cancel", "back",1);
+            <string>buttonListen = "";
+button_back = CreateButton(id, room_width-42, 2+20, "Cancel", "back",1);
 button_save = CreateButton(id, room_width/2, room_height-67, "Save", "save");
 button_name = CreateButton(id, 50, 110, "Edit Name", "name",1);
 button_age = CreateButton(id, 50, 110+25, "Edit Age", "age",1);
-button_reroll = CreateButton(id, room_width/2, 305, "Reroll", "reroll",1);
-buttonListen = "";
+button_race = CreateButton(id, 50, 110+50, "Edit Race", "race",1);
+button_reroll = CreateButton(id, room_width/2, 305-5, "Reroll", "reroll",1);
+
+portraitX = room_width-50-32;
+portraitY = 122+48+5;
+tempSprite = objCharacter.sprite_index;
+tempIndex = objCharacter.image_index;
+
+button_sprite1 = CreateButton(id, room_width-50+16, 122+48+5-11-22-4, "+", "sprite1",3);
+button_sprite2 = CreateButton(id, room_width-50+16, 122+48+5-11, "-", "sprite2",3);
+//button_sprite2 = CreateButton(id, room_width-50-16-63, 122+48+5-11, "&lt;", "sprite2",3);
+;
 
 data = DataFeats();
 feats = data[0];
@@ -45,8 +56,10 @@ featDesc1 = "";
 featDesc2 = "";
 
 tempName = objCharacter.name;
+tempAge = objCharacter.age;
+tempRace = objCharacter.race;
 
-
+dialog = "";
 
 </string>
           </argument>
@@ -78,17 +91,47 @@ break;
 
 case "save": 
     objCharacter.name = tempName;
+    objCharacter.age = tempAge;
+    objCharacter.race = tempRace;
+    objCharacter.sprite_index = tempSprite;
+    objCharacter.image_index = tempIndex;
     room_goto(rmMenu);
     buttonListen = "";
 break;
 
 case "name":
-    msg_name = get_string_async("Enter Name:", tempName);
+    msg = get_string_async("Enter Name:", tempName);
+    dialog = buttonListen;
+    buttonListen = "";
+break;
+
+case "age":
+    msg = get_string_async("Enter Age:", tempAge);
+    dialog = buttonListen;
+    buttonListen = "";
+break;
+
+case "race":
+    msg = get_string_async("Enter Race:", tempRace);
+    dialog = buttonListen;
     buttonListen = "";
 break;
 
 case "reroll":
     RerollStats(objCharacter.id, 0);
+    buttonListen = "";
+break;
+
+case "sprite1":
+    tempIndex += 1;
+    tempIndex = tempIndex mod sprite_get_number(tempSprite);
+    buttonListen = "";
+break;
+
+case "sprite2":
+    tempIndex -= 1;
+    tempIndex = tempIndex+(sprite_get_number(tempSprite));  // fix negative value
+    tempIndex = tempIndex mod sprite_get_number(tempSprite);
     buttonListen = "";
 break;
 }
@@ -126,11 +169,22 @@ if (!is_undefined(fd2)) featDesc2 = TextWrap(180-15, fd2);
           <argument>
             <kind>1</kind>
             <string>var i_d = ds_map_find_value(async_load, "id");
+var res = ds_map_find_value(async_load, "result");
 
-if i_d == msg_name {
+if i_d == msg {
     if ds_map_find_value(async_load, "status") {
         if ds_map_find_value(async_load, "result") != "" {
-            tempName = ds_map_find_value(async_load, "result");
+            switch (dialog) {
+            case "name":
+                tempName = res;
+                break;
+            case "age":
+                tempAge = res;
+                break;
+            case "race":
+                tempRace = res;
+                break;
+            }
         }
     }
 }
@@ -156,12 +210,15 @@ if i_d == msg_name {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//draw_set_color(c_yellow);
+            <string>// 
+//draw_set_color(c_yellow);
+draw_set_color(c_black);
 draw_set_alpha(0.5);
 draw_rectangle(0,185,room_width,330,1);
 draw_rectangle(0,350,room_width,490,1);
 draw_set_alpha(1);
 
+// Headings
 draw_set_color(c_black);
 draw_set_halign(fa_center);
 draw_set_valign(fa_middle);
@@ -171,12 +228,25 @@ draw_set_font(fontSubheading);
 draw_text(180,205,"Stats");
 draw_text(180,370,"Feats");
 
+// Name and age
 draw_set_halign(fa_left);
 draw_set_valign(fa_middle);
 draw_set_font(font0);
+draw_text(100, 110, tempName);
+draw_text(100, 110+25, string(tempAge));
+draw_text(100, 110+50, tempRace);/*
 draw_text(100, 110, "Name:  "+tempName);
-draw_text(100, 110+25, "Age:  ");
+draw_text(100, 110+25, "Age:  "+string(tempAge));
+draw_text(100, 110+50, "Race:  "+tempRace);*/
 
+// Sprite
+draw_set_color(c_white);
+draw_rectangle(portraitX-32,portraitY-96+10,portraitX+32,portraitY,0);
+draw_set_color(c_black);
+draw_rectangle(portraitX-32,portraitY-96+10,portraitX+32,portraitY,1);
+draw_sprite(tempSprite, tempIndex, portraitX, portraitY+5);
+
+// Stats
 index = 0;
 base = 235;
 spacing = 18;
@@ -198,7 +268,7 @@ draw_text(200+125, base+index*spacing, objCharacter.int); index++;
 draw_text(200+125, base+index*spacing, objCharacter.wis); index++;
 draw_text(200+125, base+index*spacing, objCharacter.cha);
 
-
+// Feat descriptions
 draw_set_color(c_black);
 draw_set_halign(fa_left);
 draw_set_valign(fa_middle);

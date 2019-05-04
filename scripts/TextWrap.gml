@@ -11,7 +11,7 @@ for (var i=1; i<string_length(wrapString); i++) {
         var lastSpace = string_length(tStr[lines]);
         for (var o=lastSpace; o>0; o--) {
             if (string_char_at(tStr[lines], o) == " ") {
-                lastSpace = o;
+                lastSpace = o+1;
                 break;
             }
         }

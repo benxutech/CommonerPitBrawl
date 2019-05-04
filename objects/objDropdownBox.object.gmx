@@ -41,7 +41,6 @@ label = '';
 clicked = 0;
 
 up = true;
-
 hover = false;
 
 list = instance_create(bx1,by1,objScrollList);
@@ -107,10 +106,6 @@ if (point_in_rectangle(mouse_x,mouse_y,bx1,by1,bx2+height,by2)) {
 }
 else {
     hover = false;
-}
-
-if (keyboard_check_pressed(vk_down)) {
-    ds_list_add(items, "another test");
 }
 </string>
           </argument>
