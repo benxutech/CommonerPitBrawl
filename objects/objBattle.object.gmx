@@ -484,7 +484,11 @@ if (button[3].image_index == 2) {
         targetLabel = 'Select tile to move to.';
     }
 }
-
+else {
+    if (targetMode == 'Move') {
+        targetMode = '';
+    }
+}
 
 // Buttons
 switch (buttonListen) {
