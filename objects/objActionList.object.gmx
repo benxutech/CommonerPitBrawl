@@ -107,21 +107,21 @@ ds_list_clear(items);
 ds_list_add(items, '!Take an action');
 
 // Add action heading
-ds_list_add(items, '@Actions');
+ds_list_add(items, '@Actions (' + string(owner.player.action[0]) +'/1)');
 // Add actions
 for (var i=0; i&lt;ds_list_size(ac); i++) {
     ds_list_add(items, ac[|i]);
 }
 
 // Add bonus action heading
-ds_list_add(items, '@Bonus Actions');
+ds_list_add(items, '@Bonus Actions (' + string(owner.player.action[1]) +'/1)');
 // Add actions
 for (var i=0; i&lt;ds_list_size(bAc); i++) {
     ds_list_add(items, bAc[|i]);
 }
 
 // Add free action heading
-ds_list_add(items, '@Free Actions');
+ds_list_add(items, '@Free Actions (' + string(owner.player.action[2]) +'/1)');
 // Add actions
 for (var i=0; i&lt;ds_list_size(fAc); i++) {
     ds_list_add(items, fAc[|i]);
@@ -150,7 +150,7 @@ if (visible == true) {
     }
     if (point_in_rectangle(mouse_v_x,mouse_v_y,bx1,by1,bx2,by2)) {
         if (mouse_check_button_pressed(mb_left)) {
-            clicked = selected;
+            owner.actionListen = items[|selected];
             visible = false;
             alarm[0] = 2;
         }

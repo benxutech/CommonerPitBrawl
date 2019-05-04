@@ -40,6 +40,7 @@ con = 10;
 int = 10;
 wis = 10;
 cha = 10;
+maxMovement = 30;
 
 // Calculate modifier
 str_mod = (str-10)/2;
@@ -59,8 +60,8 @@ init_mod = dex_mod;
 // Actions/round stuff
 movement = 30;
 action[0] = 0;  // action
-action[1] = 0;  // free action
-action[2] = 0;  // bonus action
+action[1] = 0;  // bonus action
+action[2] = 0;  // free action
 action[3] = 0;  // reaction
 turn = 0;
 
@@ -68,9 +69,6 @@ turn = 0;
 actions = ds_list_create();
 bonusActions = ds_list_create();
 freeActions = ds_list_create();
-ds_list_add(actions, "Attack","Dash","Dodge");
-ds_list_add(bonusActions, "Test");
-ds_list_add(freeActions, "Test2");
 
 // Initiative/per battle stuff
 initiative = 0;
@@ -106,6 +104,44 @@ moveType = 0;
             <kind>1</kind>
             <string>/// Increment entityCount by 1
 global.entityCount++;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Update action economy based on states
+ds_list_clear(actions);
+ds_list_clear(bonusActions);
+ds_list_clear(freeActions);
+
+// Add actions
+// Add basic actions
+if (action[0] &gt; 0) {
+    ds_list_add(actions, "Attack","Dash","Dodge");
+}
+if (action[1] &gt; 0) {
+    ds_list_add(bonusActions, "Test");
+}
+if (action[2] &gt; 0) {
+    ds_list_add(freeActions, "Test2");
+}
 </string>
           </argument>
         </arguments>

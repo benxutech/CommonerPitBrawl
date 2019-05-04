@@ -32,6 +32,7 @@
       <sprite>sprites\sprDie</sprite>
     </sprites>
     <sprite>sprites\sprSelect</sprite>
+    <sprite>sprites\sprSelect2</sprite>
     <sprite>sprites\sprSelectRange</sprite>
     <sprite>sprites\sprSelectThick</sprite>
     <sprite>sprites\sprSelectBlock</sprite>
@@ -48,6 +49,10 @@
   <scripts name="scripts">
     <scripts name="Network">
       <scripts name="client-out">
+        <scripts name="Actions">
+          <script>scripts\SendDash.gml</script>
+          <script>scripts\SendAttack.gml</script>
+        </scripts>
         <script>scripts\SendKey.gml</script>
         <script>scripts\SendMoveTo.gml</script>
         <script>scripts\SendKeepAlive.gml</script>

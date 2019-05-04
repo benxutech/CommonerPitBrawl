@@ -153,10 +153,10 @@ var index = 0;
 button[0] = CreateButton(id, buttonAction_x+buttonActionStep_x*index, buttonAction_y, "Action", "action", 2);
 button[0].toggle = 1;
 index++;
-button[1] = CreateButton(id, buttonAction_x+buttonActionStep_x*index, buttonAction_y, "Free", "freeaction", 2);
+button[1] = CreateButton(id, buttonAction_x+buttonActionStep_x*index, buttonAction_y, "Bonus", "bonusaction", 2);
 button[1].toggle = 1;
 index++;
-button[2] = CreateButton(id, buttonAction_x+buttonActionStep_x*index, buttonAction_y, "Bonus", "bonusaction", 2);
+button[2] = CreateButton(id, buttonAction_x+buttonActionStep_x*index, buttonAction_y, "Free", "freeaction", 2);
 button[2].toggle = 1;
 index++;
 button[3] = CreateButton(id, buttonAction_x+buttonActionStep_x*index, buttonAction_y, "Move", "move", 2);
@@ -179,6 +179,12 @@ index++;
 indicator[index] = instance_create(button[index].x,button[index].y-5-30,objIndicator);
 indicator[index].image_index = 1;
 indicator[index].labelSuffix = " ft";
+
+// Actionlist Listener
+actionListen = -1;
+
+// Target mode tracker
+targetMode = "";
 
 // Animation
 animListen = "";
@@ -333,32 +339,8 @@ if (view_yview[1] &gt; panLimit_lower) {
     view_yview[1] = panLimit_lower;
 }
 
-// If action open
-if (instance_exists(objActionList)) {
-    if (actionList.closeTrigger == 1) {
-        button[0].image_index = 0;
-        actionList.closeTrigger = 0;
-    }
-    
-    if (button[0].image_index == 2) {
-        actionList.visible = 1;
-    }
-    else {
-        actionList.visible = 0;
-    }
-}
-if (button[0].image_index == 2) {
-    if (!instance_exists(objActionList)) {
-        // Action list
-        actionList = instance_create(30,320,objActionList);
-        actionList.owner = id;
-        actionList.visible = 0;
-    }
-}
-
-// if Move is on
-if (button[3].image_index == 2) {
-    
+// if Attack is on
+if (targetMode == 'Attack') {
     // Select
     with (select) {
         block = collision_point(mouse_x,mouse_y,objBlock,1,0);
@@ -374,6 +356,50 @@ if (button[3].image_index == 2) {
         }
     }
     
+    // Show attack range
+                                    // Make into script later
+    var atkRange = 1;
+    for (var i = 0; i &lt; ds_list_size(blocks); i++) { 
+        blocks[|i].selected = 0;
+        var xDist = abs(player.xx-blocks[|i].xx);
+        var yDist = abs(player.yy-blocks[|i].yy);
+        if (xDist+yDist &lt;= atkRange) blocks[|i].selected = 1;
+        // JUST FOR FUN //if (xDist+yDist == 0) blocks[|i].selected = 0;
+    }
+    
+    // Click
+    if (mouse_check_button_pressed(mb_left)) {
+        if (mouse_y &lt; view_yport[1]+view_hport[1]) {
+            if (mouse_y &gt; view_yport[1]) {
+                block = collision_point(mouse_x,mouse_y,objBlock,1,0);
+                if (block) {
+                    // Do it
+                    with (owner) {SendAttack(battle.block.xx,battle.block.yy);}
+                    
+                }
+                targetMode = '';
+            }
+        }
+    }
+}
+// if Move is on
+else if (targetMode == 'Move') {
+    // Select
+    with (select) {
+        block = collision_point(mouse_x,mouse_y,objBlock,1,0);
+        if (block) {
+            x = block.x;
+            y = block.y;
+            xx = block.xx;
+            yy = block.yy;
+            visible = 1;
+        }
+        else {
+            visible = 0;
+        }
+    }
+    
+    // Show moverange (hacked)
     for (var i = 0; i &lt; ds_list_size(blocks); i++) { 
         blocks[|i].selected = 0;
         var xDist = abs(player.xx-blocks[|i].xx);
@@ -386,6 +412,7 @@ if (button[3].image_index == 2) {
     // Click
     if (mouse_check_button_pressed(mb_left)) {
         if (mouse_y &lt; view_yport[1]+view_hport[1]) {
+        if (mouse_y &gt; view_yport[1]) {
             block = collision_point(mouse_x,mouse_y,objBlock,1,0);
             if (block) {
                 if (player) {
@@ -408,7 +435,8 @@ if (button[3].image_index == 2) {
                     }
                 }
             }
-            button[3].image_index = 0;
+            targetMode = '';
+        }
         }
     }
 }
@@ -419,10 +447,45 @@ else {
     select.visible = 0;
 }
 
+// Button stuff
+// If action open
+                            // note: flip IFs for code consistency
+if (instance_exists(objActionList)) {
+    if (actionList.closeTrigger == 1) {
+        button[0].image_index = 0;
+        actionList.closeTrigger = 0;
+    }
+    
+    if (button[0].image_index == 2) {
+        actionList.visible = 1;
+        button[1].image_index = 0;
+        button[2].image_index = 0;
+        button[3].image_index = 0;
+    }
+    else {
+        actionList.visible = 0;
+    }
+}
+if (button[0].image_index == 2) {
+    if (!instance_exists(objActionList)) {
+        // Action list
+        actionList = instance_create(30,320,objActionList);
+        actionList.owner = id;
+        actionList.visible = 0;
+    }
+}
+
+// Move 
+if (button[3].image_index == 2) {
+    if (targetMode == '') {
+        targetMode = 'Move';
+    }
+}
+
+
 // Buttons
 switch (buttonListen) {
 case "action":
-
     buttonListen = "";
     break;
 case "move": 
@@ -482,6 +545,21 @@ if (turnAnim &gt;= 1) {
     
     turnAnim = -1;
 }*/
+
+
+// Actions. Check trigger
+switch (actionListen) {
+    case 'Dash':
+        with (owner) {SendDash();}
+        break;
+    
+    case 'Attack':
+        targetMode = 'Attack';
+        break;
+        
+}
+actionListen = "";
+
 
 </string>
           </argument>

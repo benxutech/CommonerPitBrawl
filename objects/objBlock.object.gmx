@@ -52,7 +52,7 @@ selected = 0;
             <kind>1</kind>
             <string>draw_self();
 if (selected == 1) {
-    draw_sprite(sprSelect,0,x,y);
+    draw_sprite(sprSelect2,0,x,y);
 }
 </string>
           </argument>

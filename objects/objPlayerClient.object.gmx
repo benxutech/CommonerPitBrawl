@@ -46,8 +46,8 @@ maxHp = 6;
 // Actions
 movement = 0; // placeholder
 action[0] = 0;  // action
-action[1] = 0;  // free action
-action[2] = 0;  // bonus action
+action[1] = 0;  // bonus action
+action[2] = 0;  // free action
 action[3] = 0;  // reaction
 
 // Action list
@@ -57,6 +57,8 @@ freeActions = ds_list_create();/*
 ds_list_add(actions, "Attack","Dash","Dodge");
 ds_list_add(bonusActions, "Test");
 ds_list_add(freeActions, "Test2");*/
+
+                                // DON'T FORGET REACTION LIST TOO
 
 initiative = 0;
 movement = 0;

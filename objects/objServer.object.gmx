@@ -151,27 +151,6 @@ case "getpositions":
           </argument>
         </arguments>
       </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Update initiative
-</string>
-          </argument>
-        </arguments>
-      </action>
     </event>
     <event eventtype="7" enumb="68">
       <action>
@@ -212,9 +191,7 @@ if( server == eventid ){
     cmd = ServerRecievedData();
     count = ds_list_size(socketlist);
     if (cmd == MOVE_CMD) UpdateEntities(count, player_buffer);
-    if (cmd == NAME_CMD) {
-        UpdateEntities(count, player_buffer);
-    }
+    if (cmd == NAME_CMD) UpdateEntities(count, player_buffer);
     if (cmd == TURN_CMD) {
         //show_debug_message("Received turn end");
         // turn goes to next player
@@ -225,6 +202,7 @@ if( server == eventid ){
         // update players
         UpdateEntities(count, player_buffer);
     }
+    if (cmd == ACTION_CMD) UpdateEntities(count, player_buffer);
 }
 </string>
           </argument>

@@ -84,7 +84,13 @@
         GiveEntityTurn(socketlist,Clients,instNext);
     }
     else if( cmd==ACTION_CMD ) {
-        
+        actionType = buffer_read(buff, buffer_string);
+        switch (actionType) {
+            case 'Dash':
+                inst.movement += inst.maxMovement;
+                inst.action[0] -= 1;
+                break;
+        }
     }
     return cmd;
 }
