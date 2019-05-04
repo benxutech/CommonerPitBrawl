@@ -356,8 +356,8 @@ if (targetMode == 'Attack') {
         }
     }
     
-    // Show attack range
                                     // Make into script later
+    // Show attack range
     var atkRange = 1;
     for (var i = 0; i &lt; ds_list_size(blocks); i++) { 
         blocks[|i].selected = 0;
@@ -374,7 +374,7 @@ if (targetMode == 'Attack') {
                 block = collision_point(mouse_x,mouse_y,objBlock,1,0);
                 if (block) {
                     // Do it
-                    with (owner) {SendAttack(battle.block.xx,battle.block.yy);}
+                    with (owner) {SendAttack(battle.block.xx,battle.block.yy,0);}
                     
                 }
                 targetMode = '';
@@ -436,6 +436,7 @@ else if (targetMode == 'Move') {
                 }
             }
             targetMode = '';
+            button[3].image_index = 0;
         }
         }
     }
@@ -551,12 +552,13 @@ if (turnAnim &gt;= 1) {
 switch (actionListen) {
     case 'Dash':
         with (owner) {SendDash();}
+        targetMode = '';
+        button[3].image_index = 2;
         break;
     
     case 'Attack':
         targetMode = 'Attack';
         break;
-        
 }
 actionListen = "";
 

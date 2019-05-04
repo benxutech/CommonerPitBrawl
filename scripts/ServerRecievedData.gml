@@ -75,19 +75,51 @@
         }
     }
     else if( cmd==TURN_CMD ) {
-        // take away turns from everyone
-        var h = ds_list_size(entities)-1;//ds_grid_height(entitiesInitiatives);
-        if (initiativeIndex < h) initiativeIndex += 1;
-        else initiativeIndex = 0;
-        // give turn
-        var instNext = entities[| initiativeIndex];//ds_grid_get(entitiesInitiatives, 0, initiativeIndex);
-        GiveEntityTurn(socketlist,Clients,instNext);
+        // Validate turn (if the turn ender is the turn holder)
+        if (inst.turn == 1) {
+            // take away turns from everyone
+            var h = ds_list_size(entities)-1;//ds_grid_height(entitiesInitiatives);
+            if (initiativeIndex < h) initiativeIndex += 1;
+            else initiativeIndex = 0;
+            // give turn
+            var instNext = entities[| initiativeIndex];//ds_grid_get(entitiesInitiatives, 0, initiativeIndex);
+            GiveEntityTurn(socketlist,Clients,instNext);
+        }
     }
     else if( cmd==ACTION_CMD ) {
         actionType = buffer_read(buff, buffer_string);
         switch (actionType) {
             case 'Dash':
                 inst.movement += inst.maxMovement;
+                inst.action[0] -= 1;
+                break;
+            case 'Attack':
+                var atkX = buffer_read(buff, buffer_s16);
+                var atkY = buffer_read(buff, buffer_s16);
+                var tempList = ds_list_create();
+                
+                
+                // Hit roll
+                var hit = RollDice(1,20)+inst.str_mod;
+                
+                // Get targets
+                for (var i=0; i<ds_list_size(entities); i++) {
+                    var e = entities[|i];
+                    if (e.xx == atkX && e.yy == atkY) {
+                        // Determine hit
+                        if (e.ac <= hit) {
+                            ds_list_add(tempList, e);
+                        }
+                    }
+                }
+                
+                // Deal damage
+                var dmg = max(1,1+inst.str_mod);
+                for (var i=0; i<ds_list_size(tempList); i++) {
+                    tempList[|i].hp -= dmg;
+                }
+                
+                ds_list_destroy(tempList);
                 inst.action[0] -= 1;
                 break;
         }

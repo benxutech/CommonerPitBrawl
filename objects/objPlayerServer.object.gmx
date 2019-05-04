@@ -82,6 +82,9 @@ die = 0;
 xx = 0;
 yy = 0;
 moveType = 0;
+
+// Update hp after step
+alarm[0] = 2;
 </string>
           </argument>
         </arguments>
@@ -104,6 +107,30 @@ moveType = 0;
             <kind>1</kind>
             <string>/// Increment entityCount by 1
 global.entityCount++;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>
+hp = maxHp;
 </string>
           </argument>
         </arguments>
@@ -142,6 +169,35 @@ if (action[1] &gt; 0) {
 if (action[2] &gt; 0) {
     ds_list_add(freeActions, "Test2");
 }
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Calculate modifiers and stats
+str_mod = (str-10)/2;
+dex_mod = (dex-10)/2;
+con_mod = (con-10)/2;
+int_mod = (int-10)/2;
+wis_mod = (wis-10)/2;
+cha_mod = (cha-10)/2;
+
+maxHp = hit_dice_size+con_mod;
 </string>
           </argument>
         </arguments>

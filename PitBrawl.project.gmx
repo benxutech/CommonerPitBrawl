@@ -65,6 +65,7 @@
       <script>scripts\UpdateEntities.gml</script>
       <script>scripts\UpdateEntityActions_unused.gml</script>
       <script>scripts\ShowRoll.gml</script>
+      <script>scripts\HitTile.gml</script>
     </scripts>
     <scripts name="Clientside">
       <script>scripts\MoveEntity.gml</script>
