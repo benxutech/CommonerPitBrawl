@@ -88,9 +88,9 @@ initiativeIndex = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>with (button[0]) {
+            <string>/*with (button[0]) {
     instance_destroy();
-}
+}*/
 </string>
           </argument>
         </arguments>
@@ -207,7 +207,6 @@ if( server == eventid ){
             TurnStart(current);*/
         }
     }
-    
 }else if( eventid==global.client){
     // Do nothing if this is for our "local" client
 }else{

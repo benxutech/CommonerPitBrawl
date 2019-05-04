@@ -20,8 +20,7 @@ buffer_write(player_buffer, buffer_s16, 1 );
 buffer_write(player_buffer, buffer_u32, global.entityCount );
 
 // All attached players
-with(objPlayerServer)
-{
+with(objPlayerServer) {
     buffer_write(global.player_buffer, buffer_s16, xx );
     buffer_write(global.player_buffer, buffer_s16, yy );
     buffer_write(global.player_buffer, buffer_s16, sprite_index );
@@ -39,6 +38,7 @@ with(objPlayerServer)
     buffer_write(global.player_buffer, buffer_s16, turn);
     buffer_write(global.player_buffer, buffer_s16, hp);
     buffer_write(global.player_buffer, buffer_s16, maxHp);
+    buffer_write(global.player_buffer, buffer_s16, loaded);
     
     // write actions amount
     buffer_write(global.player_buffer, buffer_s16, ds_list_size(actions));

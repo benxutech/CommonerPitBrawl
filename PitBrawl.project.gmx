@@ -41,6 +41,7 @@
     <sprite>sprites\sprCutIn</sprite>
     <sprite>sprites\sprActionMenu</sprite>
     <sprite>sprites\sprTitleReflect</sprite>
+    <sprite>sprites\refOLD</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\background0</background>
@@ -89,6 +90,8 @@
     <script>scripts\RerollStats.gml</script>
     <script>scripts\TextWrap.gml</script>
     <script>scripts\CharacterDataUpdate.gml</script>
+    <script>scripts\CalcStats.gml</script>
+    <script>scripts\RefreshActions.gml</script>
   </scripts>
   <fonts name="fonts">
     <font>fonts\font0</font>

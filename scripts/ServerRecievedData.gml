@@ -55,6 +55,11 @@
         
         inst.sprite_index = buffer_read(buff, buffer_s16);  // sprite index
         inst.image_index = buffer_read(buff, buffer_s16);  // image index
+        
+        with (inst) {CalcStats();}  // Update stats
+        inst.hp = inst.maxHp;
+        
+        inst.loaded = 1;  // Show player, now that it's updated
     }
     else if( cmd==PING_CMD ) {
         // keep alive - ignore it
@@ -90,37 +95,47 @@
         actionType = buffer_read(buff, buffer_string);
         switch (actionType) {
             case 'Dash':
-                inst.movement += inst.maxMovement;
-                inst.action[0] -= 1;
+                if (inst.action[0] > 0) {
+                    inst.movement += inst.maxMovement;
+                    inst.action[0] -= 1;
+                }
                 break;
             case 'Attack':
-                var atkX = buffer_read(buff, buffer_s16);
-                var atkY = buffer_read(buff, buffer_s16);
-                var tempList = ds_list_create();
+                if (inst.action[0] > 0) {
+                    var atkX = buffer_read(buff, buffer_s16);
+                    var atkY = buffer_read(buff, buffer_s16);
+                    var tempList = ds_list_create();  // List of targets
+                    var tempList2 = ds_list_create();  // List of hits
                 
-                
-                // Hit roll
-                var hit = RollDice(1,20)+inst.str_mod;
-                
-                // Get targets
-                for (var i=0; i<ds_list_size(entities); i++) {
-                    var e = entities[|i];
-                    if (e.xx == atkX && e.yy == atkY) {
-                        // Determine hit
-                        if (e.ac <= hit) {
+                    // Hit roll
+                    var hit = RollDice(1,20)+inst.str_mod;
+                    
+                    // Get targets
+                    for (var i=0; i<ds_list_size(entities); i++) {
+                        var e = entities[|i];
+                        if (e.xx == atkX && e.yy == atkY) {
                             ds_list_add(tempList, e);
+                            // Determine hit
+                            if (e.ac <= hit) {
+                                ds_list_add(tempList2, e);
+                            }
                         }
                     }
+                    
+                    // Deal damage
+                    var dmg = max(1,1+inst.str_mod);
+                    for (var i=0; i<ds_list_size(tempList2); i++) {
+                        tempList[|i].hp -= dmg;
+                    }
+                    
+                    // only subtract if there was anything to hit
+                    if (ds_list_size(tempList) > 0) {
+                        inst.action[0] -= 1;
+                    }
+                    
+                    ds_list_destroy(tempList);
+                    ds_list_destroy(tempList2);
                 }
-                
-                // Deal damage
-                var dmg = max(1,1+inst.str_mod);
-                for (var i=0; i<ds_list_size(tempList); i++) {
-                    tempList[|i].hp -= dmg;
-                }
-                
-                ds_list_destroy(tempList);
-                inst.action[0] -= 1;
                 break;
         }
     }

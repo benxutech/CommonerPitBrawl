@@ -163,6 +163,7 @@ if( client == eventid )
             b_turn = buffer_read(buff,buffer_s16);
             b_hp = buffer_read(buff,buffer_s16);
             b_maxHp = buffer_read(buff,buffer_s16);
+            b_loaded = buffer_read(buff,buffer_s16);
             tempAc = ds_list_create();
             tempAcBonus = ds_list_create();
             tempAcFree = ds_list_create();
@@ -215,6 +216,7 @@ if( client == eventid )
             a.die = b_die;
             a.hp = b_hp;
             a.maxHp = b_maxHp;
+            a.visible = b_loaded;
             ds_list_copy(a.actions,tempAc);
             ds_list_destroy(tempAc);
             ds_list_copy(a.bonusActions,tempAcBonus);

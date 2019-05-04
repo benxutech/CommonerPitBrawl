@@ -16,15 +16,19 @@
         ds_list_add( socketlist, sock );
         
         // Create a new player,       
-        var inst = instance_create(0,0, objPlayerServer);
+        var inst = instance_create(0, 0, objPlayerServer);
         inst.socketID = sock;
         inst.xx = 1+irandom(2);
         inst.yy = 1+irandom(1);
+        inst.loaded = 0;
+        
+        // Update it's actions
+        with (inst) {RefreshActions();}
         
         // Give it an initiative
                 // Move this elsewhere when personal stats are created
         var dice = RollDice(1,20);
-        inst.initiative = dice+ inst.init_mod;
+        inst.initiative = dice + inst.init_mod;
         ShowRoll(sock, dice, 'Your Initiative');
 
         // put this instance into a map, using the socket ID as the lookup

@@ -185,6 +185,7 @@ actionListen = -1;
 
 // Target mode tracker
 targetMode = "";
+targetLabel = '';
 
 // Animation
 animListen = "";
@@ -480,6 +481,7 @@ if (button[0].image_index == 2) {
 if (button[3].image_index == 2) {
     if (targetMode == '') {
         targetMode = 'Move';
+        targetLabel = 'Select tile to move to.';
     }
 }
 
@@ -558,6 +560,7 @@ switch (actionListen) {
     
     case 'Attack':
         targetMode = 'Attack';
+        targetLabel = 'Select tile to attack.';
         break;
 }
 actionListen = "";
@@ -601,7 +604,8 @@ draw_rectangle(view_xport[1], view_yport[1]+view_hport[1], view_xview[0]+view_wv
 
 
 // Targeting status
-if (button[3].image_index == 2) {
+//if (button[3].image_index == 2) {
+if (targetMode != '') {
     draw_set_color(c_black);
     draw_set_alpha(0.5);
     draw_rectangle(view_wview[0]/2-110, view_yport[1]+view_hport[1]-33-12, view_wview[0]/2+110, view_yport[1]+view_hport[1]-33+12,0);
@@ -610,7 +614,7 @@ if (button[3].image_index == 2) {
     draw_set_halign(fa_middle);
     draw_set_font(font0);
     draw_set_color(c_white);
-    draw_text(view_wview[0]/2, view_yport[1]+view_hport[1]-33, "Select tile to move to.") 
+    draw_text(view_wview[0]/2, view_yport[1]+view_hport[1]-33, targetLabel) 
 }
 
 // Draw Waiting on other player's turn

@@ -20,3 +20,5 @@ ent.action[1] = 1;
 ent.action[2] = 1;
 ent.turn = 1;
 
+with (ent) { RefreshActions(); }
+
