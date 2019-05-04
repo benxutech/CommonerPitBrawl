@@ -141,8 +141,9 @@
     <room>rooms\rmJoin</room>
     <room>rooms\rmBattle</room>
   </rooms>
-  <constants number="9">
+  <constants number="11">
     <constant name="GRID_SIZE">32</constant>
+    <constant name="BLOCK_FT">15</constant>
     <constant name="VERT_RATIO">0.5</constant>
     <constant name="NETWORK_LOGIN">0</constant>
     <constant name="NETWORK_PLAY">1</constant>
@@ -151,6 +152,7 @@
     <constant name="PING_CMD">2</constant>
     <constant name="MOVE_CMD">3</constant>
     <constant name="TURN_CMD">4</constant>
+    <constant name="ACTION_CMD">5</constant>
   </constants>
   <help>
     <rtf>help.rtf</rtf>

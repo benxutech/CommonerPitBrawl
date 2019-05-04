@@ -62,12 +62,15 @@
     else if( cmd==MOVE_CMD ) {
         var go_xx = buffer_read(buff, buffer_s16 );
         var go_yy = buffer_read(buff, buffer_s16 );
-        var go_moveType = buffer_read(buff, buffer_s16 );
+        var go_moveType = buffer_read(buff, buffer_s16 );  // Why is the client deciding the move type???
         
-        if (inst.movement > 0) {
+        var go_dist = abs(go_xx-inst.xx)+abs(go_yy-inst.yy);  // Distance to travel
+        
+        // Check if inst has enough movement
+        if (inst.movement/BLOCK_FT >= go_dist) {
             inst.xx = go_xx;
             inst.yy = go_yy;
-            inst.movement = 0;
+            inst.movement -= go_dist*BLOCK_FT;
             inst.moveType = go_moveType;
         }
     }
@@ -76,12 +79,14 @@
         var h = ds_list_size(entities)-1;//ds_grid_height(entitiesInitiatives);
         if (initiativeIndex < h) initiativeIndex += 1;
         else initiativeIndex = 0;
-        
+        // give turn
         var instNext = entities[| initiativeIndex];//ds_grid_get(entitiesInitiatives, 0, initiativeIndex);
         GiveEntityTurn(socketlist,Clients,instNext);
     }
+    else if( cmd==ACTION_CMD ) {
+        
+    }
     return cmd;
-    
 }
 
 

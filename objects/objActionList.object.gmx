@@ -45,6 +45,7 @@ tpadH = 15;
 
 closeTrigger = 0;
 selected = -1;
+clicked = -1;
 
 labelProperty = textProperty(fontAction, c_black, 1, fa_left, fa_top);
 titleProperty = textProperty(fontUITitle, c_dkgray, 1, fa_center, fa_top);
@@ -149,7 +150,7 @@ if (visible == true) {
     }
     if (point_in_rectangle(mouse_v_x,mouse_v_y,bx1,by1,bx2,by2)) {
         if (mouse_check_button_pressed(mb_left)) {
-            owner.clicked = selected;
+            clicked = selected;
             visible = false;
             alarm[0] = 2;
         }

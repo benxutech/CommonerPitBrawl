@@ -272,6 +272,28 @@ if (mouse_wheel_down()) {
 
 // Panning
 if (!instance_exists(objPopup) || objPopup.visible == 0) {
+    vMouseX = window_view_mouse_get_x(0);
+    vMouseY = window_view_mouse_get_y(0);
+    if (mouse_check_button_pressed(mb_left)) {
+        if (mouse_y &lt; view_yport[1]+view_hport[1]) {
+            startPressed_x = vMouseX;
+            startPressed_y = vMouseY;
+            startView_x = view_xview[1];
+            startView_y = view_yview[1];
+            panning = 1;
+        }
+    }
+    if (panning == 1) {
+        view_xview[1] = startView_x - (vMouseX - startPressed_x);
+        view_yview[1] = startView_y - (vMouseY - startPressed_y);
+    }
+}
+if (mouse_check_button_released(mb_left)) {
+    panning = 0;
+}
+
+/*
+if (!instance_exists(objPopup) || objPopup.visible == 0) {
     vMouseX = window_mouse_get_x();
     vMouseY = window_mouse_get_y();
     if (mouse_check_button_pressed(mb_left)) {
@@ -290,7 +312,8 @@ if (!instance_exists(objPopup) || objPopup.visible == 0) {
 }
 if (mouse_check_button_released(mb_left)) {
     panning = 0;
-}
+}*/
+
 
 // Panning boundaries
 panLimit_left = view_hview[0] - (view_wport[1]/2) - 100;
@@ -355,7 +378,7 @@ if (button[3].image_index == 2) {
         blocks[|i].selected = 0;
         var xDist = abs(player.xx-blocks[|i].xx);
         var yDist = abs(player.yy-blocks[|i].yy);
-        if (xDist+yDist &lt;= player.movement/15) blocks[|i].selected = 1;
+        if (xDist+yDist &lt;= player.movement/BLOCK_FT) blocks[|i].selected = 1;
         if (xDist+yDist == 0) blocks[|i].selected = 0;
         if (blocks[|i].object_index == objBlockWater) blocks[|i].selected = 0;
     }
@@ -366,21 +389,23 @@ if (button[3].image_index == 2) {
             block = collision_point(mouse_x,mouse_y,objBlock,1,0);
             if (block) {
                 if (player) {
+// New Note. server-enforced move ranges. Command can be performed by player whenever. 
+// It just won't necessarily be accepted
                     // Use hacky clientside movement ranges. Change later
                     // And hacky 2 move limit
                     var xDist = abs(player.xx-block.xx);
                     var yDist = abs(player.yy-block.yy);
                     if (block.selected) {
-                    //if (xDist+yDist &lt;= player.movement/30) {
-                        // using 1 movement as placeholder before movement ranges
-                        if (player.movement &gt;= 1) {
-                            player.movement -= 1;
-                            with (owner) {
-                                SendMoveTo(battle.block.xx, battle.block.yy,1);
-                            }
-                        }
+                        //if (xDist+yDist &lt;= player.movement/BLOCK_FT) {
+                            // using 1 movement as placeholder before movement ranges
+                            //if (player.movement &gt; 0) {
+                                //player.movement -= xDist+yDist*BLOCK_FT;
+                                with (owner) {
+                                    SendMoveTo(battle.block.xx, battle.block.yy,1);
+                                }
+                            //}
+                        //}
                     }
-                    //}
                 }
             }
             button[3].image_index = 0;
