@@ -39,6 +39,25 @@ with(objPlayerServer)
     buffer_write(global.player_buffer, buffer_s16, turn);
     buffer_write(global.player_buffer, buffer_s16, hp);
     buffer_write(global.player_buffer, buffer_s16, maxHp);
+    
+    // write actions amount
+    buffer_write(global.player_buffer, buffer_s16, ds_list_size(actions));
+    // write actions
+    for (var i=0; i<ds_list_size(actions); i++) {
+        buffer_write(global.player_buffer, buffer_string, actions[|i]);
+    }
+    // write bonus amount
+    buffer_write(global.player_buffer, buffer_s16, ds_list_size(bonusActions));
+    // write bonus
+    for (var i=0; i<ds_list_size(bonusActions); i++) {
+        buffer_write(global.player_buffer, buffer_string, bonusActions[|i]);
+    }
+    // write free amount
+    buffer_write(global.player_buffer, buffer_s16, ds_list_size(freeActions));
+    // write free
+    for (var i=0; i<ds_list_size(freeActions); i++) {
+        buffer_write(global.player_buffer, buffer_string, freeActions[|i]);
+    }
     //no reaction send yet
 }
 
@@ -47,13 +66,12 @@ var buffer_size = buffer_tell(player_buffer);
 // Now send all data... to all clients
 for(i=0;i<count;i++)
 {   
-    // get the socket
-    var sock = ds_list_find_value(socketlist,i);
-
-    buffer_seek(player_buffer, buffer_seek_start, 0);
-
     // Get the player's instance, so we can get it's id
-    var inst = ds_map_find_value( Clients, sock);
+    var sock = ds_list_find_value(socketlist,i);
+    var inst = ds_map_find_value(Clients, sock);
+    
+    // Write the players ID at the start
+    buffer_seek(player_buffer, buffer_seek_start, 0);
     buffer_write(global.player_buffer, buffer_s16, inst.socketID );
 
     // Send data to client

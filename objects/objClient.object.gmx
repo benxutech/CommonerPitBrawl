@@ -163,6 +163,22 @@ if( client == eventid )
             b_turn = buffer_read(buff,buffer_s16);
             b_hp = buffer_read(buff,buffer_s16);
             b_maxHp = buffer_read(buff,buffer_s16);
+            tempAc = ds_list_create();
+            tempAcBonus = ds_list_create();
+            tempAcFree = ds_list_create();
+            tempCount = buffer_read(buff,buffer_s16);  // Action count
+            for (var o=0; o&lt;tempCount; o++) {
+                t_add = buffer_read(buff,buffer_string);
+                ds_list_add(tempAc, t_add);  // Action
+            }
+            tempCount = buffer_read(buff,buffer_s16);  // Bonus count
+            for (var o=0; o&lt;tempCount; o++) {
+                ds_list_add(tempAcBonus, buffer_read(buff,buffer_string));  // Bonus
+            }
+            tempCount = buffer_read(buff,buffer_s16);  // Free count
+            for (var o=0; o&lt;tempCount; o++) {
+                ds_list_add(tempAcFree, buffer_read(buff,buffer_string));  // Free
+            }
             
             // Check the old list if it exist
             // If it isn't in the list then create and add it
@@ -199,6 +215,13 @@ if( client == eventid )
             a.die = b_die;
             a.hp = b_hp;
             a.maxHp = b_maxHp;
+            ds_list_copy(a.actions,tempAc);
+            ds_list_destroy(tempAc);
+            ds_list_copy(a.bonusActions,tempAcBonus);
+            ds_list_destroy(tempAcBonus);
+            ds_list_copy(a.freeActions,tempAcFree);
+            ds_list_destroy(tempAcFree);
+            // Update our turn
             if (b_socketID == clientID) {
                 battle.turn = b_turn;
             }

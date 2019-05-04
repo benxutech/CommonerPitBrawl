@@ -271,19 +271,21 @@ if (mouse_wheel_down()) {
 }
 
 // Panning
-if (!instance_exists(objPopup)) {
+if (!instance_exists(objPopup) || objPopup.visible == 0) {
+    vMouseX = window_mouse_get_x();
+    vMouseY = window_mouse_get_y();
     if (mouse_check_button_pressed(mb_left)) {
         if (mouse_y &lt; view_yport[1]+view_hport[1]) {
-            startPressed_x = window_mouse_get_x();
-            startPressed_y = window_mouse_get_y();
+            startPressed_x = vMouseX;
+            startPressed_y = vMouseY;
             startView_x = view_xview[1];
             startView_y = view_yview[1];
             panning = 1;
         }
     }
     if (panning == 1) {
-        view_xview[1] = startView_x - (window_mouse_get_x() - startPressed_x);
-        view_yview[1] = startView_y - (window_mouse_get_y() - startPressed_y);
+        view_xview[1] = startView_x - (vMouseX - startPressed_x);
+        view_yview[1] = startView_y - (vMouseY - startPressed_y);
     }
 }
 if (mouse_check_button_released(mb_left)) {
