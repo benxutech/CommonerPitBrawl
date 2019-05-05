@@ -74,6 +74,9 @@ freeActions = ds_list_create();
 initiative = 0;
 die = 0;
 
+// Sprite
+image_speed = 0;
+
 // Conditions - based on rules
 
 // Status - buffs and debuffs

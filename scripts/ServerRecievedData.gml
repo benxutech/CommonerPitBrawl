@@ -106,9 +106,9 @@
                     var atkY = buffer_read(buff, buffer_s16);
                     var tempList = ds_list_create();  // List of targets
                     var tempList2 = ds_list_create();  // List of hits
-                
+                    
                     // Hit roll
-                    var hit = RollDice(1,20)+inst.str_mod;
+                    var hit = RollDice(1,20) + inst.str_mod + inst.prof_mod;
                     
                     // Get targets
                     for (var i=0; i<ds_list_size(entities); i++) {

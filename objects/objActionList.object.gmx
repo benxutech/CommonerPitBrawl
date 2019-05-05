@@ -139,6 +139,7 @@ if (visible == true) {
             alarm[0] = 2;
         }
     }
+    selected = -1;
     for (var i=0; i&lt;ds_list_size(items); i++) {
         if (string_char_at(items[|i], 0) != '!') {
             if (string_char_at(items[|i], 0) != '@') {

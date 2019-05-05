@@ -204,6 +204,8 @@ if( client == eventid )
             
             a.xx = b_xx;
             a.yy = b_yy;
+            a.sprite_index = b_sprite_index;
+            a.image_index = b_image_index;
             a.socketID = b_socketID;
             a.entityID = b_entityID;
             a.playerName = b_PlayerName;
