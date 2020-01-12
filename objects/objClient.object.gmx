@@ -231,13 +231,18 @@ if( client == eventid )
             }
         }
     }
+    // If it's a ROLL packet
     if (b_type == 2) {
-        // If it's a ROLL packet
         b_result = buffer_read(buff,buffer_s16);
         b_label = buffer_read(buff,buffer_string);
         with (battle) {
             AnimatedDice(70+irandom(50), 640 + 40, owner.b_result, owner.b_label);
         }
+    }
+    // LOG packet
+    if (b_type == 3) {
+        var b_text = buffer_read(buff,buffer_string);
+        NewLog(b_text);
     }
 }
 

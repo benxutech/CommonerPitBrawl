@@ -14,29 +14,29 @@
     var out = 0; // returned value
     
     // Is this a KEY command?
-    if( cmd==KEY_CMD ) {
+    if (cmd == KEY_CMD) {
         // Read the key that was sent
         var key = buffer_read(buff, buffer_s16 );
         // And it's up/down state
         var updown = buffer_read(buff, buffer_s16 );
     
         // translate keypress into an index for our player array.
-        if( key==vk_left ) {
+        if( key == vk_left ) {
             key=LEFT_KEY;
         }
-        else if( key==vk_right ) {
+        else if( key == vk_right ) {
             key=RIGHT_KEY;
         }
          
         // translate updown into a bool for the player array       
-        if( updown==0 ){
+        if( updown == 0 ){
             inst.keys[key] = false;
         }else{
             inst.keys[key] = true;
         }
     }
     // Is this a NAME command?
-    else if( cmd==NAME_CMD ) {
+    else if( cmd == NAME_CMD ) {
         buffer_read(buff, buffer_s16);  // data size
         
         inst.name = buffer_read(buff, buffer_string);  // name
@@ -61,10 +61,10 @@
         
         inst.loaded = 1;  // Show player, now that it's updated
     }
-    else if( cmd==PING_CMD ) {
+    else if( cmd == PING_CMD ) {
         // keep alive - ignore it
     }
-    else if( cmd==MOVE_CMD ) {
+    else if( cmd == MOVE_CMD ) {
         var go_xx = buffer_read(buff, buffer_s16 );
         var go_yy = buffer_read(buff, buffer_s16 );
         var go_moveType = buffer_read(buff, buffer_s16 );  // Why is the client deciding the move type???
@@ -79,7 +79,7 @@
             inst.moveType = go_moveType;
         }
     }
-    else if( cmd==TURN_CMD ) {
+    else if( cmd == TURN_CMD ) {
         // Validate turn (if the turn ender is the turn holder)
         if (inst.turn == 1) {
             // take away turns from everyone
@@ -89,9 +89,10 @@
             // give turn
             var instNext = entities[| initiativeIndex];//ds_grid_get(entitiesInitiatives, 0, initiativeIndex);
             GiveEntityTurn(socketlist,Clients,instNext);
+            SendLog(inst.name+ "'s turn.")
         }
     }
-    else if( cmd==ACTION_CMD ) {
+    else if( cmd == ACTION_CMD ) {
         actionType = buffer_read(buff, buffer_string);
         switch (actionType) {
             case 'Dash':
@@ -106,9 +107,12 @@
                     var atkY = buffer_read(buff, buffer_s16);
                     var tempList = ds_list_create();  // List of targets
                     var tempList2 = ds_list_create();  // List of hits
+                    var logString = "Attacked.";
+                    var attackerName = inst.name;
                     
                     // Hit roll
                     var hit = RollDice(1,20) + inst.str_mod + inst.prof_mod;
+                    SendLog(attackerName+ ' attacks: '+ string(hit));
                     
                     // Get targets
                     for (var i=0; i<ds_list_size(entities); i++) {
@@ -122,19 +126,31 @@
                         }
                     }
                     
-                    // Deal damage
-                    var dmg = max(1,1+inst.str_mod);
-                    for (var i=0; i<ds_list_size(tempList2); i++) {
-                        tempList[|i].hp -= dmg;
-                    }
-                    
-                    // only subtract if there was anything to hit
+                    // only do if there was anything to hit
                     if (ds_list_size(tempList) > 0) {
+                        // Deal damage
+                        var dmg = max(1,1+inst.str_mod);
+                        logString = attackerName+" deals "+ string(dmg) +" DMG!";
+                        for (var i=0; i<ds_list_size(tempList2); i++) {
+                            tempList[|i].hp -= dmg;
+                        }
                         inst.action[0] -= 1;
                     }
                     
+                    // Log misses
+                    if (ds_list_size(tempList2) == 0) {
+                        logString = attackerName+" misses.";
+                    }
+                    if (ds_list_size(tempList) == 0) {
+                        logString = attackerName+" hits thin air.";
+                    }
+                    
+                    
                     ds_list_destroy(tempList);
                     ds_list_destroy(tempList2);
+                    
+                    // Send log
+                    SendLog(logString);
                 }
                 break;
         }

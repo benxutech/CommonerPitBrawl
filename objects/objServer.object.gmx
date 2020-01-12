@@ -143,7 +143,7 @@ UpdateEntities(count, player_buffer);
 regular_send += 1;
 if (regular_send == regular_send_seconds*room_speed) {
     count = ds_list_size(socketlist);
-    if( count&gt;0 )
+    if( count &gt; 0 )
     {
         UpdateEntities(count, player_buffer);
     }
@@ -227,6 +227,29 @@ if( server == eventid ){
     }
     if (cmd == ACTION_CMD) UpdateEntities(count, player_buffer);
 }
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="3">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>instance_destroy();
 </string>
           </argument>
         </arguments>

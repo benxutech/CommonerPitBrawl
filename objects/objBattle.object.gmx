@@ -65,33 +65,6 @@ global.gridY = 100;
 movePath = 0;
 
 // Create Map blocks
-/*
-blocks = ds_grid_create(ds_grid_width(map),ds_grid_height(map));
-for (var i = 0; i &lt; ds_grid_width(map); i++) {
-    for (var o = 0; o &lt; ds_grid_height(map); o++) {
-        pos = ToIsometric(i,o);
-        if (map[# i, o] == 0) {
-            mp_grid_add_cell(pathingGrid, i, o);
-            blocks[# i, o] = 0;
-        }
-        if (map[# i, o] == 1) {
-            b = instance_create(global.gridX+pos[0], global.gridY+pos[1], objBlock);
-            b.xx = i;
-            b.yy = o;
-            blocks[# i, o] = b;
-        }
-        if (map[# i, o] == 2) {
-            b = instance_create(global.gridX+pos[0], global.gridY+pos[1], objBlockWater);
-            b.xx = i;
-            b.yy = o;
-            b.image_speed = 1/60;
-            blocks[# i, o] = b;
-            mp_grid_add_cell(pathingGrid, i, o);
-        }
-    }
-}*/
-
-
 blocks = ds_list_create();
 for (var i = 0; i &lt; ds_grid_width(map); i++) {
     for (var o = 0; o &lt; ds_grid_height(map); o++) {
@@ -115,7 +88,7 @@ for (var i = 0; i &lt; ds_grid_width(map); i++) {
     }
 }
 
-
+// Create selector
 select = instance_create(0,0,objSelect);
 
 // Make entities list
@@ -198,6 +171,10 @@ turn = 0;
 
 // Event
 turnAnim = 0;
+
+// Create log
+log = instance_create(0,view_yport[1],objLog);
+log.owner = id;
 
 
 // To Draw
@@ -344,6 +321,7 @@ if (view_yview[1] &gt; panLimit_lower) {
 if (targetMode == 'Attack') {
     // Select
     with (select) {
+        visible = 0;
         block = collision_point(mouse_x,mouse_y,objBlock,1,0);
         if (block) {
             x = block.x;
@@ -351,10 +329,10 @@ if (targetMode == 'Attack') {
             xx = block.xx;
             yy = block.yy;
             visible = 1;
-        }
+        }/*
         else {
             visible = 0;
-        }
+        }*/
     }
     
                                     // Make into script later
@@ -618,7 +596,7 @@ if (targetMode != '') {
     draw_set_halign(fa_middle);
     draw_set_font(font0);
     draw_set_color(c_white);
-    draw_text(view_wview[0]/2, view_yport[1]+view_hport[1]-33, targetLabel) 
+    draw_text(view_wview[0]/2, view_yport[1]+view_hport[1]-33, targetLabel);
 }
 
 // Draw Waiting on other player's turn
@@ -631,7 +609,7 @@ if (turn == 0) {
 }
 
 
-draw_sprite(sprInitiative,0,0,0);
+//draw_sprite(sprInitiative,0,0,0);
 
 
 </string>

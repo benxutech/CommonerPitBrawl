@@ -67,6 +67,7 @@
       <script>scripts\UpdateEntityActions_unused.gml</script>
       <script>scripts\ShowRoll.gml</script>
       <script>scripts\HitTile.gml</script>
+      <script>scripts\SendLog.gml</script>
     </scripts>
     <scripts name="Clientside">
       <script>scripts\MoveEntity.gml</script>
@@ -80,6 +81,7 @@
       <script>scripts\ShowRange.gml</script>
       <script>scripts\SetTextProperty.gml</script>
       <script>scripts\textProperty.gml</script>
+      <script>scripts\NewLog.gml</script>
     </scripts>
     <script>scripts\RollDice.gml</script>
     <script>scripts\GetCurrentTurn.gml</script>
@@ -105,6 +107,7 @@
     <font>fonts\fontSubheading2</font>
     <font>fonts\fontUITitle</font>
     <font>fonts\fontArrows</font>
+    <font>fonts\fontLog</font>
   </fonts>
   <objects name="objects">
     <object>objects\objDiceTest</object>
@@ -121,6 +124,7 @@
       <object>objects\objInitiativeDisplay</object>
       <object>objects\objActionList</object>
       <object>objects\objPopup</object>
+      <object>objects\objLog</object>
     </objects>
     <objects name="network">
       <object>objects\objServer</object>
