@@ -60,6 +60,11 @@
         inst.hp = inst.maxHp;
         
         inst.loaded = 1;  // Show player, now that it's updated
+        
+        // Notify clients of new player
+        SendLog(inst.name+' has joined.');
+        SendLog('Stats: '+string(inst.str)+' '+string( inst.dex)+' '+string( inst.con)+' '+string( inst.int)+' '+string( inst.wis) +' '+string(inst.cha));
+        
     }
     else if( cmd == PING_CMD ) {
         // keep alive - ignore it
@@ -89,7 +94,7 @@
             // give turn
             var instNext = entities[| initiativeIndex];//ds_grid_get(entitiesInitiatives, 0, initiativeIndex);
             GiveEntityTurn(socketlist,Clients,instNext);
-            SendLog(inst.name+ "'s turn.")
+            SendLog('('+inst.name+ "'s turn.)")
         }
     }
     else if( cmd == ACTION_CMD ) {
@@ -99,6 +104,7 @@
                 if (inst.action[0] > 0) {
                     inst.movement += inst.maxMovement;
                     inst.action[0] -= 1;
+                    SendLog(inst.name+ ' dashes.');
                 }
                 break;
             case 'Attack':

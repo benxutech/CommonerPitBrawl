@@ -6,3 +6,4 @@ wis_mod = (wis-10)/2;
 cha_mod = (cha-10)/2;
 
 maxHp = hit_dice_size+con_mod;
+if (hp > maxHp) hp = maxHp;

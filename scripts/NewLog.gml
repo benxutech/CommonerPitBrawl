@@ -1,4 +1,6 @@
 // Clientside. Adds an entry to the log.
 // Input: string
-log = objLog;
-ds_list_add(log.items, argument0);
+var log = objLog;
+var pos = 0;
+//if (ds_list_size(log.items) != 0) pos = ds_list_size(log.items)-1;
+ds_list_insert(log.items, pos, argument0);

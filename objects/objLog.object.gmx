@@ -69,7 +69,7 @@ ds_list_clear(wrappedItems);
 height = 0;
 SetTextProperty(logTextProperty);
 for (var i=0; i&lt;min(ds_list_size(items), itemLimit); i++) {
-    var wrap = items[|ds_list_size(items)-1-i]//TextWrap(width-xPad*2, items[|i]);
+    var wrap = items[|i]//TextWrap(width-xPad*2, items[|i]);
     ds_list_add(wrappedItems, wrap);
     height += string_height(wrap)+itemGap;
 }

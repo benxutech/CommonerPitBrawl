@@ -31,6 +31,7 @@ race = "Human";
 subrace = "";
 class = "Commoner";
 level = 1;
+active = 1;
 
 // Base stats
 hit_dice_size = 6;
@@ -192,6 +193,7 @@ if (action[2] &gt; 0) {
             <kind>1</kind>
             <string>/// Calculate modifiers and stats
 CalcStats();
+
 
 
 </string>
