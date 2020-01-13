@@ -15,7 +15,7 @@ if (arg[5] == 1) {
     sprite = sprButtonThin;
 }
 if (arg[5] == 2) {
-    sprite = sprButtonAction;
+    sprite = sprButtonActionLong;
 }
 if (arg[5] == 3) {
     sprite = sprButtonTiny;

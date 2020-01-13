@@ -118,40 +118,29 @@ panLimit_lower = gridRealHeight - view_hview[1] + 200;
 
 // UI Buttons
 // Action buttons
-var buttonAction_x = 30+30;
+var buttonAction_x = 10+85;
 var buttonAction_y = 640-80;
-var buttonActionStep_x = 60 + 20
 var index = 0;
 
-button[0] = CreateButton(id, buttonAction_x+buttonActionStep_x*index, buttonAction_y, "Action", "action", 2);
+button[0] = CreateButton(id, buttonAction_x, buttonAction_y, "Action", "action", 2);
 button[0].toggle = 1;
-index++;
-button[1] = CreateButton(id, buttonAction_x+buttonActionStep_x*index, buttonAction_y, "Bonus", "bonusaction", 2);
+button[1] = CreateButton(id, 360-buttonAction_x, buttonAction_y, "Move", "move", 2);
 button[1].toggle = 1;
-index++;
-button[2] = CreateButton(id, buttonAction_x+buttonActionStep_x*index, buttonAction_y, "Free", "freeaction", 2);
-button[2].toggle = 1;
-index++;
-button[3] = CreateButton(id, buttonAction_x+buttonActionStep_x*index, buttonAction_y, "Move", "move", 2);
-button[3].toggle = 1;
 
 // End turn
-button[4] = CreateButton(id, view_wview[0]/2, 50, "End Turn", "turn", 1);
+button[2] = CreateButton(id, view_wview[0]/2, 50, "End Turn", "turn", 1);
 
 // End of buttons
 buttonListen = "";
 
 // Button action indicators 
-var index = 0;
-indicator[index] = instance_create(button[index].x,button[index].y-5-30,objIndicator);
-index++;
-indicator[index] = instance_create(button[index].x,button[index].y-5-30,objIndicator);
-index++;
-indicator[index] = instance_create(button[index].x,button[index].y-5-30,objIndicator);
-index++;
-indicator[index] = instance_create(button[index].x,button[index].y-5-30,objIndicator);
-indicator[index].image_index = 1;
-indicator[index].labelSuffix = " ft";
+indicator[0] = instance_create(button[1].x,button[1].y-5-30,objIndicator);
+indicator[0].image_index = 1;
+indicator[0].labelSuffix = " ft";
+
+indicator[1] = instance_create(button[0].x-35,button[1].y-5-30,objIndicator);
+indicator[2] = instance_create(button[0].x,button[1].y-5-30,objIndicator);
+indicator[3] = instance_create(button[0].x+35,button[1].y-5-30,objIndicator);
 
 // Actionlist Listener
 actionListen = -1;
@@ -417,7 +406,7 @@ else if (targetMode == 'Move') {
                 }
             }
             targetMode = '';
-            button[3].image_index = 0;
+            button[1].image_index = 0;
         }
         }
     }
@@ -441,8 +430,6 @@ if (instance_exists(objActionList)) {
     if (button[0].image_index == 2) {
         actionList.visible = 1;
         button[1].image_index = 0;
-        button[2].image_index = 0;
-        button[3].image_index = 0;
     }
     else {
         actionList.visible = 0;
@@ -458,7 +445,7 @@ if (button[0].image_index == 2) {
 }
 
 // Move 
-if (button[3].image_index == 2) {
+if (button[1].image_index == 2) {
     if (targetMode == '') {
         targetMode = 'Move';
         targetLabel = 'Select tile to move to.';
@@ -476,11 +463,11 @@ case "action":
     buttonListen = "";
     break;
 case "move": 
-    if (button[3].image_index == 0) {
+    if (button[1].image_index == 0) {
         buttonListen = "";
         break;
     }
-    if (button[3].image_index == 2) {
+    if (button[1].image_index == 2) {
         buttonListen = "";
         break;
     }
@@ -495,19 +482,20 @@ case "turn":
 }
 
 // No buttons if turn isn't real
-for (var i=0; i&lt;5; i++) {
+for (var i=0; i&lt;3; i++) {
     button[i].visible = turn;
-    if (i &lt;= 3) {
-        indicator[i].visible = turn;
-    }
 }
+indicator[0].visible = turn;
+indicator[1].visible = turn;
+indicator[2].visible = turn;
+indicator[3].visible = turn;
 
 // Update indicator texts
 if (player) {
-    indicator[0].label = player.action[0];
-    indicator[1].label = player.action[1];
-    indicator[2].label = player.action[2];
-    indicator[3].label = player.movement;
+    indicator[0].label = player.movement;
+    indicator[1].label = player.action[0];
+    indicator[2].label = player.action[1];
+    indicator[3].label = player.action[2];
 }
 
 if (turnAnim == 0) {
@@ -539,7 +527,7 @@ switch (actionListen) {
     case 'Dash':
         with (owner) {SendDash();}
         targetMode = '';
-        button[3].image_index = 2;
+        button[1].image_index = 2;
         break;
     
     case 'Attack':

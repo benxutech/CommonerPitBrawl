@@ -42,6 +42,7 @@
     </sprites>
     <sprites name="ui">
       <sprite>sprites\sprButtonAction</sprite>
+      <sprite>sprites\sprButtonActionLong</sprite>
       <sprite>sprites\sprite24</sprite>
       <sprite>sprites\sprButtonActionIndicator</sprite>
       <sprite>sprites\sprButtonThin</sprite>
