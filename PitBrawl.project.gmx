@@ -115,7 +115,6 @@
     <script>scripts\CharacterDataUpdate.gml</script>
     <script>scripts\CalcStats.gml</script>
     <script>scripts\RefreshActions.gml</script>
-    <script>scripts\ReadDataFeats.gml</script>
   </scripts>
   <fonts name="fonts">
     <font>fonts\font0</font>

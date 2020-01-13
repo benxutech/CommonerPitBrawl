@@ -52,6 +52,7 @@ if( err!=0 ){
 SendName(objCharacter.data);
 alarm[0]=120;
 
+
 </string>
           </argument>
         </arguments>

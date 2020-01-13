@@ -1,0 +1,32 @@
+[
+    {
+        "name" : "Wealthy",
+        "description" : "Start each match with an extra 20 gp.",
+        "effect_id" : "0"
+    },
+    {
+        "name" : "Swift",
+        "description" : "Add 10ft to your base movement speed.",
+        "effect_id" : "1"
+    },
+    {
+        "name" : "Tactician",
+        "description" : "Gain +5 to all your initiative rolls.",
+        "effect_id" : "2"
+    },
+    {
+        "name" : "Enduring",
+        "description" : "Gain an extra 3 max HP and 1 AC.",
+        "effect_id" : "3"
+    },
+    {
+        "name" : "Long Description",
+        "description" : "Extra long description. Extra long description. Extra long description.",
+        "effect_id" : "4"
+    },
+    {
+        "name" : "Wrap test",
+        "description" : "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "effect_id" : "5"
+    }
+]
