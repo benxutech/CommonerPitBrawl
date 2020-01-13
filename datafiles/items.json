@@ -1,0 +1,106 @@
+[
+    {
+        "name" : "Oil flask",
+        "item_id" : 0,
+        "interaction_id" : 0,
+        "description" : "A clay flask filled with flammable oil.",
+        "weight" : 1,
+        "cost" : 1
+    },
+    {
+        "name" : "Torch",
+        "item_id" : 1,
+        "interaction_id" : 1,
+        "description" : "An unlit torch.",
+        "weight" : 1,
+        "cost" : 1
+    },
+    {
+        "name" : "Caltrops",
+        "item_id" : 2,
+        "interaction_id" : 0,
+        "description" : "A bunch of spike-like metal that always stand up straight.",
+        "weight" : 1,
+        "cost" : 2
+    },
+    {
+        "name" : "Ball bearings",
+        "item_id" : 3,
+        "interaction_id" : 0,
+        "description" : "A bag of tiny metal balls.",
+        "weight" : 2,
+        "cost" : 2
+    },
+    {
+        "name" : "Tinderbox",
+        "item_id" : 4,
+        "interaction_id" : 2,
+        "description" : "A kit for making fires.",
+        "weight" : 1,
+        "cost" : 1
+    },
+    {
+        "name" : "Healing potion",
+        "item_id" : 5,
+        "interaction_id" : 3,
+        "description" : "A vial of glowing red liquid. It looks tasty.",
+        "weight" : 1,
+        "cost" : 5
+    },
+    {
+        "name" : "Hunting trap",
+        "item_id" : 6,
+        "interaction_id" : 4,
+        "description" : "A heavy, menacing bear trap.",
+        "weight" : 1,
+        "cost" : 5
+    },
+    {
+        "name" : "Alchemists fire",
+        "item_id" : 7,
+        "interaction_id" : 50,
+        "description" : "A vial of viscous orange liquid that ignites when exposed to air.",
+        "weight" : 1,
+        "cost" : 10
+    },
+    {
+        "name" : "Acid",
+        "item_id" : 8,
+        "interaction_id" : 0,
+        "description" : "A vial of bubbling green liquid. It looks like it'd hurt if you touched it.",
+        "weight" : 1,
+        "cost" : 5
+    },
+    {
+        "name" : "Poison",
+        "item_id" : 9,
+        "interaction_id" : 0,
+        "description" : "A vial of transparent yellow liquid. Very sinister.",
+        "weight" : 1,
+        "cost" : 2
+    },
+    {
+        "name" : "Dart",
+        "item_id" : 10,
+        "interaction_id" : 0,
+        "description" : "A war-dart adorned with bright red feathers.",
+        "weight" : 1,
+        "cost" : 5
+    },
+    {
+        "name" : "Dagger",
+        "item_id" : 11,
+        "interaction_id" : 0,
+        "description" : "A short, straight blade.",
+        "weight" : 1,
+        "cost" : 20
+    },
+    {
+        "name" : "Shortsword",
+        "item_id" : 12,
+        "interaction_id" : 0,
+        "description" : "A short, straight blade.",
+        "weight" : 1,
+        "cost" : 20
+    }
+]
