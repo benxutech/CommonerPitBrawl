@@ -33,12 +33,12 @@ width = 180;
 height = 0;
 leftMargin = 6;
 topMargin = 6;
-xPad = 1;
+xPad = 3;
 yPad = 1;
 //itemHeight = 12;
 itemGap = 1;
 
-itemLimit = 5;
+itemLimit = 4;
 
 logTextProperty = textProperty(fontLog, c_white, 1, fa_left, fa_top);
 </string>
@@ -68,7 +68,7 @@ logTextProperty = textProperty(fontLog, c_white, 1, fa_left, fa_top);
 ds_list_clear(wrappedItems);
 height = 0;
 SetTextProperty(logTextProperty);
-for (var i=0; i&lt;min(ds_list_size(items), itemLimit); i++) {
+for (var i=min(ds_list_size(items), itemLimit)-1; i&gt;=0; i--) {
     var wrap = items[|i]//TextWrap(width-xPad*2, items[|i]);
     ds_list_add(wrappedItems, wrap);
     height += string_height(wrap)+itemGap;
@@ -106,14 +106,20 @@ draw_set_color(c_dkgray);
 draw_rectangle(xx,yy,xx+width,yy+height,0);
 draw_set_alpha(1);
 
+var minVal = 0.5;
+var maxVal = 1;
 var yOffset = 0;
 SetTextProperty(logTextProperty);
 //draw_text(xx, yy, height);
-for (var i=0; i&lt;ds_list_size(wrappedItems); i++) {
+for (var i=ds_list_size(wrappedItems)-1; i&gt;=0; i--) {
+    // Fade out for higher texts
+    draw_set_alpha(minVal + (maxVal-minVal)/ds_list_size(wrappedItems)*i);
+    // Draw text
     var item = wrappedItems[|i];
+    yOffset = i*(string_height(item)+itemGap);
     draw_text(xx+xPad,yy+yPad+yOffset, item);
-    yOffset += string_height(item)+itemGap;
 }
+draw_set_alpha(1);
 </string>
           </argument>
         </arguments>
