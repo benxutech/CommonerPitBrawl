@@ -3,6 +3,25 @@
   <Configs name="configs">
     <Config>Configs\Default</Config>
   </Configs>
+  <datafiles number="1" name="datafiles">
+    <datafile>
+      <name>feats.json</name>
+      <exists>-1</exists>
+      <size>890</size>
+      <exportAction>2</exportAction>
+      <exportDir></exportDir>
+      <overwrite>0</overwrite>
+      <freeData>-1</freeData>
+      <removeEnd>0</removeEnd>
+      <store>0</store>
+      <ConfigOptions>
+        <Config name="Default">
+          <CopyToMask>9223372036854775807</CopyToMask>
+        </Config>
+      </ConfigOptions>
+      <filename>feats.json</filename>
+    </datafile>
+  </datafiles>
   <NewExtensions/>
   <sounds name="sound"/>
   <sprites name="sprites">
@@ -86,6 +105,7 @@
     <script>scripts\RollDice.gml</script>
     <script>scripts\GetCurrentTurn.gml</script>
     <script>scripts\TurnStart.gml</script>
+    <script>scripts\ServerAttack.gml</script>
     <script>scripts\SortListInitiative.gml</script>
     <script>scripts\GiveEntityTurn.gml</script>
     <script>scripts\DataFeats.gml</script>
@@ -94,6 +114,7 @@
     <script>scripts\CharacterDataUpdate.gml</script>
     <script>scripts\CalcStats.gml</script>
     <script>scripts\RefreshActions.gml</script>
+    <script>scripts\ReadDataFeats.gml</script>
   </scripts>
   <fonts name="fonts">
     <font>fonts\font0</font>

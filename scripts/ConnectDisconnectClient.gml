@@ -53,7 +53,7 @@
         with(inst) { instance_destroy(); }
         
         // Also delete the socket from our global list of connected clients
-        var index = ds_list_find_index( socketlist, sock );
+        var index = ds_list_find_index(socketlist, sock );
         ds_list_delete(socketlist,index);
         
         // delete from entities

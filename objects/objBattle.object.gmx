@@ -318,7 +318,7 @@ if (view_yview[1] &gt; panLimit_lower) {
 }
 
 // if Attack is on
-if (targetMode == 'Attack') {
+if (targetMode == 'Attack' || targetMode == 'Bonus attack') {
     // Select
     with (select) {
         visible = 0;
@@ -352,9 +352,11 @@ if (targetMode == 'Attack') {
             if (mouse_y &gt; view_yport[1]) {
                 block = collision_point(mouse_x,mouse_y,objBlock,1,0);
                 if (block) {
-                    // Do it
-                    with (owner) {SendAttack(battle.block.xx,battle.block.yy,0);}
-                    
+                    if (block.selected == 1) {
+                        // Do it
+                        owner.attackType = targetMode;
+                        with (owner) {SendAttack(attackType, battle.block.xx,battle.block.yy,0);}
+                    }
                 }
                 targetMode = '';
             }
@@ -542,6 +544,11 @@ switch (actionListen) {
     
     case 'Attack':
         targetMode = 'Attack';
+        targetLabel = 'Select tile to attack.';
+        break;
+        
+    case 'Bonus attack':
+        targetMode = 'Bonus attack';
         targetLabel = 'Select tile to attack.';
         break;
 }

@@ -202,8 +202,8 @@ for (i=0; i&lt;size; i++) {
 
         // Temp respawning in a random corner
         inst.hp = inst.maxHp;
-        inst.xx = choose(0,11);
-        inst.yy = choose(0,11);
+        inst.xx = choose(0,10);
+        inst.yy = choose(0,10);
         
         // Update situation
         count = ds_list_size(socketlist);

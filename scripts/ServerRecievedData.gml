@@ -1,15 +1,15 @@
 /// Read incoming data to the server from a connected socket
 {  
     // get the buffer the data resides in
-    var buff = ds_map_find_value(async_load, "buffer");
+    buff = ds_map_find_value(async_load, "buffer");
     
     // read ythe command 
-    var cmd = buffer_read(buff, buffer_s16 );
+    cmd = buffer_read(buff, buffer_s16 );
 
     // Get the socket ID - this is the CLIENT socket ID. We can use this as a "key" for this client
-    var sock = ds_map_find_value(async_load, "id");
+    sock = ds_map_find_value(async_load, "id");
     // Look up the client details
-    var inst = ds_map_find_value(Clients, sock );
+    inst = ds_map_find_value(Clients, sock);
 
     var out = 0; // returned value
     
@@ -63,7 +63,7 @@
         
         // Notify clients of new player
         SendLog(inst.name+' has joined.');
-        SendLog('Stats: '+string(inst.str)+' '+string( inst.dex)+' '+string( inst.con)+' '+string( inst.int)+' '+string( inst.wis) +' '+string(inst.cha));
+        SendLog('Stats: '+string(inst.str)+' '+string(inst.dex)+' '+string(inst.con)+' '+string(inst.int)+' '+string(inst.wis) +' '+string(inst.cha));
         
     }
     else if( cmd == PING_CMD ) {
@@ -109,54 +109,20 @@
                 break;
             case 'Attack':
                 if (inst.action[0] > 0) {
-                    var atkX = buffer_read(buff, buffer_s16);
-                    var atkY = buffer_read(buff, buffer_s16);
-                    var tempList = ds_list_create();  // List of targets
-                    var tempList2 = ds_list_create();  // List of hits
-                    var logString = "Attacked.";
-                    var attackerName = inst.name;
-                    
-                    // Hit roll
+                    var hit = RollDice(1,20) + inst.str_mod + inst.prof_mod;   
+                    var dmg = max(1,1+inst.str_mod);
+                    SendLog(inst.name+ ' attacks: '+ string(hit));
+                    ServerAttack(hit, dmg);
+                    inst.action[0] -= 1;
+                }
+                break;
+            case 'Bonus attack':
+                if (inst.action[1] > 0) {
                     var hit = RollDice(1,20) + inst.str_mod + inst.prof_mod;
-                    SendLog(attackerName+ ' attacks: '+ string(hit));
-                    
-                    // Get targets
-                    for (var i=0; i<ds_list_size(entities); i++) {
-                        var e = entities[|i];
-                        if (e.xx == atkX && e.yy == atkY) {
-                            ds_list_add(tempList, e);
-                            // Determine hit
-                            if (e.ac <= hit) {
-                                ds_list_add(tempList2, e);
-                            }
-                        }
-                    }
-                    
-                    // only do if there was anything to hit
-                    if (ds_list_size(tempList) > 0) {
-                        // Deal damage
-                        var dmg = max(1,1+inst.str_mod);
-                        logString = attackerName+" deals "+ string(dmg) +" DMG!";
-                        for (var i=0; i<ds_list_size(tempList2); i++) {
-                            tempList[|i].hp -= dmg;
-                        }
-                        inst.action[0] -= 1;
-                    }
-                    
-                    // Log misses
-                    if (ds_list_size(tempList2) == 0) {
-                        logString = attackerName+" misses.";
-                    }
-                    if (ds_list_size(tempList) == 0) {
-                        logString = attackerName+" hits thin air.";
-                    }
-                    
-                    
-                    ds_list_destroy(tempList);
-                    ds_list_destroy(tempList2);
-                    
-                    // Send log
-                    SendLog(logString);
+                    var dmg = 1;
+                    SendLog(inst.name+ ' uses bonus attack: '+ string(hit));
+                    ServerAttack(hit, dmg);
+                    inst.action[1] -= 1;
                 }
                 break;
         }
